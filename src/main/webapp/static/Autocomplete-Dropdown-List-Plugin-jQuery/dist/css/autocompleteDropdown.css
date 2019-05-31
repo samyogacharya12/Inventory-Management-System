@@ -1,0 +1,72 @@
+.autocomplete-dropdown {
+  position: relative;
+  width: 100%;
+  max-width: 400px;
+  font-family: sans-serif;
+  box-sizing: border-box; }
+  .autocomplete-dropdown > * {
+    box-sizing: border-box; }
+  .autocomplete-dropdown .old {
+    display: none; }
+  .autocomplete-dropdown input {
+    width: 100%;
+    padding: 5px 10px;
+    font-size: 16px;
+    outline: none;
+    border: solid 1px #cccccc; }
+    .autocomplete-dropdown input:focus {
+      border: solid 1px #0083ff; }
+  .autocomplete-dropdown .results {
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    top: 100%;
+    left: 0;
+    background-color: #fafafa;
+    border: solid 1px #cccccc;
+    display: none; }
+    .autocomplete-dropdown .results ul {
+      padding: 0;
+      margin: 0; }
+      .autocomplete-dropdown .results ul li {
+        display: block;
+        padding: 10px;
+        cursor: pointer;
+        color: #0083ff;
+        list-style: none; }
+        .autocomplete-dropdown .results ul li:hover, .autocomplete-dropdown .results ul li:focus {
+          background-color: #0083ff;
+          color: #fafafa; }
+  .autocomplete-dropdown.open .results {
+    display: block; }
+  .autocomplete-dropdown .option-tag {
+    display: block;
+    position: relative;
+    font-size: 14px;
+    background-color: #0083ff;
+    color: #fafafa;
+    padding: 5px 10px; }
+    .autocomplete-dropdown .option-tag .remove-tag {
+      display: block;
+      width: 11px;
+      height: 11px;
+      position: absolute;
+      z-index: 10;
+      cursor: pointer;
+      margin-left: 5px;
+      top: 50%;
+      right: 5px;
+      transform: translate(0, -50%); }
+      .autocomplete-dropdown .option-tag .remove-tag:before, .autocomplete-dropdown .option-tag .remove-tag:after {
+        content: " ";
+        display: block;
+        width: 11px;
+        height: 1px;
+        background-color: #fafafa;
+        position: absolute;
+        top: 50%;
+        left: 5px; }
+      .autocomplete-dropdown .option-tag .remove-tag:before {
+        transform: translate(-50%, 0) rotate(45deg); }
+      .autocomplete-dropdown .option-tag .remove-tag:after {
+        transform: translate(-50%, 0) rotate(-45deg); }
