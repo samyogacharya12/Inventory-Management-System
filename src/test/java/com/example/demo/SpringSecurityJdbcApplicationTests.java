@@ -36,59 +36,7 @@ public class SpringSecurityJdbcApplicationTests extends TestCase {
 		Double cost2=supplierDetailService.getSumofCost(buy_date);
 		Double revenue=customerDetailService.sumOfAmount(buy_date);
 		System.out.println(revenue);
-		if(cost1!=null && cost2!=null)
-		{
-			Double cost=cost1+cost2;
-			if(revenue>=cost)
-			{
-				System.out.println(revenue);
-				System.out.println(cost);
-				Double profit=revenue-cost;
-				System.out.println(profit);
-			}
-			else if(revenue==cost)
-			{
-				System.out.println(revenue);
-				System.out.println(cost);
-				Double breakevenpoint=revenue-cost;
-				System.out.println(breakevenpoint);
-			}
-			
-			else
-			{
-				System.out.println(revenue);
-				System.out.println(cost);
-				Double loss=cost-revenue;
-				System.out.println(loss);
-				System.out.println("the loss is of" + loss);
-			}
-		}
-		else if(cost1==null)
-		{
-			cost1=(double) 0;
-			cost2=(double) 0;
-			System.out.println(cost1);
-			System.out.println(cost2);
-			Double cost=cost1+cost2;
-			revenue=(double) 0;
-			System.out.println(revenue);
-			if(revenue>cost)
-			{
-				Double profit=revenue-cost;
-			}
-			else if(revenue==cost)
-			{
-				Double breakevenpoint=revenue-cost;
-			}
-			
-			else
-			{
-				String data="loss";	
-				Double loss=cost-revenue;
-				System.out.println("the loss is of" + loss);
-			}
-		}
-		else if(cost2==null)
+		 if(cost2==null)
 		{
 			cost2=(double) 0;
 			Double cost=cost1+cost2;
@@ -99,7 +47,7 @@ public class SpringSecurityJdbcApplicationTests extends TestCase {
 			  if(revenue>=cost)
 			{
 				Double profit=revenue-cost;
-				assertNotSame(14.0, profit);
+				assertNotSame(14, profit);
 			}
 			else if(revenue==cost)
 			{
@@ -131,29 +79,6 @@ public class SpringSecurityJdbcApplicationTests extends TestCase {
 			}
 		    }
 		}
-		else
-		{
-		  cost1=(double) 0;
-		  cost2=(double) 0;
-		  Double cost=cost1+cost2;
-			if(revenue>=cost)
-			{
-				Double profit=revenue-cost;
-			}
-			else if(revenue==cost)
-			{
-				Double breakevenpoint=revenue-cost;
-			}
-			
-			else
-			{
-				Double loss=cost-revenue;
-				System.out.println("the loss is of" + loss);
-			}
-		
-		//assertNotSame(14, profit);
-		
-	}
 	}
 }
 
