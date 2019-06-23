@@ -3,8 +3,10 @@ package com.example.demo.repository;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -13,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
+import org.apache.commons.collections4.iterators.ReverseListIterator;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFCellStyle;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -190,7 +193,6 @@ public class ExpenseRepositoryImpl extends JdbcDaoSupport implements ExpenseRepo
 		    expense_date.setBackgroundColor(BaseColor.GRAY);
 		    expense_date.setExtraParagraphSpace(5);
 		    table.addCell(expense_date);
-		    
 		    for(Expense expense:expenses)
 		    {
 		    	 String expense_id1=String.valueOf(expense.getExpense_id());
@@ -236,6 +238,10 @@ public class ExpenseRepositoryImpl extends JdbcDaoSupport implements ExpenseRepo
 			    expense_datevalue.setBackgroundColor(BaseColor.WHITE);
 				expense_datevalue.setExtraParagraphSpace(5);
 				table.addCell(expense_datevalue);	 
+				
+				ReverseListIterator reverseListIterator=new ReverseListIterator(expenses);
+				
+				
 		    }	
 		    String value;
 			int count=0;
