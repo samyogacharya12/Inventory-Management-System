@@ -86,10 +86,16 @@ label {
            <li>
             <a href="/get_expenses">
           <i class="tim-icons icon-notes"></i>
-              <p>Expenses</p>
+              Expenses
             </a>
           </li>
          
+           <li>
+            <a href="/get_trash">
+          <i class="tim-icons icon-trash-simple"></i>
+              Trash
+            </a>
+          </li>
          
          <li>
             <a href="/logout">

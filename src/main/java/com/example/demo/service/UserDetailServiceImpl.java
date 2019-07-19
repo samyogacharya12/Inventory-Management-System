@@ -18,6 +18,7 @@ import com.example.demo.model.Customer_Product;
 import com.example.demo.model.Product;
 import com.example.demo.model.Projectuser;
 import com.example.demo.model.Supplier_View;
+import com.example.demo.model.Trash;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.UserRolesRepository;
 
@@ -32,6 +33,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	public Projectuser findByUsername(String username)
 	{
 		return userRepository.findByUsername(username);
+	}
+	
+	
+	public void updateExpiredProduct(Product product)
+	{
+		userRepository.updateExpiredProduct(product);
 	}
 	
 	
@@ -164,5 +171,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
 			
 			return userRepository.getNoOfExpiredProduct(expiry_date);
 		}
+		
+		  public List<String> getExpiredProduct(String expiry_date)
+		  {
+			  return userRepository.getExpiredProduct(expiry_date);
+		  }
 		
 }

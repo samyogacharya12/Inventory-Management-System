@@ -3,7 +3,9 @@ package com.example.demo.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletOutputStream;
@@ -168,6 +170,20 @@ public class CustomerController {
 		System.out.println(customer_id);
 		Customer_View customer_view=customerDetailServiceImpl.getCustomerById(customer_id, product_id);
 		return new ModelAndView("customerproductadd.jsp","customer",customer_view);
+	}
+	
+	
+	@GetMapping("/getChart")
+	public String getChart()
+	{
+		return "barGraph.jsp";
+	}
+	
+	@GetMapping("/processData")
+	public ModelAndView getChart(@RequestParam(value="sell_date[]") String sell_date[])
+	{
+		List<Customer_View> customerView=customerDetailServiceImpl.getCustomerBuyDate(sell_date);
+		return new ModelAndView("barGraph.jsp", "customerView", customerView);
 	}
 	
 	

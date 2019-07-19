@@ -34,6 +34,7 @@ import com.example.demo.model.Customer_View;
 import com.example.demo.model.Product;
 import com.example.demo.model.Projectuser;
 import com.example.demo.model.Supplier_View;
+import com.example.demo.model.Trash;
 import com.itextpdf.text.BaseColor;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
@@ -88,6 +89,19 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 					}
 				});
 	    
+	}
+	@Override
+	public void updateExpiredProduct(Product product) {
+		// TODO Auto-generated method stub
+		String sql="UPDATE product SET is_expired=? WHERE product_id=?";
+		this.getJdbcTemplate().update(sql, new Object[] {product.getIs_expired(), product.getProduct_id()});
+	}	
+	
+	@Override
+	public List<String> getExpiredProduct(String expiry_date) {
+		// TODO Auto-generated method stub
+		String sql="SELECT product_name FROM product WHERE expiry_date<=?::Date and is_expired='false'";
+		return this.getJdbcTemplate().queryForList(sql, new Object[] {expiry_date}, String.class);
 	}
 	
 	@Override
@@ -164,6 +178,7 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 		String sql="INSERT INTO product "+"(product_id, product_name,product_type,price,quantity,magnifacture_date,expiry_date, image) SELECT ?,?,?,?,?,?::Date,?::Date,?";
         getJdbcTemplate().update(sql, new Object[] {product.getProduct_id(), product.getProduct_name(), product.getProduct_type(), product.getPrice(), product.getQuantity(), product.getMagnifacture_date(), product.getExpiry_date(), product.getImage()});
 	}
+	
 
 	@Override
 	public void updateintoproduct(Product product) {
@@ -184,7 +199,7 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 	@Override
 	public List<Product> getAllProductInfo() {
 		// TODO Auto-generated method stub
-		String sql="SELECT * FROM product";
+		String sql="SELECT * FROM product WHERE is_expired='false' ";
 		RowMapper<Product> rowmapper=new BeanPropertyRowMapper<Product> (Product.class);
 		return this.getJdbcTemplate().query(sql, rowmapper);
 	}
@@ -681,9 +696,8 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 	@Override
 	public int getNoOfExpiredProduct(String expiry_date) {
 		// TODO Auto-generated method stub
-		String sql="SELECT COUNT(product_id) FROM product WHERE expiry_date<=?::Date";
+		String sql="SELECT COUNT(product_id) FROM product WHERE expiry_date<=?::Date and is_expired='false'";
 		int total=this.getJdbcTemplate().queryForObject(sql, Integer.class, expiry_date);
 		return total;
 	}
-	
 }

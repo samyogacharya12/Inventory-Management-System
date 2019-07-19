@@ -1,7 +1,9 @@
 package com.example.demo.controller;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -61,6 +63,21 @@ public class SpringSecurityJdbcController {
 		else
 		{
 		model.addAttribute("revenue", revenue);
+		}
+		Date date = new Date(System.currentTimeMillis());
+		String sell_date=formatter.format(date);
+		List<String> product_name=userDetailService.getExpiredProduct(sell_date);
+		if(product_name!=null)
+		{
+			for(String product_name1:product_name)
+			{
+			model.addAttribute("product_name", product_name1);
+		}
+		}
+		else
+		{
+			product_name=null;
+			model.addAttribute("product_name", product_name);
 		}
 		return "home.jsp";
 	}

@@ -30,10 +30,14 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.model.Customer;
 import com.example.demo.model.Customer_Product;
+import com.example.demo.model.Customer_View;
 import com.example.demo.model.Product;
 import com.example.demo.model.Supplier_View;
 import com.example.demo.service.CustomerDetailServiceImpl;
+import com.example.demo.service.TrashDetailServiceImpl;
 import com.example.demo.service.UserDetailServiceImpl;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @Controller
 public class ProductController {
@@ -42,7 +46,11 @@ public class ProductController {
 	@Autowired
 	private UserDetailServiceImpl userDetailService;
 	
-
+	@Autowired
+    private CustomerDetailServiceImpl customerDetailService;
+	
+	@Autowired
+	private TrashDetailServiceImpl trashDetailService;
 	
 	@Autowired
 	private ServletContext context;
@@ -59,6 +67,17 @@ public class ProductController {
 		}
 		return "product.jsp";
 	}
+	@GetMapping("/trashproduct")
+	public String moveToTrash(@RequestParam long product_id)
+	{
+		Product product=userDetailService.getproductbyId(product_id);
+		product.setIs_expired("true");
+		userDetailService.updateExpiredProduct(product);
+//		userDetailService.deleteproduct(product_id);
+		trashDetailService.insertintotrash(product);
+		return "redirect:/productList.jsp";
+	}
+	
 
 	@GetMapping("/addproduct")
 	public String customer()
@@ -138,6 +157,17 @@ public class ProductController {
 	{
 		userDetailService.deleteproduct(product_id);
 		return "redirect:/productList.jsp";
+	}
+	
+	
+	@GetMapping(value="/viewData")
+	public String viewData(@RequestParam(value="sell_date[]") String[] sell_date, Model model) throws JsonProcessingException
+	{
+		List<Customer_View> customerView=customerDetailService.getCustomerBuyDate(sell_date);
+		ObjectMapper objectMapper=new ObjectMapper();
+		model.addAttribute("sales", objectMapper.writeValueAsString(customerView));
+		model.addAttribute("date", sell_date);
+		return "redirect:/chart.jsp";
 	}
  
 	@GetMapping(value="/createExcelProduct")

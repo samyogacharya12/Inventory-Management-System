@@ -63,6 +63,14 @@
               Expenses
             </a>
           </li>
+          
+            <li>
+            <a href="/get_trash">
+          <i class="tim-icons icon-trash-simple"></i>
+              Trash
+            </a>
+          </li>
+          
 
                    <li><a href="/logout">  <i class="icon-double-right"></i>Log Out <span class="fa fa-chevron-right"></span></a> </li>
         </ul>
@@ -467,10 +475,10 @@
     
   var html ='<div class="table">\
   <div class="text-primary">\
-  <form action="/getcustomerDate" method="get">\
+  <form action="/getDate" method="get">\
       <span class="icon"><i class="fa fa-search"></i></span>\
-      <input type="Date" name="buy_date[]" id="search" placeholder="Date..." />\
-       <input type="Date" name="buy_date[]" id="search1" placeholder="Date..." />\
+      <input type="Date" name="sell_date[]" id="search" placeholder="Date..." />\
+       <input type="Date" name="sell_date[]" id="search1" placeholder="Date..." />\
        <button type="submit" class="btn btn-fill btn-primary">Find</button>\
        </form>\
   </div>\

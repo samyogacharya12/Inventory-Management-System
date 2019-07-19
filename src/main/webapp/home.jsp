@@ -2,6 +2,35 @@
 <html lang="en">
 
 <head>
+<style>
+body {
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.notification {
+  background-color: #555;
+  color: white;
+  text-decoration: none;
+  padding: 15px 26px;
+  position: relative;
+  display: inline-block;
+  border-radius: 2px;
+}
+
+.notification:hover {
+  background: red;
+}
+
+.notification .badge {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  padding: 5px 10px;
+  border-radius: 50%;
+  background-color: red;
+  color: white;
+}
+</style>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <link rel="apple-touch-icon" sizes="76x76" href="../assets/img/apple-icon.png">
@@ -79,6 +108,13 @@
               <p>Expenses</p>
             </a>
           </li>
+          
+                <li>
+            <a href="/get_trash">
+          <i class="tim-icons icon-trash-simple"></i>
+              <p>Trash</p>
+            </a>
+          </li>
          
          <li>
             <a href="/logout">
@@ -91,8 +127,7 @@
       </div>
     </div>
     <div class="main-panel">
-      <!-- Navbar -->
-      <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
+     <nav class="navbar navbar-expand-lg navbar-absolute navbar-transparent">
         <div class="container-fluid">
           <div class="navbar-wrapper">
             <div class="navbar-toggle d-inline">
@@ -102,6 +137,7 @@
                 <span class="navbar-toggler-bar bar3"></span>
               </button>
             </div>
+            <a class="navbar-brand" href="javascript:void(0)"></a>
           </div>
           <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navigation" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-bar navbar-kebab"></span>
@@ -109,14 +145,23 @@
             <span class="navbar-toggler-bar navbar-kebab"></span>
           </button>
           <div class="collapse navbar-collapse" id="navigation">
+            <ul class="navbar-nav ml-auto">
+              <li class="dropdown nav-item">          
+              <a href="javascript:void(0)" class="notification"  data-toggle="dropdown">
+              <span>Inbox</span>
+             <span class="badge">${expiredproduct}</span>
+              </a>  
+                <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
+                  <li class="nav-link">
+                    <a href="#" class="nav-item dropdown-item">${product_name} is expired</a>
+                  </li>
+                </ul>
               </li>
               <li class="separator d-lg-none"></li>
             </ul>
           </div>
         </div>
       </nav>
-      <div class="modal modal-search fade" id="searchModal" tabindex="-1" role="dialog" aria-labelledby="searchModal" aria-hidden="true">
-      </div>
       <!-- End Navbar -->
       <div class="content">
         <div class="row">
@@ -139,10 +184,6 @@
               </div>
             </div>
           </div>
-        
-        
-        
-        
         
           <div class="col-lg-4">
             <div class="card card-chart">
@@ -192,21 +233,26 @@
     </div>
   </div>
   <!--   Core JS Files   -->
-  <script src="../assets/js/core/jquery.min.js"></script>
-  <script src="../assets/js/core/popper.min.js"></script>
-  <script src="../assets/js/core/bootstrap.min.js"></script>
-  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <script src="static/black-dashboard-html-v1.0.1/assets/js/core/jquery.min.js"></script>
+  <script src="static/black-dashboard-html-v1.0.1/assets/js/core/popper.min.js"></script>
+  <script src="static/black-dashboard-html-v1.0.1/assets/js/core/bootstrap.min.js"></script>
+  <script src="static/black-dashboard-html-v1.0.1/assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
   <!--  Google Maps Plugin    -->
   <!-- Place this tag in your head or just before your close body tag. -->
   <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
   <!-- Chart JS -->
-  <script src="../assets/js/plugins/chartjs.min.js"></script>
+  <script src="static/black-dashboard-html-v1.0.1/assets/js/plugins/chartjs.min.js"></script>
   <!--  Notifications Plugin    -->
-  <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+  <script src="static/black-dashboard-html-v1.0.1/assets/js/plugins/bootstrap-notify.js"></script>
   <!-- Control Center for Black Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="../assets/js/black-dashboard.min.js?v=1.0.0"></script>
+  <script src="static/black-dashboard-html-v1.0.1/assets/js/black-dashboard.min.js?v=1.0.0"></script>
   <!-- Black Dashboard DEMO methods, don't include it in your project! -->
-  <script src="../assets/demo/demo.js"></script>
+  <script src="static/black-dashboard-html-v1.0.1/assets/demo/demo.js"></script>
+  <script>
+   document.getElementById("connect").click();
+</script>  
+  
+  
   <script>
     $(document).ready(function() {
       $().ready(function() {
