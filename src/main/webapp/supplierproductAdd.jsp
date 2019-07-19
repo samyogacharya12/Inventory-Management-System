@@ -91,6 +91,14 @@ Swal.fire({
               <p>Expenses</p>
             </a>
           </li>
+          
+          
+            <li>
+            <a href="/get_trash">
+          <i class="tim-icons icon-trash-simple"></i>
+              <p>Trash</p>
+            </a>
+          </li>
          
          
          <li>

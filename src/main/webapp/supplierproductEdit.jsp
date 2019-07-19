@@ -80,6 +80,14 @@
               <p>Expenses</p>
             </a>
           </li>
+          
+          
+            <li>
+            <a href="/get_trash">
+          <i class="tim-icons icon-trash-simple"></i>
+              Trash
+            </a>
+          </li>
          
          <li>
             <a href="/logout">

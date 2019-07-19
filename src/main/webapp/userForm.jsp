@@ -80,6 +80,14 @@
             </a>
           </li>
          
+           <li>
+            <a href="/get_trash">
+          <i class="tim-icons icon-trash-simple"></i>
+              Trash
+            </a>
+          </li>
+         
+         
          <li>
             <a href="/logout">
               <i class="icon-double-right"></i>

@@ -78,6 +78,14 @@
               Expenses
             </a>
           </li>
+          
+            <li>
+            <a href="/get_trash">
+          <i class="tim-icons icon-trash-simple"></i>
+              Trash
+            </a>
+          </li>
+          
          
          <li>
             <a href="/logout">
@@ -209,6 +217,7 @@
                         <td class="text-right" style="display: none;"><a href="add_new?product_id=${products.product_id}"></a> </td>
                        <td> <a href="product?product_id=${products.product_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
                        <td> <a href="deleteproduct?product_id=${products.product_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
+                       <td><a href="trashproduct?product_id=${products.product_id}"  <i class="tim-icons icon-trash-simple"></i></a></td>
                       </tr>
                       </c:forEach>
                      
@@ -235,6 +244,7 @@
                           <td> <img src="productimagedisplay?product_id=${product.product_id}" alt="image-display" class="center" height="200px" width="200px" style="width:50%;"/> </td>
                           <td> <a href="product?product_id=${product.product_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
                        <td> <a href="deleteproduct?product_id=${product.product_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
+                        <td><a href="trashproduct?product_id=${products.product_id}"  <i class="tim-icons icon-trash-simple"></i></a></td>
                           </tr>
                           </c:forEach>
                            <td>${totalproduct1}  </td>

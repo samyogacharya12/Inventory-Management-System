@@ -8,12 +8,17 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.imageio.IIOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.SendTo;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -38,7 +43,7 @@ import com.example.demo.service.UserDetailServiceImpl;
 public class UserController {
 	String uploaded_file="C:/Users/DELL/Desktop/New Files/";
     @Autowired
-    private UserDetailServiceImpl userservice;
+    private UserDetailServiceImpl userService;
     @Autowired
     private SupplierDetailService supplierDetailService;
     @Autowired
@@ -52,6 +57,21 @@ public class UserController {
 	{
 		return "userForm.jsp";
 	}
+	
+//	public ProductResponse getExpiredProduct()
+//	{
+//		DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+//		Date date = new Date();
+//		String product_name=userService.getExpiredProduct(dateFormat.format(date));
+//		if(product_name!=null)
+//		{
+//			return new ProductResponse(product_name+"The Given Product has been Expired");
+//		}
+//		else
+//		{
+//			return null;
+//		}
+//	}
 	
 	@GetMapping(value="/get_report")
 	public String getReport()
@@ -264,7 +284,7 @@ public class UserController {
 		if(projectuser!=null)
 		{
 			projectuser.setImage(imageuploadpath);
-			userservice.insert(projectuser);
+			userService.insert(projectuser);
 		}
 		return "redirect:/userForm.jsp";
 	}
@@ -272,14 +292,14 @@ public class UserController {
 	@GetMapping(value="/getUserByName")
 	public ModelAndView getUser(@RequestParam String username)
 	{
-		Projectuser usern=userservice.findByUsername(username);
+		Projectuser usern=userService.findByUsername(username);
 		return new ModelAndView("userList.jsp", "username", usern);
 	}
 	
 	@RequestMapping(value="/get_list", method=RequestMethod.GET)
 	public ModelAndView listuser()
 	{
-		List<Projectuser> userList = userservice.getAllUserInfo();
+		List<Projectuser> userList = userService.getAllUserInfo();
 		return new ModelAndView("userList.jsp", "user", userList);
 	}
 	
@@ -305,14 +325,14 @@ public class UserController {
 	@GetMapping(value="/viewprofile")
 	public String getProfile(Model model, @RequestParam long user_id)
 	{
-		model.addAttribute("user",userservice.getUserById(user_id));
+		model.addAttribute("user",userService.getUserById(user_id));
 		return "userprofile.jsp";
 	}
 	
 	@GetMapping(value="/username")
 	public String getUserProfile(Model model, @RequestParam long user_id)
 	{
-		model.addAttribute("user",userservice.getUserById(user_id));
+		model.addAttribute("user",userService.getUserById(user_id));
 		return "userprofile.jsp";
 	}
 	
@@ -321,7 +341,7 @@ public class UserController {
 	public ModelAndView getUserEditForm(@RequestParam long user_id)
 	{
 		System.out.println(user_id);
-		Projectuser user=userservice.getUserById(user_id);
+		Projectuser user=userService.getUserById(user_id);
 		return new ModelAndView("userEdit.jsp", "userEdit", user);
 	}
 	
@@ -332,7 +352,7 @@ public class UserController {
 		String imageuploadpath="";
 		if(file.getOriginalFilename().isEmpty())
 		{
-			Projectuser user=userservice.getUserById(projectuser.getUser_id());
+			Projectuser user=userService.getUserById(projectuser.getUser_id());
 	        imageuploadpath=user.getImage();		
 		}
 		else
@@ -342,7 +362,7 @@ public class UserController {
 		if(projectuser!=null)
 		{
 			projectuser.setImage(imageuploadpath);
-			userservice.UpdateUser(projectuser);
+			userService.UpdateUser(projectuser);
 		}
 		return "redirect:/userEdit.jsp";
 	}
@@ -351,7 +371,7 @@ public class UserController {
 	@PreAuthorize("hasRole('super_admin')")
 	public String deleteUser(@RequestParam long user_id)
 	{
-		userservice.deleteUser(user_id);
+		userService.deleteUser(user_id);
 		return "redirect:/userList.jsp";
 	}
 	

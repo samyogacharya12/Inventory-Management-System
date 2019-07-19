@@ -1,0 +1,18 @@
+body
+{
+  background-color:#000;
+}
+h1
+{
+  margin:0;
+  padding:10px;
+  color:#CCCCCC;
+  background-color:#222222;
+  text-align:center;
+  font-family:'courier';
+}
+#Container
+{
+  margin-top:20vh;
+  text-align:center;  
+}

@@ -11,12 +11,14 @@ import com.example.demo.model.Customer_View;
 import com.example.demo.model.Product;
 import com.example.demo.model.Projectuser;
 import com.example.demo.model.Supplier_View;
+import com.example.demo.model.Trash;
 
 public interface UserRepository {
 
   Projectuser findByUsername(String username);
   List<Product> findByProductName(String product_name);
   public void insert(Projectuser projectuser);
+  public void updateExpiredProduct(Product product);
   Projectuser getUserById(long id);
   public void deleteuserinfo(long user_id);
   Product getproductbyid(long product_id);
@@ -35,6 +37,7 @@ public interface UserRepository {
   public double getSumOfprice(String product_name);
   public int getTotalNoOfQuantity(String product_name);
   public int getNoofUsers();
+  public List<String> getExpiredProduct(String expiry_date);
   public int getNoOfExpiredProduct(String expiry_date);
   public boolean createPdf(List<Product> products, ServletContext context, HttpServletRequest request, HttpServletResponse response);
   public boolean createExcel(List<Product> products, ServletContext context, HttpServletRequest request, HttpServletResponse response);

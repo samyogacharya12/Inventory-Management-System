@@ -6,8 +6,9 @@ import javax.validation.constraints.Min;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-public class Product {
+public class Trash {
 
+	private long trash_id;
 	private long product_id;
     private String product_name;
     private String product_type;
@@ -15,31 +16,18 @@ public class Product {
     @Min(value = 0L, message = "The value must be positive")
     private int quantity;
     private String image;
-    private String is_expired;
-    public String getIs_expired() {
-		return is_expired;
-	}
-	public void setIs_expired(String is_expired) {
-		this.is_expired = is_expired;
-	}
-	public String getImage() {
-		return image;
-	}
-	public void setImage(String image) {
-		this.image = image;
-	}
-	public int getQuantity() {
-		return quantity;
-	}
-	public void setQuantity(int quantity) {
-		this.quantity = quantity;
-	}
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date magnifacture_date;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
     private Date expiry_date;
 	public long getProduct_id() {
 		return product_id;
+	}
+	public long getTrash_id() {
+		return trash_id;
+	}
+	public void setTrash_id(long trash_id) {
+		this.trash_id = trash_id;
 	}
 	public void setProduct_id(long product_id) {
 		this.product_id = product_id;
@@ -62,6 +50,18 @@ public class Product {
 	public void setPrice(double price) {
 		this.price = price;
 	}
+	public int getQuantity() {
+		return quantity;
+	}
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+	public String getImage() {
+		return image;
+	}
+	public void setImage(String image) {
+		this.image = image;
+	}
 	public Date getMagnifacture_date() {
 		return magnifacture_date;
 	}
@@ -74,5 +74,5 @@ public class Product {
 	public void setExpiry_date(Date expiry_date) {
 		this.expiry_date = expiry_date;
 	}
-    
+	
 }
