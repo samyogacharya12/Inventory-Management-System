@@ -20,7 +20,7 @@ public class CustomerDetailServiceImpl {
 	private CustomerRepository customerRepository;
 	
 	
-	public Customer_Product getCustomerByid(long customer_id)
+	public Customer_Product getCustomerById(long customer_id)
 	{
 		return customerRepository.getCustomerById(customer_id);
 	}
@@ -32,12 +32,12 @@ public class CustomerDetailServiceImpl {
 	
 	public void insertintocustomer(Customer customer)
 	{
-		customerRepository.insertintocustomer(customer);
+		customerRepository.insertIntoCustomer(customer);
 	}
 	
 	public void insertintocustomerproduct(Customer_Product customerproduct)
 	{
-		customerRepository.insertintocustomerproduct(customerproduct);
+		customerRepository.insertIntoCustomerProduct(customerproduct);
 	}
 	
 	public Customer_View getCustomerById(long customer_id, long product_id)
@@ -45,24 +45,24 @@ public class CustomerDetailServiceImpl {
 		return customerRepository.getCustomerId(customer_id, product_id);
 	}
 	
-	public void updateintopersonalcustomer(Customer customer)
+	public void updateIntoPersonalCustomer(Customer customer)
 	{
-		customerRepository.updateintopersonalcustomer(customer);
+		customerRepository.updateIntoPersonalCustomer(customer);
 	}
 	
-	public void updateintocustomerproduct(Customer_Product customerproduct) 
+	public void updateIntoCustomerProduct(Customer_Product customerproduct)
 	{
-      customerRepository.updateintocustomerproduct(customerproduct);                   
+      customerRepository.updateIntoCustomerProduct(customerproduct);
 	}
 	
-	public void deleteintocustomerview(long customer_id, long product_id)
+	public void deleteIntoCustomerView(long customer_id, long product_id)
 	{
-		customerRepository.deleteintocustomerview(customer_id, product_id);
+		customerRepository.deleteIntoCustomerView(customer_id, product_id);
 	}
 	
-	public void deleteintocustomer(long customer_id, long product_id)
+	public void deleteIntoCustomer(long customer_id, long product_id)
 	{
-		customerRepository.deleteintocustomer(customer_id, product_id);
+		customerRepository.deleteIntoCustomer(customer_id, product_id);
 	}
 	
 	public List<Customer_View> getCustomerBuyDate(String buy_date[])
