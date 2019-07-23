@@ -14,9 +14,9 @@ public class TrashDetailServiceImpl {
 	@Autowired
 	private TrashRepository trashRepository;
 	
-	public void insertintotrash(Product product)
+	public void insertIntoTrash(Product product)
 	{
-		trashRepository.insertintotrash(product);
+		trashRepository.insertIntoTrash(product);
 	}
 	
 	public List<Trash> getAllTrashInfo() {
