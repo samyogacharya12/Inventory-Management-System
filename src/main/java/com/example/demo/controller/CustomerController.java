@@ -3,12 +3,9 @@ package com.example.demo.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletContext;
-import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -90,7 +87,7 @@ public class CustomerController {
 		return new ModelAndView("customerList.jsp", "buy_date", customer_view);
 	}
 	
-	@GetMapping("/customer")
+	@GetMapping("/getCustomerEditForm")
 	public ModelAndView getCustomerEditForm(@RequestParam long customer_id, @RequestParam long product_id)
 	{
 		System.out.println(product_id);
@@ -110,7 +107,7 @@ public class CustomerController {
 	{
 		if(customer!=null)
 		{
-			customerDetailServiceImpl.updateintopersonalcustomer(customer);
+			customerDetailServiceImpl.updateIntoPersonalCustomer(customer);
 		}
 		return "customerpersonalEdit.jsp";
 	}
@@ -159,13 +156,13 @@ public class CustomerController {
 	    if(customerproduct!=null)
 		{
 	    	customerproduct.setQuantity(quantity);
-		customerDetailServiceImpl.updateintocustomerproduct(customerproduct);
+		customerDetailServiceImpl.updateIntoCustomerProduct(customerproduct);
 		}
 		return "customerproductEdit.jsp";
 	}
 	
-	@GetMapping("/getCustomer")
-	public ModelAndView getCustomerForm(@RequestParam long customer_id, @RequestParam long product_id)
+	@GetMapping("/addCustomer")
+	public ModelAndView addCustomerForm(@RequestParam long customer_id, @RequestParam long product_id)
 	{
 		System.out.println(customer_id);
 		Customer_View customer_view=customerDetailServiceImpl.getCustomerById(customer_id, product_id);
@@ -189,7 +186,7 @@ public class CustomerController {
 	
 	
 	@PostMapping("/save_customerproduct")
-	public String postSupplierProductForm(@ModelAttribute Customer_Product customerproduct, @RequestParam int product_product_id, @RequestParam int quantity)
+	public String saveCustomerProductForm(@ModelAttribute Customer_Product customerproduct, @RequestParam int product_product_id, @RequestParam int quantity)
 	{
 		Product product=userDetailServiceImpl.getquantitybyid(product_product_id);
 		System.out.println(product.getQuantity());
@@ -266,8 +263,8 @@ public class CustomerController {
 	@GetMapping("/deletecustomer")
 	public String deleteSupplier(@RequestParam long customer_id,@RequestParam long product_id)
 	{
-		customerDetailServiceImpl.deleteintocustomerview(customer_id, product_id);
-		customerDetailServiceImpl.deleteintocustomer(customer_id, product_id);
+		customerDetailServiceImpl.deleteIntoCustomerView(customer_id, product_id);
+		customerDetailServiceImpl.deleteIntoCustomer(customer_id, product_id);
 		return "customerList.jsp";
 	}
 	
