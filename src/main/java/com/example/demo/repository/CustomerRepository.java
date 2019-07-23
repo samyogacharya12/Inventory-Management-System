@@ -16,12 +16,12 @@ public interface CustomerRepository {
 	public Customer_Product getCustomerById(long customer_id);
 	public Customer_View getCustomerId(long customer_id, long product_id);
 	public List<Customer_View> getAllCustomerInfo();
-	 public void insertintocustomer(Customer customer);
-	  public void insertintocustomerproduct(Customer_Product customerproduct);
-	  public void updateintopersonalcustomer(Customer customer);
-	  public void updateintocustomerproduct(Customer_Product customerproduct);
-	  public void deleteintocustomerview(long customer_id, long product_id);
-	  public void deleteintocustomer(long customer_id, long product_id);
+	 public void insertIntoCustomer(Customer customer);
+	  public void insertIntoCustomerProduct(Customer_Product customerproduct);
+	  public void updateIntoPersonalCustomer(Customer customer);
+	  public void updateIntoCustomerProduct(Customer_Product customerproduct);
+	  public void deleteIntoCustomerView(long customer_id, long product_id);
+	  public void deleteIntoCustomer(long customer_id, long product_id);
 	  public List<Customer_View> getCustomerByBuyDate(String[] buy_date);
 	  public List<Customer_View> getCustomerByName(String customer_name);
 	  public int getTotalCustomer();
