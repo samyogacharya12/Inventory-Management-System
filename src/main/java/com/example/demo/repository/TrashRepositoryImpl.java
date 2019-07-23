@@ -27,7 +27,7 @@ public class TrashRepositoryImpl extends JdbcDaoSupport implements TrashReposito
 	    }  
 	   
 	@Override
-	public void insertintotrash(Product product) {
+	public void insertIntoTrash(Product product) {
 		// TODO Auto-generated method stub
 		String sql="INSERT INTO trash "+" (product_id,product_name,product_type,price,quantity,magnifacture_date,expiry_date, image) SELECT ?,?,?,?,?,?::DATE, ?::DATE, ?";
 		this.getJdbcTemplate().update(sql, new Object[] {product.getProduct_id(), product.getProduct_name(), product.getProduct_name(), product.getPrice(), product.getQuantity(), product.getMagnifacture_date(), product.getExpiry_date(), product.getImage()});
