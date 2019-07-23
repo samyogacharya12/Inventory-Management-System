@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.demo.service.ProductDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
@@ -33,7 +34,10 @@ public class SpringSecurityJdbcController {
 	private UserDetailServiceImpl userDetailService;
 	@Autowired
 	private CustomerDetailServiceImpl customerDetailService;
-	
+
+	@Autowired
+	private ProductDetailServiceImpl productDetailService;
+
 	@Autowired
 	private SupplierDetailService supplierDetailService;
 	@RequestMapping(value= {"/", "/home"})
@@ -50,9 +54,9 @@ public class SpringSecurityJdbcController {
 		model.addAttribute("numberofcustomers", numberofcustomers);
 		int numberofsuppliers=supplierDetailService.NoofSupplier();
 		model.addAttribute("numberofsuppliers", numberofsuppliers);
-		int expiredproduct=userDetailService.getNoOfExpiredProduct(buy_date);
+		int expiredproduct=productDetailService.getNoOfExpiredProduct(buy_date);
 		model.addAttribute("expiredproduct", expiredproduct);
-		int numberofproduct=userDetailService.getTotalNoOfQuantity();
+		int numberofproduct=productDetailService.getTotalNoOfQuantity();
 		model.addAttribute("numberofproducts", numberofproduct);
 		Double revenue=customerDetailService.getPresentRevenue(buy_date);
 		if(revenue==null)
@@ -66,7 +70,7 @@ public class SpringSecurityJdbcController {
 		}
 		Date date = new Date(System.currentTimeMillis());
 		String sell_date=formatter.format(date);
-		List<String> product_name=userDetailService.getExpiredProduct(sell_date);
+		List<String> product_name=productDetailService.getExpiredProduct(sell_date);
 		if(product_name!=null)
 		{
 			for(String product_name1:product_name)
