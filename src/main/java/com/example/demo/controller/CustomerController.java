@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.demo.service.ProductDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +35,10 @@ public class CustomerController {
 	
 	@Autowired
 	private UserDetailServiceImpl userDetailServiceImpl;
-	
+
+	@Autowired
+	private ProductDetailServiceImpl productDetailService;
+
 	@Autowired
 	private ServletContext context;
 	@GetMapping("/customer_form")
@@ -115,9 +120,9 @@ public class CustomerController {
 	@PostMapping("/update_customerproduct")
 	public String updatecustomerForm(@ModelAttribute Customer_Product customerproduct, @RequestParam long product_product_id, @RequestParam int quantity, @RequestParam long customer_customer_id)
 	{
-	    Product product=userDetailServiceImpl.getquantitybyid(product_product_id);
+	    Product product=productDetailService.getQuantityById(quantity);
 	    int dbquantity=product.getQuantity();
-	    customerproduct=userDetailServiceImpl.getquantitybycustomerid(customer_customer_id, product_product_id);
+	    customerproduct=productDetailService.getQuantityByCustomerid(customer_customer_id, product_product_id);
 	    int currentvalue=customerproduct.getQuantity();
 	    if(currentvalue==quantity)
 	    {
@@ -131,7 +136,7 @@ public class CustomerController {
 	    	product.setQuantity(dbquantity);
 	    	if(dbquantity>=0)
 	    	{
-	    	userDetailServiceImpl.updateintoproduct(product);
+	    		productDetailService.updateIntoProduct(product);
 	    }
 	    	else
 	    	{
@@ -145,7 +150,7 @@ public class CustomerController {
 	    	product.setQuantity(dbquantity);
 	    	if(dbquantity>=0)
 	    	{
-	    	userDetailServiceImpl.updateintoproduct(product);
+	    		productDetailService.updateIntoProduct(product);
 	    }
 	    	else
 	    	{
@@ -188,7 +193,7 @@ public class CustomerController {
 	@PostMapping("/save_customerproduct")
 	public String saveCustomerProductForm(@ModelAttribute Customer_Product customerproduct, @RequestParam int product_product_id, @RequestParam int quantity)
 	{
-		Product product=userDetailServiceImpl.getquantitybyid(product_product_id);
+		Product product=productDetailService.getQuantityById(product_product_id);
 		System.out.println(product.getQuantity());
 		int dbquantity=product.getQuantity();
 		System.out.println(dbquantity);
@@ -197,7 +202,7 @@ public class CustomerController {
 		if(customerproduct!=null & dbquantity>=0)
 		{
 		customerDetailServiceImpl.insertintocustomerproduct(customerproduct);
-		userDetailServiceImpl.updateintoproduct(product);
+		productDetailService.updateIntoProduct(product);
 		}
 		else
 		{
@@ -213,14 +218,14 @@ public class CustomerController {
 		{
 			customerDetailServiceImpl.insertintocustomerproduct(customerproduct);
 		}
-		Product product=userDetailServiceImpl.getquantitybyid(product_product_id);
+		Product product=productDetailService.getQuantityById(product_product_id);
 		System.out.println(product.getQuantity());
 		int dbquantity=product.getQuantity();
 		dbquantity=dbquantity-quantity;
 		product.setQuantity(dbquantity);
 		if(dbquantity!=-1)
 		{
-			userDetailServiceImpl.updateintoproduct(product);
+			productDetailService.updateIntoProduct(product);
 		}
 		return "customerList.jsp";
 	}
