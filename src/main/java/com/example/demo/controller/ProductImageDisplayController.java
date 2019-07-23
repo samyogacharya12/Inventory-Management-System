@@ -8,6 +8,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.example.demo.service.ProductDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,14 +25,15 @@ public class ProductImageDisplayController {
 	@Autowired
 	private UserRepository userRepository;
 	
-	
+	@Autowired
+	private ProductDetailServiceImpl productDetailService;
 	private int DEFAULT_BUFFER_SIZE=1024;
 	
 	@GetMapping(value="/productimagedisplay")
 	public void showImage(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		long id=Integer.parseInt(request.getParameter("product_id"));
-		Product product=userRepository.getproductbyid(id);
+		Product product=productDetailService.getProductById(id);
 		File file=new File(product.getImage());
 		BufferedInputStream input=null;
 		BufferedOutputStream output=null;
@@ -58,7 +61,7 @@ public class ProductImageDisplayController {
 	public void showImagebyName(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
 		String name=request.getParameter("product_name");
-		Product product=(Product) userRepository.findByProductName(name);
+		Product product=(Product) productDetailService.findByProductName(name);
 		File file=new File(product.getImage());
 		BufferedInputStream input=null;
 		BufferedOutputStream output=null;
