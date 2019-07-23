@@ -9,15 +9,14 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
+import com.example.demo.service.ProductDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,14 +27,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.model.Customer;
-import com.example.demo.model.Customer_Product;
 import com.example.demo.model.Customer_View;
 import com.example.demo.model.Product;
-import com.example.demo.model.Supplier_View;
 import com.example.demo.service.CustomerDetailServiceImpl;
 import com.example.demo.service.TrashDetailServiceImpl;
-import com.example.demo.service.UserDetailServiceImpl;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
@@ -43,9 +38,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class ProductController {
 
 	String uploaded_file="C:/Users/DELL/Desktop/New Files/";
+
+
 	@Autowired
-	private UserDetailServiceImpl userDetailService;
-	
+	private ProductDetailServiceImpl productDetailService;
+
 	@Autowired
     private CustomerDetailServiceImpl customerDetailService;
 	
@@ -62,19 +59,19 @@ public class ProductController {
 		if(product!=null)
 		{
 			product.setImage(imageuploadpath);
-			userDetailService.insertintorpoduct(product);
-			request.setAttribute("product_product_id", userDetailService.getAllProductInfo());
+			productDetailService.insertIntoProduct(product);
+			request.setAttribute("product_product_id", productDetailService.getAllProductInfo());
 		}
 		return "product.jsp";
 	}
 	@GetMapping("/trashproduct")
 	public String moveToTrash(@RequestParam long product_id)
 	{
-		Product product=userDetailService.getproductbyId(product_id);
+		Product product=productDetailService.getProductById(product_id);
 		product.setIs_expired("true");
-		userDetailService.updateExpiredProduct(product);
+		productDetailService.updateExpiredProduct(product);
 //		userDetailService.deleteproduct(product_id);
-		trashDetailService.insertintotrash(product);
+		trashDetailService.insertIntoTrash(product);
 		return "redirect:/productList.jsp";
 	}
 	
@@ -89,7 +86,7 @@ public class ProductController {
 	@GetMapping(value="/product")
 	public ModelAndView getProductEditForm(@RequestParam long product_id,Model model)
 	{
-		Product product=userDetailService.getproductbyId(product_id);
+		Product product=productDetailService.getProductById(product_id);
 	    Date date=product.getMagnifacture_date();
 	    DateFormat dateFormat=new SimpleDateFormat("MM/dd/yyyy");
 	    String date1=dateFormat.format(date);
@@ -104,7 +101,7 @@ public class ProductController {
 		String imageuploadpath="";
 		if(file.getOriginalFilename().isEmpty())
 		{
-			Product prod=userDetailService.getproductbyId(product.getProduct_id());
+			Product prod=productDetailService.getProductById(product.getProduct_id());
 			System.out.println(product.getMagnifacture_date());
 			System.out.println(product.getExpiry_date());
 			imageuploadpath=prod.getImage();
@@ -116,7 +113,7 @@ public class ProductController {
 		if(product!=null)
 		{
 			product.setImage(imageuploadpath);
-			userDetailService.updateintoproduct(product);
+			productDetailService.updateIntoProduct(product);
 		}
 		
 		return "redirect:/productEdit.jsp";
@@ -125,10 +122,10 @@ public class ProductController {
 	@GetMapping("/list_product")
 	public ModelAndView List_Product(Model model)
 	{
-	  List<Product> product=userDetailService.getAllProductInfo();
-	  int totalquantity=userDetailService.getTotalNoOfQuantity();
-	  int totalnoproduct=userDetailService.getTotalNoOfProduct();
-	  double totalnoprice=userDetailService.getSumOfPrice();
+	  List<Product> product=productDetailService.getAllProductInfo();
+	  int totalquantity=productDetailService.getTotalNoOfQuantity();
+	  int totalnoproduct=productDetailService.getTotalNoOfProduct();
+	  double totalnoprice=productDetailService.getSumOfPrice();
 	  model.addAttribute("quantity", totalquantity);
 	  model.addAttribute("totalproduct", totalnoproduct);
 	  model.addAttribute("price", totalnoprice);
@@ -140,14 +137,14 @@ public class ProductController {
 	public ModelAndView get_product(Model model,@RequestParam String product_name) throws IOException
 	{
 		System.out.println(product_name);
-		List<Product> findproduct=userDetailService.findByProductName(product_name);
-		int totalquantity=userDetailService.getTotalNoOfQuantity(product_name);
+		List<Product> findproduct=productDetailService.findByProductName(product_name);
+		int totalquantity=productDetailService.getTotalNoOfQuantity(product_name);
 		System.out.println(totalquantity);
 		model.addAttribute("totalquantity1", totalquantity);
-		int totalproduct=userDetailService.getTotalNoOfProduct(product_name);
+		int totalproduct=productDetailService.getTotalNoOfProduct(product_name);
 		System.out.println(totalproduct);
 		model.addAttribute("totalproduct1", totalproduct);
-		double totalnoprice=userDetailService.getSumOfPrice(product_name);
+		double totalnoprice=productDetailService.getSumOfprice(product_name);
 		model.addAttribute("price1", totalnoprice);
 		return new ModelAndView("productList.jsp", "producter", findproduct);
 	}
@@ -155,7 +152,7 @@ public class ProductController {
 	@GetMapping(value="/deleteproduct")
 	public String deleteProduct(@RequestParam long product_id)
 	{
-		userDetailService.deleteproduct(product_id);
+		productDetailService.deleteproductinfo(product_id);
 		return "redirect:/productList.jsp";
 	}
 	
@@ -173,8 +170,8 @@ public class ProductController {
 	@GetMapping(value="/createExcelProduct")
 	public void createExcel(HttpServletRequest request, HttpServletResponse response)
 	{
-		List<Product> products=userDetailService.getAllProductInfo();
-		boolean isflag=userDetailService.createExcel(products, context, request, response);
+		List<Product> products=productDetailService.getAllProductInfo();
+		boolean isflag=productDetailService.createExcel(products, context, request, response);
 		if(isflag)
 		{
 			String filepath=request.getServletContext().getRealPath("/resources/reports/"+"products"+".xls");
@@ -186,8 +183,8 @@ public class ProductController {
 	@GetMapping(value="/createPdfProduct")
 	public void createPdf(HttpServletRequest request, HttpServletResponse response)
 	{
-		List<Product> products=userDetailService.getAllProductInfo();
-		boolean isflag=userDetailService.createPdf(products, context,request, response);
+		List<Product> products=productDetailService.getAllProductInfo();
+		boolean isflag=productDetailService.createPdf(products, context,request, response);
 		if(isflag)
 		{
 			String fullpath=request.getServletContext().getRealPath("/resources/reports/"+"products"+".pdf");
