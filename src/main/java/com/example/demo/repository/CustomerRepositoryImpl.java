@@ -69,13 +69,13 @@ public class CustomerRepositoryImpl extends JdbcDaoSupport implements CustomerRe
 	}
 
 	@Override
-	public void insertintocustomer(Customer customer) {
+	public void insertIntoCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 	String sql="INSERT INTO customer "+"(customer_id, customer_name, permanent_address, temporary_address, phone_number, country) SELECT ?,?,?,?,?,?";
 	getJdbcTemplate().update(sql, new Object[] {customer.getCustomer_id(), customer.getCustomer_name(), customer.getTemporary_address(), customer.getPermanent_address(), customer.getPhone_number(), customer.getCountry()});	
 	}
 	@Override
-	public void insertintocustomerproduct(Customer_Product customerproduct) {
+	public void insertIntoCustomerProduct(Customer_Product customerproduct) {
 		// TODO Auto-generated method stub
 	String sql="INSERT INTO customer_product "+"(customer_customer_id, product_product_id, quantity, buy_date ,amount) SELECT ?,?,?,?,?";
 	getJdbcTemplate().update(sql, new Object[] {customerproduct.getCustomer_customer_id(), customerproduct.getProduct_product_id(), customerproduct.getQuantity(),customerproduct.getBuy_date(),customerproduct.getAmount()});
@@ -152,7 +152,7 @@ public class CustomerRepositoryImpl extends JdbcDaoSupport implements CustomerRe
 	}
 
 	@Override
-	public void updateintopersonalcustomer(Customer customer) {
+	public void updateIntoPersonalCustomer(Customer customer) {
 		// TODO Auto-generated method stub
 		String sql="UPDATE customer SET customer_name=?, permanent_address=?, temporary_address=?, phone_number=?, country=? WHERE customer_id=?";
 		getJdbcTemplate().update(sql, new Object[] {customer.getCustomer_name(), customer.getPermanent_address(), customer.getTemporary_address(), customer.getPhone_number(), customer.getCountry(), customer.getCustomer_id()});
@@ -160,21 +160,21 @@ public class CustomerRepositoryImpl extends JdbcDaoSupport implements CustomerRe
 
 
 	@Override
-	public void updateintocustomerproduct(Customer_Product customerproduct) {
+	public void updateIntoCustomerProduct(Customer_Product customerproduct) {
 		// TODO Auto-generated method stub
         String sql="UPDATE customer_product SET product_product_id=?, quantity=?, buy_date=?, amount=? WHERE customer_customer_id=?";
         getJdbcTemplate().update(sql, new Object[] {customerproduct.getProduct_product_id(), customerproduct.getQuantity(), customerproduct.getBuy_date(), customerproduct.getAmount(), customerproduct.getCustomer_customer_id()});
 	}
 
 	@Override
-	public void deleteintocustomerview(long customer_id, long product_id) {
+	public void deleteIntoCustomerView(long customer_id, long product_id) {
 		// TODO Auto-generated method stub
 		String sql="DELETE FROM customer_product WHERE customer_customer_id=? and product_product_id=?";
 		getJdbcTemplate().update(sql, customer_id, product_id);
 	}
 
 	@Override
-	public void deleteintocustomer(long customer_id, long product_id) {
+	public void deleteIntoCustomer(long customer_id, long product_id) {
 		// TODO Auto-generated method stub
 		String sql="DELETE FROM customer WHERE customer_id IN(SELECT B.customer_customer_id FROM customer_product B INNER JOIN product p ON B.product_product_id=p.product_id WHERE customer_id=? and b.product_product_id=?)";
 		getJdbcTemplate().update(sql, customer_id, product_id);
