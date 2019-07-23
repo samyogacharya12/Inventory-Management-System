@@ -15,6 +15,7 @@ import java.util.List;
 
 import javax.imageio.IIOException;
 
+import com.example.demo.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.messaging.handler.annotation.MessageMapping;
@@ -33,10 +34,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.example.demo.model.Expense;
 import com.example.demo.model.Projectuser;
-import com.example.demo.service.CustomerDetailServiceImpl;
-import com.example.demo.service.ExpenseDetailServiceImpl;
-import com.example.demo.service.SupplierDetailService;
-import com.example.demo.service.UserDetailServiceImpl;
 
 @Controller
 @RequestMapping("/")
@@ -48,7 +45,10 @@ public class UserController {
     private SupplierDetailService supplierDetailService;
     @Autowired
     private ExpenseDetailServiceImpl expenseDetailService;
-    
+
+    @Autowired
+    private ProductDetailServiceImpl productDetailService;
+
     @Autowired
     private CustomerDetailServiceImpl customerDetailService;
 	@GetMapping(value="/user_Form")
@@ -362,7 +362,7 @@ public class UserController {
 		if(projectuser!=null)
 		{
 			projectuser.setImage(imageuploadpath);
-			userService.UpdateUser(projectuser);
+			userService.updateUser(projectuser);
 		}
 		return "redirect:/userEdit.jsp";
 	}
