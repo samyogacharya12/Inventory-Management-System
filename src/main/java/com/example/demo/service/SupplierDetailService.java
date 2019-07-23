@@ -1,8 +1,6 @@
 package com.example.demo.service;
 
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -22,15 +20,15 @@ public class SupplierDetailService {
 	@Autowired
 	private SupplierRepository supplierRepository;
 
-    public void insertintosupplier(Supplier supplier)
+    public void insertIntoSupplier(Supplier supplier)
     {
-    	supplierRepository.insertintosupplier(supplier);
+    	supplierRepository.insertIntoSupplier(supplier);
     	
     }
    
-    public void insertintosupplierproduct(Supplier_Product supplierproduct)
+    public void insertIntoSupplierProduct(Supplier_Product supplierproduct)
     {
-    	supplierRepository.insertintosupplierproduct(supplierproduct);
+    	supplierRepository.insertIntoSupplierProduct(supplierproduct);
     }
     
     public List<Supplier_View> getAllSupplierInfo()
@@ -39,39 +37,39 @@ public class SupplierDetailService {
     }
     
   
-    public Supplier_View getSupplierById(long supplier_id, long product_id)
+    public Supplier_View getSupplierBySupplierIdAndProductId(long supplier_id, long product_id)
     {
-    	return supplierRepository.getsupplierbyid(supplier_id, product_id);
+    	return supplierRepository.getSupplierBySupplierIdAndProductId(supplier_id, product_id);
     }
     
     public Supplier getSupplierId(long supplier_id)
     {
-    	return supplierRepository.getsupplierid(supplier_id);
+    	return supplierRepository.getSupplierId(supplier_id);
     }
     
-    public void updateintosupplier(Supplier supplierview)
+    public void updateIntoSupplier(Supplier supplierview)
     {
-    	supplierRepository.updateintosupplier(supplierview);
+    	supplierRepository.updateIntoSupplier(supplierview);
     }
     
-    public void updateintosupplierview(Supplier_Product supplierview)
+    public void updateIntoSupplierView(Supplier_Product supplierview)
     {
-    	supplierRepository.updateintosupplierview(supplierview);
+    	supplierRepository.updateIntoSupplierView(supplierview);
     }
     
-    public void deleteintosupplierview(long supplier_id, long product_id)
+    public void deleteIntoSupplierView(long supplier_id, long product_id)
     {
-    	supplierRepository.deleteintosupplierview(supplier_id, product_id);
+    	supplierRepository.deleteIntoSupplierView(supplier_id, product_id);
     }
     
-    public void deleteintosupplier(long supplier_id, long product_id)
+    public void deleteIntoSupplier(long supplier_id, long product_id)
     {
-    	supplierRepository.deleteintosupplier(supplier_id, product_id);
+    	supplierRepository.deleteIntoSupplier(supplier_id, product_id);
     }
     
-    public List<Supplier_View> getSupplierbybuydate(String[] buy_date)
+    public List<Supplier_View> getSupplierByBuyDate(String[] buy_date)
     {
-        return supplierRepository.getSupplierbybuydate(buy_date);
+        return supplierRepository.getSupplierByBuyDate(buy_date);
     }
     
     public List<Supplier> getAllSupplier()
