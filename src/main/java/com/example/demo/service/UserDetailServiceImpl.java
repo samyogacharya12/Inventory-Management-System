@@ -94,15 +94,15 @@ public class UserDetailServiceImpl implements UserDetailsService {
 //		return userRepository.getAllProductInfo();
 //	}
 //
-//	public void UpdateUser(Projectuser projectuser)
-//	{
-//		userRepository.updateIntoUser(projectuser);
-//	}
-//
-//	public void deleteUser(long user_id)
-//	{
-//		userRepository.deleteUserInfo(user_id);
-//	}
+	public void updateUser(Projectuser projectuser)
+	{
+		userRepository.updateIntoUser(projectuser);
+	}
+
+	public void deleteUser(long user_id)
+	{
+		userRepository.deleteUserInfo(user_id);
+	}
 //
 //	public Product getproductbyId(long id)
 //	{
