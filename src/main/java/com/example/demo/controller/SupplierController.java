@@ -13,6 +13,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.demo.service.ProductDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -42,7 +43,10 @@ public class SupplierController {
 	private UserDetailServiceImpl userDetailService;
 	@Autowired
 	private ServletContext context;
-	
+
+	@Autowired
+	private ProductDetailServiceImpl productDetailService;
+
 	@Autowired
 	private CustomerDetailServiceImpl customerDetailServiceImpl;
 	@GetMapping("/supplier_Form")
@@ -54,7 +58,7 @@ public class SupplierController {
 	@GetMapping("/getSupplier")
 	public ModelAndView getSupplierId(@RequestParam long supplier_id, Model model)
 	{
-		List<Product> product1=userDetailService.getAllProductInfo();
+		List<Product> product1=productDetailService.getAllProductInfo();
 		System.out.println(product1);
         model.addAttribute("product1", product1);
 		Supplier supplier=supplierDetailService.getSupplierId(supplier_id);
@@ -64,7 +68,7 @@ public class SupplierController {
 	@GetMapping("/addSupplierProduct")
 	public ModelAndView addSupplierProduct(@RequestParam long supplier_id, Model model)
 	{
-		List<Product> product1=userDetailService.getAllProductInfo();
+		List<Product> product1=productDetailService.getAllProductInfo();
 		System.out.println(product1);
         model.addAttribute("product1", product1);
 		Supplier supplier=supplierDetailService.getSupplierId(supplier_id);
@@ -86,7 +90,7 @@ public class SupplierController {
 	@PostMapping("/add_supplierproduct")
 	public String postSupplierProductForm(@ModelAttribute Supplier_Product supplierproduct, @RequestParam long product_id)
 	{	
-		Product product=userDetailService.getquantitybyid(product_id);
+		Product product=productDetailService.getQuantityById(product_id);
 		int quantity=product.getQuantity();
 		supplierproduct.setQuantity(quantity);
 		supplierDetailService.insertIntoSupplierProduct(supplierproduct);
