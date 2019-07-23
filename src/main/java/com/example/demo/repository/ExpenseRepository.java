@@ -13,10 +13,10 @@ import com.example.demo.model.Supplier_View;
 public interface ExpenseRepository {
 
 	   public List<Expense> getAllExpenseInfo();
-	   public void InsertIntoExpenses(Expense expense);
-	   public Expense getexpensebyid(long expense_id);
-	   public void UpdateIntoExpenses(Expense expense);
-	   public void DeleteExpenses(long expense_id);
+	   public void insertIntoExpenses(Expense expense);
+	   public Expense getExpenseById(long expense_id);
+	   public void updateIntoExpenses(Expense expense);
+	   public void deleteExpenses(long expense_id);
 	   public List<Expense> getExpenseByExpenseName(String expense_name);
 	   public List<Expense> getExpenseByExpenseDate(String[] expense_date);
 	   public int countTotalId();
