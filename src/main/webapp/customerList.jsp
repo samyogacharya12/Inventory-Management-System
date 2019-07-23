@@ -148,7 +148,7 @@
                 <a href="/createExcel" style="float:right;">
                 <img src="images/excelimg.png" style="width:70px;">
                 </a>
-                <a href="/createPdf" style="float:right;"><img src="images/Pdf_by_mimooh.svg.png" style="width:40px;" margin-left:10px"> </a>
+                <a href="/createPdf" style="float:right;"><img src="images/Pdf_by_mimooh.svg.png" style="width:40px;" margin-left:10px;> </a>
                   <thead class=" text-primary">
                    <tr>
                    <th>
@@ -207,8 +207,8 @@
                       <td>  ${customer.phone_number} </td>
                       <td> ${customer.product_id} </td>
                       <td> ${customer.product_name} </td>
-                      <td><a href="/getCustomer?customer_id=${customer.customer_id}&product_id=${customer.product_id}"" class=""> <i class="tim-icons icon-upload"></i></a> </td>
-                       <td> <a href="customer?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+                      <td><a href="/addCustomer?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class=""> <i class="tim-icons icon-upload"></i></a> </td>
+                       <td> <a href="getCustomerEditForm?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
                        <td> <a href="deletecustomer?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
                       </tr>
                       </c:forEach>
@@ -239,8 +239,8 @@
                       <td>  ${customer.phone_number} </td>
                       <td> ${customer.product_id} </td>
                       <td> ${customer.product_name} </td>
-                      <td><a href="/getCustomer?customer_id=${customer.customer_id}&product_id=${customer.product_id}"" class=""> <i class="tim-icons icon-upload"></i></a> </td>
-                       <td> <a href="customer?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+                      <td><a href="/addCustomer?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class=""> <i class="tim-icons icon-upload"></i></a> </td>
+                       <td> <a href="getCustomerEditForm?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
                        <td> <a href="deletecustomer?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
                       </tr>
                       </c:forEach>
@@ -269,8 +269,8 @@
                       <td>  ${customer.phone_number} </td>
                       <td> ${customer.product_id} </td>
                       <td> ${customer.product_name} </td>
-                      <td><a href="/getCustomer?customer_id=${customer.customer_id}&product_id=${customer.product_id}"" class=""> <i class="tim-icons icon-upload"></i></a> </td>
-                       <td> <a href="customer?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+                      <td><a href="/addCustomer?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class=""> <i class="tim-icons icon-upload"></i></a> </td>
+                       <td> <a href="getCustomerEditForm?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
                        <td> <a href="deletecustomer?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
                       </tr>
                       </c:forEach>
