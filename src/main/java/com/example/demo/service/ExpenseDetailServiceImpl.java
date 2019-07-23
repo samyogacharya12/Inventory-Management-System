@@ -24,23 +24,23 @@ public class ExpenseDetailServiceImpl {
 		return expenseRepository.getAllExpenseInfo();
 	}
 	
-	public void InsertIntoExpenses(Expense expense) {
+	public void insertIntoExpenses(Expense expense) {
 		
-		expenseRepository.InsertIntoExpenses(expense);
+		expenseRepository.insertIntoExpenses(expense);
 	}
 	
 	
-	public Expense getexpensebyid(long expense_id) {
-		return expenseRepository.getexpensebyid(expense_id);
+	public Expense getExpenseById(long expense_id) {
+		return expenseRepository.getExpenseById(expense_id);
 	}
 	
 	
-	public void UpdateIntoExpenses(Expense expense) {
-		expenseRepository.UpdateIntoExpenses(expense);
+	public void updateIntoExpenses(Expense expense) {
+		expenseRepository.updateIntoExpenses(expense);
 	}
 	
-	public void DeleteExpenses(long expense_id) {
-		expenseRepository.DeleteExpenses(expense_id);
+	public void deleteExpenses(long expense_id) {
+		expenseRepository.deleteExpenses(expense_id);
 	}
 	
 	public List<Expense> getExpenseByExpenseName(String expense_name) {
