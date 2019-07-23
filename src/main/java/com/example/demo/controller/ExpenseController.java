@@ -50,21 +50,21 @@ public class ExpenseController {
 	@PostMapping(value="/save_expense")
 	public String saveExpenseData(@ModelAttribute Expense expense)
 	{
-		expenseDetailService.InsertIntoExpenses(expense);
+		expenseDetailService.insertIntoExpenses(expense);
 		return "redirect:/expenseForm.jsp";
 	}
 	
 	@GetMapping(value="/expense")
 	public ModelAndView getUserEditForm(@RequestParam long expense_id)
 	{
-		Expense expense=expenseDetailService.getexpensebyid(expense_id);
+		Expense expense=expenseDetailService.getExpenseById(expense_id);
 		return new ModelAndView("ExpenseEditForm.jsp", "expenseEdit", expense);
 	}
 	
 	@PostMapping(value="/update_expense")
 	public String updateUser(@ModelAttribute Expense expense)
 	{
-		expenseDetailService.UpdateIntoExpenses(expense);
+		expenseDetailService.updateIntoExpenses(expense);
 		return "redirect:/ExpenseEditForm.jsp";
 	}
 	
@@ -72,7 +72,7 @@ public class ExpenseController {
 	public String deleteuser(@RequestParam long expense_id)
 	{
 		System.out.println(expense_id);
-		expenseDetailService.DeleteExpenses(expense_id);
+		expenseDetailService.deleteExpenses(expense_id);
 		return "redirect:/expenseForm.jsp";
 	}
 	
