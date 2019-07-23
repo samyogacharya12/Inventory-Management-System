@@ -64,7 +64,7 @@ public class ExpenseRepositoryImpl extends JdbcDaoSupport implements ExpenseRepo
 
 
 	@Override
-	public void InsertIntoExpenses(Expense expense) {
+	public void insertIntoExpenses(Expense expense) {
 		// TODO Auto-generated method stub
 		String sql="INSERT INTO expense(expense_id, expense_name, cost, expense_date) SELECT ?,?,?,?";
 		getJdbcTemplate().update(sql, new Object[] {expense.getExpense_id(), expense.getExpense_name(), expense.getCost(), expense.getExpense_date()});
@@ -72,7 +72,7 @@ public class ExpenseRepositoryImpl extends JdbcDaoSupport implements ExpenseRepo
 
 
 	@Override
-	public Expense getexpensebyid(long expense_id) {
+	public Expense getExpenseById(long expense_id) {
 		// TODO Auto-generated method stub
 		String sql="SELECT * FROM expense WHERE expense_id=?";
 		RowMapper<Expense> expense=new BeanPropertyRowMapper<Expense> (Expense.class);
@@ -81,7 +81,7 @@ public class ExpenseRepositoryImpl extends JdbcDaoSupport implements ExpenseRepo
 
 
 	@Override
-	public void UpdateIntoExpenses(Expense expense) {
+	public void updateIntoExpenses(Expense expense) {
 		// TODO Auto-generated method stub
 		String sql="UPDATE expense SET expense_name=?, cost=?, expense_date=?::Date WHERE expense_id=?";
 		this.getJdbcTemplate().update(sql, new Object[] {expense.getExpense_name(), expense.getCost(), expense.getExpense_date(), expense.getExpense_id()});
@@ -89,7 +89,7 @@ public class ExpenseRepositoryImpl extends JdbcDaoSupport implements ExpenseRepo
 
 
 	@Override
-	public void DeleteExpenses(long expense_id) {
+	public void deleteExpenses(long expense_id) {
 		// TODO Auto-generated method stub
 		String sql="DELETE FROM expense WHERE expense_id=?";
 		this.getJdbcTemplate().update(sql, expense_id);
