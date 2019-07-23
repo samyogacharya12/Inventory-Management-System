@@ -14,16 +14,16 @@ import com.example.demo.model.Supplier_View;
 
 public interface SupplierRepository {
 
-	public void insertintosupplierproduct(Supplier_Product supplierproduct);
-	public void insertintosupplier(Supplier supplier);
+	public void insertIntoSupplierProduct(Supplier_Product supplierproduct);
+	public void insertIntoSupplier(Supplier supplier);
     public List<Supplier_View> getAllSupplierInfo();
-    public Supplier_View getsupplierbyid(long supplier_id, long product_id);
-    public Supplier getsupplierid(long supplier_id);
-    public void updateintosupplier(Supplier supplier);
-    public void updateintosupplierview(Supplier_Product supplierview);
-    public void deleteintosupplierview(long supplier_id, long product_id);
-    public void deleteintosupplier(long supplier_id, long product_id);
-    public List<Supplier_View> getSupplierbybuydate(String[] buy_date);
+    public Supplier_View getSupplierBySupplierIdAndProductId(long supplier_id, long product_id);
+    public Supplier getSupplierId(long supplier_id);
+    public void updateIntoSupplier(Supplier supplier);
+    public void updateIntoSupplierView(Supplier_Product supplierview);
+    public void deleteIntoSupplierView(long supplier_id, long product_id);
+    public void deleteIntoSupplier(long supplier_id, long product_id);
+    public List<Supplier_View> getSupplierByBuyDate(String[] buy_date);
     public List<Supplier> getAllSupplier();
     public List<Supplier_View> getSupplierByName(String supplier_name);
     public List<Supplier_View> getSupplierInformaton();
