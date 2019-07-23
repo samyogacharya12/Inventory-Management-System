@@ -7,11 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -82,7 +78,7 @@ public class SupplierController {
 		if(supplier!=null)
 		{
 			supplier.setImage(imageuploadpath);
-			supplierDetailService.insertintosupplier(supplier);
+			supplierDetailService.insertIntoSupplier(supplier);
 		}	
 		return "supplierForm.jsp";
 	}
@@ -93,7 +89,7 @@ public class SupplierController {
 		Product product=userDetailService.getquantitybyid(product_id);
 		int quantity=product.getQuantity();
 		supplierproduct.setQuantity(quantity);
-		supplierDetailService.insertintosupplierproduct(supplierproduct);
+		supplierDetailService.insertIntoSupplierProduct(supplierproduct);
     	return "redirect:/supplierproductAdd.jsp"; 	
 	}
 	
@@ -119,7 +115,7 @@ public class SupplierController {
 	@GetMapping("/supplier")
 	public ModelAndView getSupplierEditForm(@RequestParam long supplier_id, @RequestParam long product_id)
 	{
-		Supplier_View supplier=supplierDetailService.getSupplierById(supplier_id, product_id);
+		Supplier_View supplier=supplierDetailService.getSupplierBySupplierIdAndProductId(supplier_id, product_id);
 		return new ModelAndView("supplierEdit.jsp", "supplierEdit", supplier);	
 	}
 	
@@ -137,7 +133,7 @@ public class SupplierController {
 	{
 		System.out.println(supplier_id);
 		System.out.println(product_id);
-		Supplier_View supplier=supplierDetailService.getSupplierById(supplier_id, product_id);
+		Supplier_View supplier=supplierDetailService.getSupplierBySupplierIdAndProductId(supplier_id, product_id);
 		return new ModelAndView("supplierproductEdit.jsp","supplierproduct",supplier);
 	}
 	
@@ -165,7 +161,7 @@ public class SupplierController {
 		{
 			suppliers.setImage(imageuploadpath);
 			System.out.println(suppliers.getSupplier_name());
-            supplierDetailService.updateintosupplier(suppliers);
+            supplierDetailService.updateIntoSupplier(suppliers);
             System.out.println(suppliers.getSupplier_name());
 		}
 		return "redirect:/supplierpersonalEdit.jsp";
@@ -189,7 +185,7 @@ public class SupplierController {
 		if(suppliers!=null)
 		{
 			suppliers.setImage(imageuploadpath);
-			supplierDetailService.updateintosupplier(suppliers);
+			supplierDetailService.updateIntoSupplier(suppliers);
 		}
 		
 		return "redirect:/supplierEdit.jsp";
@@ -199,15 +195,15 @@ public class SupplierController {
 	@PostMapping("/update_supplierproduct")
 	public String updateSupplierProduct(@ModelAttribute Supplier_Product supplierproduct, @RequestParam long supplier_id)
 	{
-		supplierDetailService.updateintosupplierview(supplierproduct);
+		supplierDetailService.updateIntoSupplierView(supplierproduct);
 		return "redirect:/supplierproductEdit.jsp";
 	}
 	
 	@GetMapping("/deletesupplier")
 	public String deleteSupplier(@RequestParam long supplier_id, @RequestParam long product_id)
 	{
-		supplierDetailService.deleteintosupplierview(supplier_id, product_id);
-		supplierDetailService.deleteintosupplier(supplier_id, product_id);
+		supplierDetailService.deleteIntoSupplierView(supplier_id, product_id);
+		supplierDetailService.deleteIntoSupplier(supplier_id, product_id);
 		return "supplierList.jsp";
 	}
 	
@@ -218,7 +214,7 @@ public class SupplierController {
 		System.out.println(buy_date.toString());
 		List<Supplier_View> supplier=supplierDetailService.getSupplierInformation();
 		model.addAttribute("supplier2", supplier);
-	List<Supplier_View> supplierproduct=supplierDetailService.getSupplierbybuydate(buy_date);
+	List<Supplier_View> supplierproduct=supplierDetailService.getSupplierByBuyDate(buy_date);
 	
 	int totalsupplier=supplierDetailService.getNoofSupplier(buy_date);
 	model.addAttribute("totalsupplier1", totalsupplier);
