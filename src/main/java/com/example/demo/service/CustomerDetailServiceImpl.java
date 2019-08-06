@@ -1,31 +1,93 @@
 package com.example.demo.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.demo.model.CustomerProduct;
+import com.example.demo.model.Product;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Customer;
-import com.example.demo.model.Customer_Product;
-import com.example.demo.model.Customer_View;
+import com.example.demo.model.CustomerView;
 import com.example.demo.repository.CustomerRepository;
 @Service
 public class CustomerDetailServiceImpl {
 
 	@Autowired
 	private CustomerRepository customerRepository;
-	
-	
-	public Customer_Product getCustomerById(long customer_id)
+
+	@Autowired
+	private PdfService pdfService;
+
+	@Autowired
+	private ExcelService excelService;
+
+	@Autowired
+	private ProductDetailServiceImpl productDetailService;
+
+      public Integer updateCustomerProductQuantity(long customerPurchaseId , long productId,  int quantity,  long customerId)
 	{
-		return customerRepository.getCustomerById(customer_id);
+		Product product=productDetailService.getProductById(productId);
+		CustomerView customerView=getDataByCustomerId(customerId, customerPurchaseId);
+		int dbquantity=product.getQuantity();
+//		customerProduct=productDetailService.getQuantityByCustomerid(customerId, productId);
+
+		int currentQuantity=customerView.getQuantity();
+		if(currentQuantity==quantity)
+		{
+			System.out.println("The given quantity are equal");
+		}
+		else if(currentQuantity>quantity)
+		{
+			currentQuantity=currentQuantity-quantity;
+			dbquantity=dbquantity+currentQuantity;
+			System.out.println(dbquantity);
+			product.setQuantity(dbquantity);
+			if(dbquantity>=0)
+			{
+				productDetailService.updateIntoProduct(product);
+			}
+			else
+			{
+				System.out.println("Sorry your data is illegel");
+			}
+		}
+		else if(currentQuantity<quantity)
+		{
+			currentQuantity=quantity-currentQuantity;
+			dbquantity=dbquantity-currentQuantity;
+			product.setQuantity(dbquantity);
+			if(dbquantity>=0)
+			{
+				productDetailService.updateIntoProduct(product);
+			}
+			else
+			{
+				System.out.println("sorry your data is illegel");
+			}
+
+		}
+		System.out.println(customerView.getQuantity());
+		return customerView.getQuantity();
 	}
-	
-	public List<Customer_View> getAllCustomerInfo()
+
+
+	public CustomerProduct getCustomerById(long customerId)
+	{
+		return customerRepository.getCustomerById(customerId);
+	}
+
+	public List<Integer> getProductIdNotEqualToCustomerId(long customerId) {
+	 return  customerRepository.getProductIdNotEqualToCustomerId(customerId);
+	}
+
+	public List<CustomerView> getAllCustomerInfo()
 	{
 		return customerRepository.getAllCustomerInfo();
 	}
@@ -35,14 +97,36 @@ public class CustomerDetailServiceImpl {
 		customerRepository.insertIntoCustomer(customer);
 	}
 	
-	public void insertintocustomerproduct(Customer_Product customerproduct)
+	public void insertintocustomerproduct(CustomerProduct customerproduct)
 	{
 		customerRepository.insertIntoCustomerProduct(customerproduct);
 	}
-	
-	public Customer_View getCustomerById(long customer_id, long product_id)
+
+
+	public CustomerView getCustomerById(long customerId, long productId)
 	{
-		return customerRepository.getCustomerId(customer_id, product_id);
+		return customerRepository.getCustomerId(customerId, productId);
+	}
+	public CustomerView getDataByCustomerId(long customerId, long customerPurchaseId) {
+
+		return customerRepository.getDataByCustomerId(customerId, customerPurchaseId);
+	}
+
+    public Product substractCustomerProductQuantity(Product product, int quantity)
+	{
+		int dbQuantity=product.getQuantity();
+		dbQuantity=dbQuantity-quantity;
+		product.setQuantity(dbQuantity);
+		return product;
+	}
+
+	public Map calculationOfAmount(int productId, int quantity)
+	{
+		Product product=productDetailService.getProductById(productId);
+		double amount=product.getPrice()*quantity;
+		Map<String, Object> map=new HashMap<>();
+		map.put("amount", amount);
+		return map;
 	}
 	
 	public void updateIntoPersonalCustomer(Customer customer)
@@ -50,29 +134,29 @@ public class CustomerDetailServiceImpl {
 		customerRepository.updateIntoPersonalCustomer(customer);
 	}
 	
-	public void updateIntoCustomerProduct(Customer_Product customerproduct)
+	public void updateIntoCustomerProduct(CustomerView customerproduct)
 	{
       customerRepository.updateIntoCustomerProduct(customerproduct);
 	}
 	
-	public void deleteIntoCustomerView(long customer_id, long product_id)
+	public void deleteIntoCustomerView(long customerId, long productId)
 	{
-		customerRepository.deleteIntoCustomerView(customer_id, product_id);
+		customerRepository.deleteIntoCustomerView(customerId, productId);
 	}
 	
-	public void deleteIntoCustomer(long customer_id, long product_id)
+	public void deleteIntoCustomer(long customerId, long productId)
 	{
-		customerRepository.deleteIntoCustomer(customer_id, product_id);
+		customerRepository.deleteIntoCustomer(customerId, productId);
 	}
 	
-	public List<Customer_View> getCustomerBuyDate(String buy_date[])
+	public List<CustomerView> getCustomerBuyDate(String buyDate[])
 	{
-		return customerRepository.getCustomerByBuyDate(buy_date);
+		return customerRepository.getCustomerByBuyDate(buyDate);
 	}
 	
-	public List<Customer_View> getCustomerByName(String customer_name)
+	public List<CustomerView> getCustomerByName(String customerName)
 	{
-		return customerRepository.getCustomerByName(customer_name);
+		return customerRepository.getCustomerByName(customerName);
 	}
 	
 	public int getTotalCustomer() {
@@ -95,67 +179,67 @@ public class CustomerDetailServiceImpl {
 		return customerRepository.getTotalProduct();
 	}
 	
-	public int getTotalCustomer(String customer_name) {
+	public int getTotalCustomer(String customerName) {
 		
-		return customerRepository.getTotalCustomer(customer_name);
+		return customerRepository.getTotalCustomer(customerName);
 	}
 	
-	public int sumOfQuantity(String customer_name) {
+	public int sumOfQuantity(String customerName) {
 		
-		return customerRepository.sumOfQuantity(customer_name);
+		return customerRepository.sumOfQuantity(customerName);
 	}
 	
-	public double sumOfAmount(String customer_name) {
+	public double sumOfAmount(String customerName) {
 		
-		return customerRepository.sumOfAmount(customer_name);
+		return customerRepository.sumOfAmount(customerName);
 	}
 	
-	public int getTotalProduct(String customer_name) {
+	public int getTotalProduct(String customerName) {
 		
-		return customerRepository.getTotalProduct(customer_name);
+		return customerRepository.getTotalProduct(customerName);
 	}
 	
-	public int getTotalCustomer(String[] buy_date) {
+	public int getTotalCustomer(String[] buyDate) {
 		
-		return customerRepository.getTotalCustomer(buy_date);	
+		return customerRepository.getTotalCustomer(buyDate);
 	}
 	
-	public Double sumOfAmount(String[] buy_date) {
+	public Double sumOfAmount(String[] buyDate) {
 		
-		return customerRepository.sumOfAmount(buy_date);
+		return customerRepository.sumOfAmount(buyDate);
 	}
 	
-	public Integer sumOfQuantity(String[] buy_date) {
+	public Integer sumOfQuantity(String[] buyDate) {
 		
-		return customerRepository.sumOfQuantity(buy_date);
+		return customerRepository.sumOfQuantity(buyDate);
 	}
 	
-	 public int getTotalProduct(String[] buy_date)
+	 public int getTotalProduct(String[] buyDate)
 	 {
-		 return customerRepository.getTotalProduct(buy_date);
+		 return customerRepository.getTotalProduct(buyDate);
 	 }
 	
-		public int getPresentDate(String buy_date)
+		public int getPresentDate(String buyDate)
 		{
-			return customerRepository.getPresentDate(buy_date);
+			return customerRepository.getPresentDate(buyDate);
 		}
 	 
-		  public int getNumberofCustomersToday(String buy_date){
-			  return customerRepository.getNumberofCustomersToday(buy_date);
+		  public int getNumberofCustomersToday(String buyDate){
+			  return customerRepository.getNumberofCustomersToday(buyDate);
 		  }
 		
-	public boolean createPdf(List<Customer_View> customers, ServletContext context, HttpServletRequest request,
-			HttpServletResponse response) {
-		return customerRepository.createPdf(customers, context, request, response);
+	public boolean createPdfForCustomers(List<CustomerView> customers, ServletContext context, HttpServletRequest request,
+										 HttpServletResponse response) {
+      	return pdfService.createPdfForCustomers(customers, context, request,response);
 }
-	public boolean createExcel(List<Customer_View> customers, ServletContext context, HttpServletRequest request,
-			HttpServletResponse response) {
-        	return customerRepository.createExcel(customers, context, request, response);
+	public boolean createExcelForCustomers(List<CustomerView> customers, ServletContext context, HttpServletRequest request,
+										   HttpServletResponse response) {
+      	return excelService.createExcelForCustomers(customers, context, request, response);
 }
 	
-	public Double getPresentRevenue(String buy_date) {
+	public Double getPresentRevenue(String buyDate) {
 		
-		return customerRepository.getPresentRevenue(buy_date);
+		return customerRepository.getPresentRevenue(buyDate);
 	}
 	
 	
