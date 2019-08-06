@@ -7,50 +7,52 @@ import javax.validation.constraints.Max;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Customer {
-private long customer_id;
-private String customer_name;
+
+	private long customerId;
+private String customerName;
 @DateTimeFormat(pattern="yyyy-MM-dd")
-private Date buy_date;
-private String permanent_address;
-private String temporary_address;
+private Date buyDate;
+private String permanentAddress;
+private String temporaryAddress;
+private String email;
 @Max(999999999)
-private int phone_number;
+private int phoneNumber;
 private String Country;
-public long getCustomer_id() {
-	return customer_id;
+public long getCustomerId() {
+	return customerId;
 }
-public void setCustomer_id(long customer_id) {
-	this.customer_id = customer_id;
+public void setCustomerId(long customerId) {
+	this.customerId = customerId;
 }
-public String getCustomer_name() {
-	return customer_name;
+public String getCustomerName() {
+	return customerName;
 }
-public void setCustomer_name(String customer_name) {
-	this.customer_name = customer_name;
+public void setCustomerName(String customerName) {
+	this.customerName = customerName;
 }
-public Date getBuy_date() {
-	return buy_date;
+public Date getBuyDate() {
+	return buyDate;
 }
-public void setBuy_date(Date buy_date) {
-	this.buy_date = buy_date;
+public void setBuyDate(Date buyDate) {
+	this.buyDate = buyDate;
 }
-public String getPermanent_address() {
-	return permanent_address;
+public String getPermanentAddress() {
+	return permanentAddress;
 }
-public void setPermanent_address(String permanent_address) {
-	this.permanent_address = permanent_address;
+public void setPermanentAddress(String permanentAddress) {
+	this.permanentAddress = permanentAddress;
 }
-public String getTemporary_address() {
-	return temporary_address;
+public String getTemporaryAddress() {
+	return temporaryAddress;
 }
-public void setTemporary_address(String temporary_address) {
-	this.temporary_address = temporary_address;
+public void setTemporaryAddress(String temporaryAddress) {
+	this.temporaryAddress = temporaryAddress;
 }
-public int getPhone_number() {
-	return phone_number;
+public int getPhoneNumber() {
+	return phoneNumber;
 }
-public void setPhone_number(int phone_number) {
-	this.phone_number = phone_number;
+public void setPhoneNumber(int phoneNumber) {
+	this.phoneNumber = phoneNumber;
 }
 public String getCountry() {
 	return Country;
@@ -58,6 +60,7 @@ public String getCountry() {
 public void setCountry(String country) {
 	Country = country;
 }
-
+public String getEmail() { return email;	}
+public void setEmail(String email) { this.email = email; }
 	
 }
