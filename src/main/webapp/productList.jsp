@@ -41,46 +41,46 @@
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
           </li>
          
            <li>
-            <a href="/get_expenses">
+            <a href="/list-expenses">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
           </li>
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               Trash
             </a>
@@ -157,13 +157,13 @@
                 <div class="col-sm-12 col-md-6">
                 <div id="datatable_filter" class="dataTables_filter">
                 <form action="/getProductByName" method="get">
-                <label><input type="search" name="product_name" class="form-control form-control-sm" placeholder="Search records" aria-controls="datatable"></label>
+                <label><input type="search" name="productName" class="form-control form-control-sm" placeholder="Search records" aria-controls="datatable"></label>
                 <button class="btn btn-primary btn-sm">Search</button>
                 </form>
                 </div></div></div>
          
                 <div class="row"><div class="col-sm-12">
-                    <a href="/addproduct" class="btn btn-primary btn-sm"> Add new </a>
+                    <a href="/addProduct" class="btn btn-primary btn-sm"> Add new </a>
                  
                   <table class="table" id="">
                     <a href="/createExcelProduct" style="float:right;"><img src="images/excelimg.png" style="width:80px;"> </a>
@@ -197,27 +197,37 @@
                    <th>
                    expiry date
                    </th>
-                   
+
+                    <th>
+                    purchase date
+                    </th>
+
+                     <th>
+                       Added By
+                     </th>
+
                    <th>
                    Image
                    </th>
                    </tr>
                   </thead>
                   <tbody>
-                     <c:forEach var="products" items="${product}">
+                     <c:forEach var="products" items="${purchaseProducts}">
                   <tr>
-                      <td tabindex="0" class="sorting_1" class="odd">${products.product_id}</td>
-                      <td>${products.product_name}</td>
-                      <td>${products.product_type}</td>
+                      <td tabindex="0" class="sorting_1" class="odd">${products.productId}</td>
+                      <td>${products.productName}</td>
+                      <td>${products.productType}</td>
                       <td>${products.price} </td>
                       <td>${products.quantity}</td>
-                      <td>${products.magnifacture_date}</td>
-                       <td> ${products.expiry_date}</td>
-                       <td> <img src="productimagedisplay?product_id=${products.product_id}" alt="image-display" class="center" height="200px" width="200px" style="width:50%;"/> </td>
-                        <td class="text-right" style="display: none;"><a href="add_new?product_id=${products.product_id}"></a> </td>
-                       <td> <a href="product?product_id=${products.product_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-                       <td> <a href="deleteproduct?product_id=${products.product_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
-                       <td><a href="trashproduct?product_id=${products.product_id}"  <i class="tim-icons icon-trash-simple"></i></a></td>
+                      <td>${products.magnifactureDate}</td>
+                       <td>${products.expiryDate}</td>
+                       <td>${products.purchaseDate}</td>
+                       <td>${products.username}</td>
+                       <td> <img src="productimagedisplay?productId=${products.productId}" alt="image-display" class="center" height="200px" width="200px" style="width:50%;"/> </td>
+                        <td class="text-right" style="display: none;"><a href="add_new?productId=${products.productId}"></a> </td>
+                       <td> <a href="getProductEditForm?productId=${products.productId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+                       <td> <a href="delete-product?productId=${products.productId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
+                       <td><a href="addToTrash?productId=${products.productId}"><i class="tim-icons icon-trash-simple"></i></a></td>
                       </tr>
                       </c:forEach>
                      
@@ -234,17 +244,19 @@
                      
                          <c:forEach var="product" items="${producter}">
                           <tr>
-                          <td> ${product.product_id} </td>
-                          <td> ${product.product_name} </td>
-                          <td> ${product.product_type} </td>
+                          <td> ${product.productId} </td>
+                          <td> ${product.productName} </td>
+                          <td> ${product.productType} </td>
                           <td> ${product.price} </td>
                           <td> ${product.quantity} </td>
-                          <td> ${product.magnifacture_date} </td>
-                          <td> ${product.expiry_date} </td>
-                          <td> <img src="productimagedisplay?product_id=${product.product_id}" alt="image-display" class="center" height="200px" width="200px" style="width:50%;"/> </td>
-                          <td> <a href="product?product_id=${product.product_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-                       <td> <a href="deleteproduct?product_id=${product.product_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
-                        <td><a href="trashproduct?product_id=${products.product_id}"  <i class="tim-icons icon-trash-simple"></i></a></td>
+                          <td> ${product.magnifactureDate} </td>
+                          <td> ${product.expiryDate} </td>
+                              <td> ${product.purchaseDate}</td>
+                              <td> ${product.username}</td>
+                          <td> <img src="productimagedisplay?productId=${product.productId}" alt="image-display" class="center" height="200px" width="200px" style="width:50%;"/> </td>
+                          <td> <a href="product?productId=${product.productId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+                       <td> <a href="deleteproduct?productId=${product.productId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
+                              <td><a href="addToTrash?productId=${product.productId}"><i class="tim-icons icon-trash-simple"></i></a></td>
                           </tr>
                           </c:forEach>
                            <td>${totalproduct1}  </td>
@@ -287,7 +299,6 @@
   <script src="../assets/js/black-dashboard.min.js?v=1.0.0"></script>
   <!-- Black Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
-  </script>
   
 <script>
     $(document).ready(function() {
