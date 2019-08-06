@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -10,8 +11,11 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.demo.model.*;
+import com.example.demo.service.NotificationDetailServiceImpl;
 import com.example.demo.service.ProductDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,10 +24,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.example.demo.model.Customer;
-import com.example.demo.model.Customer_Product;
-import com.example.demo.model.Customer_View;
-import com.example.demo.model.Product;
 import com.example.demo.service.CustomerDetailServiceImpl;
 import com.example.demo.service.UserDetailServiceImpl;
 
@@ -40,74 +40,85 @@ public class CustomerController {
 	private ProductDetailServiceImpl productDetailService;
 
 	@Autowired
+	private NotificationDetailServiceImpl notificationDetailService;
+
+	@Autowired
 	private ServletContext context;
-	@GetMapping("/customer_form")
+	@GetMapping("/getCustomerForm")
 	public String getCustomerForm()
 	{
-		return "customer.jsp";
+		return "AddCustomer.jsp";
 	}
 	
 	@GetMapping("/getCustomerByName")
-	public ModelAndView getCustomerByName(@RequestParam String customer_name, Model model)
+	public ModelAndView getCustomerByName(@RequestParam String customerName, Model model)
 	{
-		List<Customer_View> customer_view=customerDetailServiceImpl.getCustomerByName(customer_name);
-		int totalcustomer=customerDetailServiceImpl.getTotalCustomer(customer_name);
+		List<CustomerView> customerView=customerDetailServiceImpl.getCustomerByName(customerName);
+		int totalcustomer=customerDetailServiceImpl.getTotalCustomer(customerName);
 		model.addAttribute("totalcustomer", totalcustomer);
-		int totalquantity=customerDetailServiceImpl.sumOfQuantity(customer_name);
-		model.addAttribute("totalquantity", totalquantity);
-		double totalamount=customerDetailServiceImpl.sumOfAmount(customer_name);
-		model.addAttribute("totalamount", totalamount);
-		int totalproduct=customerDetailServiceImpl.getTotalProduct(customer_name);
-		model.addAttribute("totalproduct", totalproduct);
-		return new ModelAndView("customerList.jsp", "customerview", customer_view);
+		int totalQuantity=customerDetailServiceImpl.sumOfQuantity(customerName);
+		model.addAttribute("totalQuantity", totalQuantity);
+		double totalAmount=customerDetailServiceImpl.sumOfAmount(customerName);
+		model.addAttribute("totalAmount", totalAmount);
+		int totalProduct=customerDetailServiceImpl.getTotalProduct(customerName);
+		model.addAttribute("totalProduct", totalProduct);
+		return new ModelAndView("customerList.jsp", "customerview", customerView);
 	}
-	@GetMapping("/getcustomerDate")
-	public ModelAndView getCustomerByDate(@RequestParam(value="buy_date[]") String buy_date[], Model model)
+	@GetMapping("/getcustomerbyDate")
+	public ModelAndView getCustomerByDate(@RequestParam(value="sellDate[]") String sellDate[], Model model)
 	{
-		List<Customer_View> customer_view=customerDetailServiceImpl.getCustomerBuyDate(buy_date);
-		int totalcustomer=customerDetailServiceImpl.getTotalProduct(buy_date);
-		model.addAttribute("totalcustomer1", totalcustomer);
-		Integer totalquantity=customerDetailServiceImpl.sumOfQuantity(buy_date);
-		if(totalquantity==null)
+		List<CustomerView> customerView=customerDetailServiceImpl.getCustomerBuyDate(sellDate);
+		int totalCustomer=customerDetailServiceImpl.getTotalProduct(sellDate);
+		model.addAttribute("totalcustomer1", totalCustomer);
+		Integer totalQuantity=customerDetailServiceImpl.sumOfQuantity(sellDate);
+		if(totalQuantity==null)
 		{
-			totalquantity=0;
-			model.addAttribute("totalquantity1", totalquantity);
+			totalQuantity=0;
+			model.addAttribute("totalquantity1", totalQuantity);
 		}
 		else
 		{
-			model.addAttribute("totalquantity1", totalquantity);
+			model.addAttribute("totalquantity1", totalQuantity);
 		}
-		Double totalamount=customerDetailServiceImpl.sumOfAmount(buy_date);
-		if(totalamount==null)
+		Double totalAmount=customerDetailServiceImpl.sumOfAmount(sellDate);
+		if(totalAmount==null)
 		{
-			totalamount=(double) 0;
-			model.addAttribute("totalamount1", totalamount);
+			totalAmount=(double) 0;
+			model.addAttribute("totalamount1", totalAmount);
 		}
 		else
 		{
-		model.addAttribute("totalamount1", totalamount);
+		model.addAttribute("totalamount1", totalAmount);
 		}
-		int totalproduct=customerDetailServiceImpl.getTotalProduct(buy_date);
-		model.addAttribute("totalproduct1", totalproduct);
-		return new ModelAndView("customerList.jsp", "buy_date", customer_view);
+		int totalProduct=customerDetailServiceImpl.getTotalProduct(sellDate);
+		model.addAttribute("totalproduct1", totalProduct);
+		return new ModelAndView("customerList.jsp", "buyDate", customerView);
 	}
 	
 	@GetMapping("/getCustomerEditForm")
-	public ModelAndView getCustomerEditForm(@RequestParam long customer_id, @RequestParam long product_id)
+	public ModelAndView getCustomerEditForm(@RequestParam long customerId, @RequestParam long productId)
 	{
-		System.out.println(product_id);
-        Customer_View customer_view=customerDetailServiceImpl.getCustomerById(customer_id, product_id);
-		return new ModelAndView("customerpersonalEdit.jsp","customerview",customer_view);
+		System.out.println(productId);
+        CustomerView customerView=customerDetailServiceImpl.getCustomerById(customerId, productId);
+		return new ModelAndView("customerpersonalEdit.jsp","customerview",customerView);
 	}
 	
-	@GetMapping("/customerproduct")
-	public ModelAndView getCustomerProductEditForm(@RequestParam long customer_id, @RequestParam long product_id)
+	@GetMapping("/getCustomerProductEditForm")
+	public ModelAndView getCustomerProductEditForm(@RequestParam long customerId, @RequestParam long productId)
 	{
-		Customer_View customer_product=customerDetailServiceImpl.getCustomerById(customer_id, product_id);
-		return new ModelAndView("customerproductEdit.jsp","customerproduct",customer_product);
+		CustomerView customerProduct=customerDetailServiceImpl.getCustomerById(customerId, productId);
+//		Map<String, Object> map=new HashMap<>();
+//		map.put("customerId", customerProduct.getCustomerId());
+//		map.put("productId", customerProduct.getProductId());
+//		map.put("quantity", customerProduct.getQuantity());
+//		map.put("amount", customerProduct.getAmount());
+//		map.put("buyDate", customerProduct.getBuyDate());
+//		System.out.println(map);
+//		customerDetailServiceImpl.insertIntoCustomerProductTemp(map);
+		return new ModelAndView("customerproductEdit.jsp","customerproduct",customerProduct);
 	}
 	
-	@PostMapping("/update_customerPersonal")
+	@PostMapping("/updatecustomerPersonalData")
 	public String updateForm(@ModelAttribute Customer customer)
 	{
 		if(customer!=null)
@@ -117,108 +128,169 @@ public class CustomerController {
 		return "customerpersonalEdit.jsp";
 	}
 	
-	@PostMapping("/update_customerproduct")
-	public String updatecustomerForm(@ModelAttribute Customer_Product customerproduct, @RequestParam long product_product_id, @RequestParam int quantity, @RequestParam long customer_customer_id)
+	@PostMapping("/updateCustomerProduct")
+	public String updatecustomerForm(@RequestParam double amount,@RequestParam long customerPurchaseId ,@RequestParam int productId, @RequestParam int quantity, @RequestParam long customerId)
 	{
-	    Product product=productDetailService.getQuantityById(quantity);
-	    int dbquantity=product.getQuantity();
-	    customerproduct=productDetailService.getQuantityByCustomerid(customer_customer_id, product_product_id);
-	    int currentvalue=customerproduct.getQuantity();
-	    if(currentvalue==quantity)
-	    {
-	    	System.out.println("The given quantity are equal");
-	    }
-	    else if(currentvalue>quantity)
-	    {
-	    	currentvalue=currentvalue-quantity;
-	    	dbquantity=dbquantity+currentvalue;
-	    	System.out.println(dbquantity);
-	    	product.setQuantity(dbquantity);
-	    	if(dbquantity>=0)
-	    	{
-	    		productDetailService.updateIntoProduct(product);
-	    }
-	    	else
-	    	{
-	    		System.out.println("Sorry your data is illegel");
-	    	}
-	    }
-	    else if(currentvalue<quantity)
-	    {
-	    	currentvalue=quantity-currentvalue;
-	    	dbquantity=dbquantity-currentvalue;
-	    	product.setQuantity(dbquantity);
-	    	if(dbquantity>=0)
-	    	{
-	    		productDetailService.updateIntoProduct(product);
-	    }
-	    	else
-	    	{
-	    		System.out.println("sorry your data is illegel");
-	    	}
-	    	
-	    }
-	    if(customerproduct!=null)
+
+//	    Product product=productDetailService.getQuantityById(productId);
+	    Product product=productDetailService.getProductById(productId);
+        CustomerView customerView=customerDetailServiceImpl.getDataByCustomerId(customerId, customerPurchaseId);
+//	    int dbquantity=product.getQuantity();
+////		customerProduct=productDetailService.getQuantityByCustomerid(customerId, productId);
+//
+//	    int currentvalue=customerView.getQuantity();
+//	    if(currentvalue==quantity)
+//	    {
+//	    	System.out.println("The given quantity are equal");
+//	    }
+//	    else if(currentvalue>quantity)
+//	    {
+//	    	currentvalue=currentvalue-quantity;
+//	    	dbquantity=dbquantity+currentvalue;
+//	    	System.out.println(dbquantity);
+//	    	product.setQuantity(dbquantity);
+//	    	if(dbquantity>=0)
+//	    	{
+//	    		productDetailService.updateIntoProduct(product);
+//	    }
+//	    	else
+//	    	{
+//	    		System.out.println("Sorry your data is illegel");
+//	    	}
+//	    }
+//	    else if(currentvalue<quantity)
+//	    {
+//	    	currentvalue=quantity-currentvalue;
+//	    	dbquantity=dbquantity-currentvalue;
+//	    	product.setQuantity(dbquantity);
+//	    	if(dbquantity>=0)
+//	    	{
+//	    		productDetailService.updateIntoProduct(product);
+//	    }
+//	    	else
+//	    	{
+//	    		System.out.println("sorry your data is illegel");
+//	    	}
+//
+//	    }
+		Integer currentQuantity=customerDetailServiceImpl.updateCustomerProductQuantity(customerPurchaseId, productId, quantity, customerId);
+	     System.out.println(currentQuantity);
+	    if(customerView!=null)
 		{
-	    	customerproduct.setQuantity(quantity);
-		customerDetailServiceImpl.updateIntoCustomerProduct(customerproduct);
+			customerView.setQuantity(quantity);
+			Map map1=customerDetailServiceImpl.calculationOfAmount(productId, quantity);
+			customerView.setAmount((Double) map1.get("amount"));
+			if(currentQuantity!=quantity)
+			{
+				Map<String, Object> map=new HashMap<>();
+				map.put("productName", product.getProductName());
+				map.put("currentAmount", amount);
+				map.put("newAmount", customerView.getAmount());
+				map.put("email", customerView.getEmail());
+				map.put("currentQuantity", currentQuantity);
+				map.put("quantity", quantity);
+				notificationDetailService.updateProductNotification(map);
+			}
+		customerDetailServiceImpl.updateIntoCustomerProduct(customerView);
 		}
 		return "customerproductEdit.jsp";
 	}
 	
-	@GetMapping("/addCustomer")
-	public ModelAndView addCustomerForm(@RequestParam long customer_id, @RequestParam long product_id)
+	@GetMapping("/getCustomerProductForm")
+	public ModelAndView getCustomerForm(Model model,@RequestParam long customerId, @RequestParam long productId)
 	{
-		System.out.println(customer_id);
-		Customer_View customer_view=customerDetailServiceImpl.getCustomerById(customer_id, product_id);
-		return new ModelAndView("customerproductadd.jsp","customer",customer_view);
+//		List<PurchaseProduct> product=productDetailService.getAllProductInfo();
+		List<Integer> product=customerDetailServiceImpl.getProductIdNotEqualToCustomerId(customerId);
+	     model.addAttribute("product", product);
+		CustomerView customerView=customerDetailServiceImpl.getCustomerById(customerId, productId);
+		return new ModelAndView("customerproductadd.jsp","customer",customerView);
 	}
-	
-	
-	@GetMapping("/getChart")
-	public String getChart()
+
+	@GetMapping("/getNewCustomerProductForm")
+	public String getNewCustomerProductForm(Model model)
 	{
-		return "barGraph.jsp";
+		List<PurchaseProduct> product=productDetailService.getAllProductInfo();
+		model.addAttribute("product1", product);
+		return "newcustomerproductadd.jsp";
 	}
+
+//	@GetMapping("/getChart")
+//	public String getChart()
+//	{
+//		return "barGraph.jsp";
+//	}
 	
-	@GetMapping("/processData")
-	public ModelAndView getChart(@RequestParam(value="sell_date[]") String sell_date[])
+//	@GetMapping("/processData")
+//	public ModelAndView getChart(@RequestParam(value="sell_date[]") String sell_date[])
+//	{
+//		List<CustomerView> customerView=customerDetailServiceImpl.getCustomerBuyDate(sell_date);
+//		return new ModelAndView("barGraph.jsp", "customerView", customerView);
+//	}
+	
+	
+	
+	@PostMapping("/saveCustomerProduct")
+	public String saveCustomerProduct(@ModelAttribute CustomerProduct customerProduct, @RequestParam int productId, @RequestParam int quantity) throws MailException
 	{
-		List<Customer_View> customerView=customerDetailServiceImpl.getCustomerBuyDate(sell_date);
-		return new ModelAndView("barGraph.jsp", "customerView", customerView);
-	}
-	
-	
-	
-	@PostMapping("/save_customerproduct")
-	public String saveCustomerProductForm(@ModelAttribute Customer_Product customerproduct, @RequestParam int product_product_id, @RequestParam int quantity)
-	{
-		Product product=productDetailService.getQuantityById(product_product_id);
-		System.out.println(product.getQuantity());
-		int dbquantity=product.getQuantity();
-		System.out.println(dbquantity);
-		dbquantity=dbquantity-quantity;
-		product.setQuantity(dbquantity);
-		if(customerproduct!=null & dbquantity>=0)
+		Product product=productDetailService.getProductById(productId);
+//		int dbquantity=product.getQuantity();
+//		dbquantity=dbquantity-quantity;
+//		product.setQuantity(dbquantity);
+		product=customerDetailServiceImpl.substractCustomerProductQuantity(product, quantity);
+		if(customerProduct!=null & product.getQuantity()>=0)
 		{
-		customerDetailServiceImpl.insertintocustomerproduct(customerproduct);
+			Map map=userDetailServiceImpl.getUserTempData();
+			customerProduct.setUsername((String) map.get("username"));
+			Map map1=customerDetailServiceImpl.calculationOfAmount(productId, quantity);
+			customerProduct.setAmount((Double) map1.get("amount"));
+		customerDetailServiceImpl.insertintocustomerproduct(customerProduct);
 		productDetailService.updateIntoProduct(product);
+        notificationDetailService.sendProductNotification(customerProduct);
 		}
 		else
 		{
 			System.out.println("Sorry your data is illegel");
 		}
-		return "redirect:/customerproduct.jsp";
+		return "redirect:/customerList.jsp";
 	}
+
+	@PostMapping("/saveNewCustomerProduct")
+	public String saveNewCustomerProduct(@ModelAttribute CustomerProduct customerProduct, @RequestParam int productId, @RequestParam int quantity) throws MailException
+	{
+		Product product=productDetailService.getProductById(productId);
+//		System.out.println(product.getQuantity());
+//		int dbquantity=product.getQuantity();
+//		System.out.println(dbquantity);
+//		dbquantity=dbquantity-quantity;
+//		product.setQuantity(dbquantity);
+	  	product=customerDetailServiceImpl.substractCustomerProductQuantity(product, quantity);
+		if(customerProduct!=null & product.getQuantity()>=0)
+		{
+			Map map=userDetailServiceImpl.getUserTempData();
+			System.out.println(map.get("username"));
+			customerProduct.setUsername((String) map.get("username"));
+			Map map1=customerDetailServiceImpl.calculationOfAmount(productId, quantity);
+			customerProduct.setAmount((Double) map1.get("amount"));
+			customerDetailServiceImpl.insertintocustomerproduct(customerProduct);
+			productDetailService.updateIntoProduct(product);
+			notificationDetailService.sendProductNotification(customerProduct);
+		}
+		else
+		{
+			System.out.println("Sorry your data is illegel");
+		}
+		return "redirect:/customerList.jsp";
+	}
+
 	
-	@PostMapping("/saveCustomerProduct")
-	public String addSupplierProductForm(@ModelAttribute Customer_Product customerproduct, @RequestParam int product_product_id, @RequestParam int quantity)
+	@PostMapping("/saveRemainingCustomerProduct")
+	public String addSupplierProduct(@ModelAttribute CustomerProduct customerproduct, @RequestParam int productId, @RequestParam int quantity)
 	{
 		if(customerproduct!=null)
 		{
 			customerDetailServiceImpl.insertintocustomerproduct(customerproduct);
 		}
-		Product product=productDetailService.getQuantityById(product_product_id);
+		Product product=productDetailService.getProductById(productId);
 		System.out.println(product.getQuantity());
 		int dbquantity=product.getQuantity();
 		dbquantity=dbquantity-quantity;
@@ -230,55 +302,55 @@ public class CustomerController {
 		return "customerList.jsp";
 	}
 	
-	@GetMapping("/getCustomerForm")
-	public String getCustomerProductForm()
-	{
-		return "redirect:/customerproduct.jsp";
-	}
+//	@GetMapping("/getNewCustomerProductForm")
+//	public String getNewCustomerProductForm()
+//	{
+//		return "redirect:/customerproduct.jsp";
+//	}
 	
 	
-	@GetMapping("/list_Customer")
+	@GetMapping("/list-Customer")
 	public ModelAndView getAllCustomerInfo(Model model)
 	{
-		List<Customer_View> customerview=customerDetailServiceImpl.getAllCustomerInfo();
+		List<CustomerView> customerView=customerDetailServiceImpl.getAllCustomerInfo();
 		
-		int customer_id=customerDetailServiceImpl.getTotalCustomer();
-		model.addAttribute("customer_id", customer_id);
+		int customerId=customerDetailServiceImpl.getTotalCustomer();
+		model.addAttribute("customerId", customerId);
 		int quantity=customerDetailServiceImpl.sumOfQuantity();
 		model.addAttribute("quantity", quantity);
 		double amount=customerDetailServiceImpl.sumOfAmount();
 		model.addAttribute("amount", amount);
-		int product_id=customerDetailServiceImpl.getTotalProduct();
-		model.addAttribute("product_id", product_id);
-		return new ModelAndView("customerList.jsp","customers",customerview);
+		int productId=customerDetailServiceImpl.getTotalProduct();
+		model.addAttribute("productId", productId);
+		return new ModelAndView("customerList.jsp","customers",customerView);
 	}
 	
-	@PostMapping("/save_customer")
-	public String insertcustomer(HttpServletRequest request, @ModelAttribute Customer customer)
+	@PostMapping("/saveCustomer")
+	public String insertCustomer(HttpServletRequest request, @ModelAttribute Customer customer)
 	{
 		if(customer!=null)
 		{
 			customerDetailServiceImpl.insertintocustomer(customer);
-	        System.out.println(customer.getCustomer_id());
-	        request.setAttribute("customer_customer_id", customer.getCustomer_id());
+	        System.out.println(customer.getCustomerId());
+	        request.setAttribute("customer_customer_id", customer.getCustomerId());
 		}
 		return "customerproduct.jsp";
 	}
 
-	@GetMapping("/deletecustomer")
-	public String deleteSupplier(@RequestParam long customer_id,@RequestParam long product_id)
+	@GetMapping("/deleteCustomer")
+	public String deleteCustomer(@RequestParam long customerId,@RequestParam long productId)
 	{
-		customerDetailServiceImpl.deleteIntoCustomerView(customer_id, product_id);
-		customerDetailServiceImpl.deleteIntoCustomer(customer_id, product_id);
+		customerDetailServiceImpl.deleteIntoCustomerView(customerId, productId);
+		customerDetailServiceImpl.deleteIntoCustomer(customerId, productId);
 		return "customerList.jsp";
 	}
 	
 	@GetMapping(value="/createPdf")
 	public void downloadPdf(HttpServletRequest request, HttpServletResponse response)
 	{
-		List<Customer_View> customers=customerDetailServiceImpl.getAllCustomerInfo();
+		List<CustomerView> customers=customerDetailServiceImpl.getAllCustomerInfo();
 		System.out.println("data");
-		boolean isflag=customerDetailServiceImpl.createPdf(customers, context, request, response);
+		boolean isflag=customerDetailServiceImpl.createPdfForCustomers(customers, context, request, response);
         if(isflag)
         {
         	String fullpath=request.getServletContext().getRealPath("/resources/reports/"+"customers"+".pdf");
@@ -320,8 +392,8 @@ public class CustomerController {
 	@GetMapping(value="/createExcel")
 	public void createExcel(HttpServletRequest request, HttpServletResponse response)
 	{
-		List<Customer_View> customerview=customerDetailServiceImpl.getAllCustomerInfo();
-		boolean isflag=customerDetailServiceImpl.createExcel(customerview, context, request, response);
+		List<CustomerView> customerView=customerDetailServiceImpl.getAllCustomerInfo();
+		boolean isflag=customerDetailServiceImpl.createExcelForCustomers(customerView, context, request, response);
 		if(isflag)
 		{
 			String fullPath=request.getServletContext().getRealPath("/resources/reports/"+"customers" +".xls");
