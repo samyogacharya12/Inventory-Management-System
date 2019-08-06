@@ -1,34 +1,24 @@
 package com.example.demo.controller;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.example.demo.model.Login;
 import com.example.demo.service.ProductDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
-import com.example.demo.model.Product;
-import com.example.demo.model.Projectuser;
 import com.example.demo.service.CustomerDetailServiceImpl;
 import com.example.demo.service.SupplierDetailService;
 import com.example.demo.service.UserDetailServiceImpl;
 
-
-
 @Controller
 @RequestMapping("/")
-public class SpringSecurityJdbcController {
+public class HomeController {
 
 	@Autowired
 	private UserDetailServiceImpl userDetailService;
@@ -44,21 +34,22 @@ public class SpringSecurityJdbcController {
 	public String home(Model model)
 	{
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
-		Date buy_date1 = new Date(System.currentTimeMillis());
-		String buy_date=formatter.format(buy_date1);
+		Date buyDate1 = new Date(System.currentTimeMillis());
+		String buyDate=formatter.format(buyDate1);
 		int user=userDetailService.getNoofUsers();
-		int numberofsales=customerDetailService.getPresentDate(buy_date);
+		int numberofsales=customerDetailService.getPresentDate(buyDate);
 		model.addAttribute("numberofsales", numberofsales);
 		model.addAttribute("user", user);
-		int numberofcustomers=customerDetailService.getNumberofCustomersToday(buy_date);
+		int numberofcustomers=customerDetailService.getNumberofCustomersToday(buyDate);
 		model.addAttribute("numberofcustomers", numberofcustomers);
 		int numberofsuppliers=supplierDetailService.NoofSupplier();
 		model.addAttribute("numberofsuppliers", numberofsuppliers);
-		int expiredproduct=productDetailService.getNoOfExpiredProduct(buy_date);
+		int expiredproduct=productDetailService.getNoOfExpiredProduct(buyDate);
 		model.addAttribute("expiredproduct", expiredproduct);
-		int numberofproduct=productDetailService.getTotalNoOfQuantity();
+		int totalNoOfQuantity = productDetailService.getTotalNoOfQuantity();
+		int numberofproduct= totalNoOfQuantity;
 		model.addAttribute("numberofproducts", numberofproduct);
-		Double revenue=customerDetailService.getPresentRevenue(buy_date);
+		Double revenue=customerDetailService.getPresentRevenue(buyDate);
 		if(revenue==null)
 		{
 			revenue=(double) 0;
@@ -69,25 +60,23 @@ public class SpringSecurityJdbcController {
 		model.addAttribute("revenue", revenue);
 		}
 		Date date = new Date(System.currentTimeMillis());
-		String sell_date=formatter.format(date);
-		List<String> product_name=productDetailService.getExpiredProduct(sell_date);
-		if(product_name!=null)
+		String sellDate=formatter.format(date);
+		List<String> productName=productDetailService.getExpiredProduct(sellDate);
+		System.out.println(productName);
+		if(productName!=null)
 		{
-			for(String product_name1:product_name)
-			{
-			model.addAttribute("product_name", product_name1);
-		}
+			model.addAttribute("productName", productName);
 		}
 		else
 		{
-			product_name=null;
-			model.addAttribute("product_name", product_name);
+			productName=null;
+			model.addAttribute("productName", productName);
 		}
 		return "home.jsp";
 	}
 	
 	 @GetMapping(value="/login")
-	public String loginpage(HttpServletRequest request, HttpServletResponse response, @ModelAttribute("login") Projectuser projectuser)
+	public String loginpage(@ModelAttribute("login") Login login)
 	{
 		return "login.jsp";
 	}
@@ -95,6 +84,8 @@ public class SpringSecurityJdbcController {
 	@GetMapping("/logout-sucess")
 	public String logoutpage()
 	{
+		Map map=userDetailService.getUserTempData();
+		userDetailService.deleteIntoUserTemp((String) map.get("username"));
 		return "logout.jsp";
 	}
 }
