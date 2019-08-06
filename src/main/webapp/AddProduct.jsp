@@ -30,7 +30,7 @@
      <a href="javascript:void(0)" class="simple-text logo-mini"> 
      </a>
      <a href="javascript:void(0)" class="simple-text logo-normal">
-    <b>Welcome ${username}</b>
+    <p> Welcome  ${username}</p>
      </a> 
      <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
    <ul class="nav">
@@ -41,19 +41,19 @@
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
@@ -73,7 +73,7 @@
           </li>
          
           <li>
-            <a href="/get_expenses">
+            <a href="/get-expenses">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
@@ -81,7 +81,7 @@
           
           
             <li>
-            <a href="/get_trash">
+            <a href="/get-trash">
           <i class="tim-icons icon-trash-simple"></i>
               <p>Trash</p>
             </a>
@@ -141,31 +141,32 @@
               <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
                  <div class="col-sm-12 col-md-6">
-               <a href="/list_product" class="btn btn-primary btn-sm"> Back</a>
+               <a href="/list-product" class="btn btn-primary btn-sm"> Back</a>
                </div> 
               <div class="card-body">
-                <form action="/save_data" method="post"  enctype="multipart/form-data">
+                <form action="/save-product" method="post"  enctype="multipart/form-data">
                   <div class="row">
                     <div class="col-md-5 pr-md-1">
                      <div class="form-group has-label">
                         <label >Product Id </label>
-                        <input type="text" name="product_id" class="form-control" required="true"/>
+                        <input type="text" name="productId" value="${username}" class="form-control" required="true"/>
                       </div>
                     </div>
                     <div class="col-md-3 px-md-1">
                     <div class="form-group has-label">
                         <label>Product Name</label>
-                        <input type="text"  name="product_name" placeholder="productname" class="form-control" required="true"/>
+                        <input type="text"  name="productName" placeholder="productname" class="form-control" required="true"/>
                       </div>
                     </div>
                     
                     <div class="col-md-3 px-md-1">
                       <div class="form-group has-label">
                         <label>Product Type</label>
-                        <input type="text" name="product_type" class="form-control" required="true"/>
+                        <input type="text" name="productType" class="form-control" required="true"/>
                       </div>
                     </div>
-                    </div>
+                </div>
+
                     
                     <div class="col-md-4 pl-md-1">
                      <div class="form-group has-label">
@@ -187,14 +188,14 @@
                     <div class="col-md-4 px-md-1">
                       <div class="form-group has-label">
                          <label>Magnifacture Date </label>
-                        <input type="date" name="magnifacture_date" placeholder="" class="form-control"  required="true"/>
+                        <input type="date" name="magnifactureDate" placeholder="" class="form-control"  required="true"/>
                       </div>
                     </div>
                   
                      <div class="col-md-4 px-md-1">
                       <div class="form-group has-label">
                          <label>Expiry Date </label>
-                        <input type="date" name="expiry_date" placeholder="" class="form-control" required="true"/>
+                        <input type="date" name="expiryDate" placeholder="" class="form-control" required="true"/>
                       </div>
                     </div>
       
@@ -220,6 +221,7 @@
           </div>
         </div>
         </div>
+       </div>
        
   <!--   Core JS Files   -->
   <script src="static/black-dashboard-html-v1.0.1/assets/js/core/jquery.min.js"></script>
@@ -460,3 +462,4 @@
     });
   </script>
 </body>
+</html>
