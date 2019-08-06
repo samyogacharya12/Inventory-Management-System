@@ -4,11 +4,13 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.demo.service.UserDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -26,11 +28,14 @@ public class ExpenseController {
 
 	@Autowired
 	private ExpenseDetailServiceImpl expenseDetailService;
-	
+
+	@Autowired
+	private UserDetailServiceImpl userDetailService;
+
 	@Autowired
 	private ServletContext context;
 	
-	@GetMapping(value="/get_expenses")
+	@GetMapping(value="/list-expense")
 	public ModelAndView getExpenseReport(Model model)
 	{
 		List<Expense> expense=expenseDetailService.getAllExpenseInfo();
@@ -41,60 +46,67 @@ public class ExpenseController {
 		return new ModelAndView("ExpenseReport.jsp","expense",expense);
 	}
 	
-	@GetMapping(value="/expense_Form")
+	@GetMapping(value="/expense-Form")
 	public String expenseForm()
 	{
 		return "expenseForm.jsp";
 	}
 	
-	@PostMapping(value="/save_expense")
+	@PostMapping(value="/save-expense")
 	public String saveExpenseData(@ModelAttribute Expense expense)
 	{
+		Map map=userDetailService.getUserTempData();
+		expense.setUsername((String) map.get("username"));
 		expenseDetailService.insertIntoExpenses(expense);
 		return "redirect:/expenseForm.jsp";
 	}
 	
-	@GetMapping(value="/expense")
-	public ModelAndView getUserEditForm(@RequestParam long expense_id)
+	@GetMapping(value="/getExpenseEditForm")
+	public ModelAndView getEzpenseEditForm(@RequestParam long expenseId)
 	{
-		Expense expense=expenseDetailService.getExpenseById(expense_id);
+		Expense expense=expenseDetailService.getExpenseById(expenseId);
 		return new ModelAndView("ExpenseEditForm.jsp", "expenseEdit", expense);
 	}
 	
-	@PostMapping(value="/update_expense")
+	@PostMapping(value="/update-expense")
 	public String updateUser(@ModelAttribute Expense expense)
 	{
 		expenseDetailService.updateIntoExpenses(expense);
 		return "redirect:/ExpenseEditForm.jsp";
 	}
 	
-	@GetMapping(value="/deleteexpense")
-	public String deleteuser(@RequestParam long expense_id)
+	@GetMapping(value="/delete-eexpense")
+	public String deleteuser(@RequestParam long expenseId)
 	{
-		System.out.println(expense_id);
-		expenseDetailService.deleteExpenses(expense_id);
+		System.out.println(expenseId);
+		expenseDetailService.deleteExpenses(expenseId);
 		return "redirect:/expenseForm.jsp";
 	}
 	
 	@GetMapping(value="/getByExpenseName")
-	public ModelAndView getExpenseByname(Model model,@RequestParam String expense_name)
+	public ModelAndView getExpenseByname(Model model,@RequestParam String expenseName)
 	{
-		System.out.println(expense_name);
-		List<Expense> expense=expenseDetailService.getExpenseByExpenseName(expense_name);
-		int totalnumberofid2=expenseDetailService.countTotalId(expense_name);
+		System.out.println(expenseName);
+		List<Expense> expense=expenseDetailService.getExpenseByExpenseName(expenseName);
+		for(Expense expense1:expense)
+		{
+			System.out.println(expense1.getExpenseName());
+			System.out.println(expense1.getCost());
+		}
+		int totalnumberofid2=expenseDetailService.countTotalId(expenseName);
 		model.addAttribute("totalnumberofid2", totalnumberofid2);
-		double cost2=expenseDetailService.totalCost(expense_name);
+		double cost2=expenseDetailService.totalCost(expenseName);
 		model.addAttribute("cost2", cost2);
-		return new ModelAndView("ExpenseReport.jsp", "expense_name", expense);
+		return new ModelAndView("ExpenseReport.jsp", "expenseName", expense);
 	}
 	
-	@GetMapping(value="/getDataByDate")
-	public ModelAndView getDataByDate(Model model,@RequestParam(value="expense_date[]") String[] expense_date)
+	@GetMapping(value="/getExpenseByDate")
+	public ModelAndView getDataByDate(Model model,@RequestParam(value="expenseDate[]") String[] expenseDate)
 	{
-		List<Expense> expense=expenseDetailService.getExpenseByExpenseDate(expense_date);
-		int numberofid1=expenseDetailService.countTotalId(expense_date);
+		List<Expense> expense=expenseDetailService.getExpenseByExpenseDate(expenseDate);
+		int numberofid1=expenseDetailService.countTotalId(expenseDate);
 		model.addAttribute("total_id1", numberofid1);
-		Double cost1=expenseDetailService.totalCost(expense_date);
+		Double cost1=expenseDetailService.totalCost(expenseDate);
 		if(cost1==null)
 		{
 			cost1=(double) 0;
@@ -104,14 +116,14 @@ public class ExpenseController {
 		{
 			model.addAttribute("cost1", cost1);
 		}
-		return new ModelAndView("ExpenseReport.jsp", "expense_date", expense);
+		return new ModelAndView("ExpenseReport.jsp", "expenseDate", expense);
 	}
 	
 	@GetMapping(value="/createPdfExpenses")
 	public void createPdf(HttpServletRequest request, HttpServletResponse response)
 	{
 		List<Expense> expenses=expenseDetailService.getAllExpenseInfo();
-		boolean isflag=expenseDetailService.createPdf(expenses, context, request, response);
+		boolean isflag=expenseDetailService.createPdfForExpenses(expenses, context, request, response);
 		if(isflag)
 		{
 			String fullpath=request.getServletContext().getRealPath("/resources/reports/"+"expenses"+".pdf");
@@ -123,7 +135,7 @@ public class ExpenseController {
 	public void createExcel(HttpServletRequest request, HttpServletResponse response)
 	{
 		List<Expense> expenses=expenseDetailService.getAllExpenseInfo();
-		boolean isflag=expenseDetailService.createExcel(expenses, context, response, request);
+		boolean isflag=expenseDetailService.createExcelForExpenses(expenses, context, response, request);
 		if(isflag)
 		{
 			String fullpath=request.getServletContext().getRealPath("/resources/reports/"+"expenses"+".xls");
