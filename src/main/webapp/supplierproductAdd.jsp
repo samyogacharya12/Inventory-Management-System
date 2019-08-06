@@ -54,39 +54,39 @@ Swal.fire({
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
           </li>
          
           <li>
-            <a href="/get_expenses">
+            <a href="/list-expenses">
           <i class="tim-icons icon-notes"></i>
               <p>Expenses</p>
             </a>
@@ -94,7 +94,7 @@ Swal.fire({
           
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               <p>Trash</p>
             </a>
@@ -147,14 +147,14 @@ Swal.fire({
                 <h5 class="title"></h5>
               </div>
                <div class="col-sm-12 col-md-6">
-               <a href="/list_supplier" class="btn btn-primary btn-sm"> Back</a>
+               <a href="/list-supplier" class="btn btn-primary btn-sm"> Back</a>
                </div> 
               <div class="card-body">
-                <form action="/add_supplierproduct" method="post"  enctype="multipart/form-data">
+                <form action="/save-supplierproduct" method="post"  enctype="multipart/form-data">
                     <div class="col-md-4 px-md-1">
                       <div class="form-group">
                     <label>Supplier Id </label>
-                       <input type="text" name="supplier_id" value="${supplierAdd.supplier_id}" readonly class="form-control" />
+                       <input type="text" name="supplierId" value="${supplierAdd.supplierId}" readonly class="form-control" />
                          </div>
                          </div>
                 
@@ -162,10 +162,10 @@ Swal.fire({
    <div class="form-group">
    <label> Product Id</label>
    <br>
-    <select id="myInput" name="product_id" class="chosen">
+    <select id="myInput" name="productId" class="chosen">
                 <c:forEach var="product2" items="${product1}">
                 <option>
-                 ${product2.product_id}              
+                 ${product2.productId}
                  </option>
 				 </c:forEach>
 				 </select>
@@ -186,7 +186,7 @@ Swal.fire({
                     <div class="col-md-6 pr-md-1">
                      <div class="form-group has-label">
                         <label> Buy Date </label>
-                        <input type="date"  name="buy_date"  placeholder="" class="form-control" required="true"/>
+                        <input type="date"  name="buyDate"  placeholder="" class="form-control" required="true"/>
                       </div>
                     </div>
                     </div>
