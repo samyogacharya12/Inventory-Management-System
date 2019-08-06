@@ -42,32 +42,32 @@
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
@@ -75,14 +75,14 @@
           
           
            <li>
-            <a href="/get_expenses">
+            <a href="/list-expense">
           <i class="tim-icons icon-notes"></i>
               <p>Expenses</p>
             </a>
           </li>
          
            <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               <p>Trash</p>
             </a>
@@ -136,11 +136,11 @@
               </div>
               <div class="card-body">
                 <div class="col-sm-12 col-md-6">
-                <a href="/list_Customer" class="btn btn-primary btn-sm"> Back</a> 
+                <a href="/list-Customer" class="btn btn-primary btn-sm"> Back</a>
                 </div>
                  <div class="col-sm-12 col-md-6">
                 <div id="datatable_filter" class="dataTables_filter">
-                  <a href="customerproduct?customer_id=${customerview.customer_id}&product_id=${customerview.product_id}" class="btn btn-primary btn-sm">ProductInfo</a>
+                  <a href="/getCustomerProductEditForm?customerId=${customerview.customerId}&productId=${customerview.productId}" class="btn btn-primary btn-sm">ProductInfo</a>
                   </div>
                   </div>
                   </div>
@@ -157,19 +157,19 @@
                   </div>
                   </div>
                   <div class="row">
-                        <input type="hidden" name="customer_id" value="${customerview.customer_id}" class="form-control" />
+                        <input type="hidden" name="customerId" value="${customerview.customerId}" class="form-control" />
  
                     <div class="col-md-3 px-md-1">
                       <div class="form-group">
                         <label>customer name</label>
-                        <input type="text"  name="customer_name" value="${customerview.customer_name}" placeholder="productname" class="form-control" />
+                        <input type="text"  name="customerName" value="${customerview.customerName}" placeholder="productname" class="form-control" />
                       </div>
                     </div>
                     
                     <div class="col-md-3 px-md-1">
                       <div class="form-group">
                         <label>permanent address </label>
-                        <input type="text" name="permanent_address" value="${customerview.permanent_address}" class="form-control" />
+                        <input type="text" name="permanentAddress" value="${customerview.permanentAddress}" class="form-control" />
                       </div>
                     </div>
                     </div>            
@@ -178,7 +178,7 @@
                     <div class="col-md-6 pr-md-1">
                       <div class="form-group">
                         <label> temporary address  </label>
-                        <input type="text"  name="temporary_address" value="${customerview.temporary_address}" placeholder="" class="form-control" />
+                        <input type="text"  name="temporaryAddress" value="${customerview.temporaryAddress}" placeholder="" class="form-control" />
                       </div>
                     </div>
                     </div>
@@ -187,7 +187,7 @@
                     <div class="col-md-6 pr-md-1">
                       <div class="form-group">
                         <label> temporary address  </label>
-                        <input type="text"  name="phone_number" value="${customerview.phone_number}" placeholder="" class="form-control" />
+                        <input type="text"  name="phoneNumber" value="${customerview.phoneNumber}" placeholder="" class="form-control" />
                       </div>
                     </div>
                     </div>              
