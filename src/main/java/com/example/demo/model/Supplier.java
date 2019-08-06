@@ -2,11 +2,11 @@ package com.example.demo.model;
 
 public class Supplier {
 
-	private long supplier_id;
-	private String supplier_name;
-	private String supplier_type;
-	private String temporary_address;
-	private String permanent_address;
+	private long supplierId;
+	private String supplierName;
+	private String supplierType;
+	private String temporaryAddress;
+	private String permanentAddress;
     private String image;
 	public String getImage() {
 		return image;
@@ -14,34 +14,34 @@ public class Supplier {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public long getSupplier_id() {
-		return supplier_id;
+	public long getSupplierId() {
+		return supplierId;
 	}
-	public void setSupplier_id(long supplier_id) {
-		this.supplier_id = supplier_id;
+	public void setSupplierId(long supplierId) {
+		this.supplierId = supplierId;
 	}
-	public String getSupplier_name() {
-		return supplier_name;
+	public String getSupplierName() {
+		return supplierName;
 	}
-	public void setSupplier_name(String supplier_name) {
-		this.supplier_name = supplier_name;
+	public void setSupplierName(String supplierName) {
+		this.supplierName = supplierName;
 	}
-	public String getSupplier_type() {
-		return supplier_type;
+	public String getSupplierType() {
+		return supplierType;
 	}
-	public void setSupplier_type(String supplier_type) {
-		this.supplier_type = supplier_type;
+	public void setSupplierType(String supplierType) {
+		this.supplierType = supplierType;
 	}
-	public String getTemporary_address() {
-		return temporary_address;
+	public String getTemporaryAddress() {
+		return temporaryAddress;
 	}
-	public void setTemporary_address(String temporary_address) {
-		this.temporary_address = temporary_address;
+	public void setTemporaryAddress(String temporaryAddress) {
+		this.temporaryAddress = temporaryAddress;
 	}
-	public String getPermanent_address() {
-		return permanent_address;
+	public String getPermanentAddress() {
+		return permanentAddress;
 	}
-	public void setPermanent_address(String permanent_address) {
-		this.permanent_address = permanent_address;
+	public void setPermanentAddress(String permanentAddress) {
+		this.permanentAddress = permanentAddress;
 	}
 }
