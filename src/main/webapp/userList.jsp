@@ -46,32 +46,32 @@
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
@@ -79,7 +79,7 @@
           
           
            <li>
-            <a href="/get_expenses">
+            <a href="/list-expense">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
@@ -87,7 +87,7 @@
           
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               Trash
             </a>
@@ -159,7 +159,7 @@
               
        <div class="row">
        <div class="col-sm-12">
-          <a href="/user_Form" class="btn btn-primary btn-sm"> Add new </a>
+          <a href="/user-form" class="btn btn-primary btn-sm"> Add new </a>
                   <table class="table" id="">
                     <thead class=" text-primary">
                       <tr>
@@ -187,22 +187,24 @@
                         <th>
                         User Role
                         </th>
-                        
+
+
+
                       </tr>
                     </thead>
         
                     <tbody>
                  <c:forEach var="users" items="${user}">
 <tr>   
-    <td> ${users.user_id} </td>
-    <td><a href="username?user_id=${users.user_id}"> ${users.username} </a> </td>
+    <td> ${users.userId} </td>
+    <td><a href="username?userId=${users.userId}"> ${users.username} </a> </td>
     <td> ${users.password} </td>
-    <td> ${users.first_name} </td>
-    <td> ${users.middle_name} </td>
-    <td> ${users.last_name} </td>
-    <td> ${users.user_role_id}</td>
-    <td> <a href="user?user_id=${users.user_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-    <td> <a href="deleteuser?user_id=${users.user_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
+    <td> ${users.firstName} </td>
+    <td> ${users.middleName} </td>
+    <td> ${users.lastName} </td>
+    <td> ${users.userRoleId}</td>
+    <td> <a href="getEditForm?userId=${users.userId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+    <td> <a href="delete-user?userId=${users.userId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
     </tr>
 </c:forEach>                         
 </tbody>
@@ -210,15 +212,15 @@
         
 <tbody>
 <tr>   
-    <td> ${username.user_id} </td>
-    <td><a href="username?user_id=${username.user_id}"> ${username.username} </a> </td>
+    <td> ${username.userId} </td>
+    <td><a href="username?userId=${username.userId}"> ${username.username} </a> </td>
     <td> ${username.password} </td>
-    <td> ${username.first_name} </td>
-    <td> ${username.middle_name} </td>
-    <td> ${username.last_name} </td>
-    <td> ${username.user_role_id}</td>
-    <td> <a href="user?user_id=${username.user_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"></a> </td>
-    <td> <a href="deleteuser?user_id=${username.user_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"></a> </td>
+    <td> ${username.firstName} </td>
+    <td> ${username.middleName} </td>
+    <td> ${username.lastName} </td>
+    <td> ${username.userRoleId}</td>
+    <td> <a href="user?userId=${username.userId}" class="btn btn-link btn-warning btn-icon btn-sm edit"></a> </td>
+    <td> <a href="delete-user?userId=${username.userId}" class="btn btn-link btn-danger btn-icon btn-sm remove"></a> </td>
     </tr>
     </tbody>
                   </table>
