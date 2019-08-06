@@ -41,39 +41,39 @@
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
           </li>
           
            <li>
-            <a href="/get_expenses">
+            <a href="/list-expense">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
@@ -81,7 +81,7 @@
           
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               Trash
             </a>
@@ -172,7 +172,9 @@
            </div>
            </div> 
            </div>      
-  <!--   Core JS Files   -->
+    </div>
+</body>
+        <!--   Core JS Files   -->
   
 	<script src="static/jquery.tablesorter.js.download"></script>
 	<script src="static/jquery.tablesorter.js.download"> </script>
@@ -191,7 +193,6 @@
   <script src="../assets/js/black-dashboard.min.js?v=1.0.0"></script>
   <!-- Black Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>
-  </script>
   
 <script>
     $(document).ready(function() {
@@ -354,8 +355,8 @@
   <div class="text-primary">\
   <form action="/calculateCash" method="get">\
       <span class="icon"><i class="fa fa-search"></i></span>\
-      <input type="Date" name="buy_date[]" id="search" placeholder="Date..." />\
-       <input type="Date" name="buy_date[]" id="search1" placeholder="Date..." />\
+      <input type="Date" name="buyDate[]" id="search" placeholder="Date..." />\
+       <input type="Date" name="buyDate[]" id="search1" placeholder="Date..." />\
        <button type="submit" class="btn btn-fill btn-primary">Find</button>\
        </form>\
   </div>\
@@ -365,6 +366,5 @@ function search(elem) {
   elem.outerHTML = html;
 }
   </script>
-  
-</body>
+
 </html>
