@@ -37,35 +37,35 @@
      <li><a href="/"> <i class="tim-icons icon-chart-pie-36"></i> HOME <span class="fa fa-chevron-right"></span></a>
                   </li>
                   
-                  <li><a href="/list_supplier">  <i class="tim-icons icon-single-02"></i> Supplier <span class="fa fa-chevron-right"></span></a></li>
-                  <li><a href="/list_product">  <i class="tim-icons icon-basket-simple"></i> Product <span class="fa fa-chevron-right"></span></a>
+                  <li><a href="/list-supplier">  <i class="tim-icons icon-single-02"></i> Supplier <span class="fa fa-chevron-right"></span></a></li>
+                  <li><a href="/list-product">  <i class="tim-icons icon-basket-simple"></i> Product <span class="fa fa-chevron-right"></span></a>
                    
                   </li>
-                 <li><a href="/list_Customer"> <i class="tim-icons icon-single-02"></i> Customer <span class="fa fa-chevron-right"></span></a>
+                 <li><a href="/list-Customer"> <i class="tim-icons icon-single-02"></i> Customer <span class="fa fa-chevron-right"></span></a>
                    
                   </li>
                     
-                    <li><a href="/get_list"> <i class="tim-icons icon-single-02"></i> User <span class="fa fa-chevron-right"></span></a>
+                    <li><a href="/list-user"> <i class="tim-icons icon-single-02"></i> User <span class="fa fa-chevron-right"></span></a>
                    
                   </li>
 
 
                     <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
           </li>
           
              <li>
-            <a href="/get_expenses">
+            <a href="/list-expenses">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
           </li>
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               Trash
             </a>
@@ -136,19 +136,21 @@
                 <div class="col-sm-12 col-md-6">
                 <div id="datatable_filter" class="dataTables_filter">
                 <form action="/getCustomerByName" method="get">
-                <label><input type="search" name="customer_name" class="form-control form-control-sm" placeholder="Search records" aria-controls="datatable"></label>
+                <label><input type="search" name="customerName" class="form-control form-control-sm" placeholder="Search records" aria-controls="datatable"></label>
                 <button class="btn btn-primary btn-sm">Search</button>
                 </form>
                 </div></div></div>
          
                 <div class="row"><div class="col-sm-12">
-                    <a href="/customer_form" class="btn btn-primary btn-sm"> Add new </a>
+                    <a href="/getCustomerForm" class="btn btn-primary btn-sm"> Add new </a>
                       <button class="btn btn-primary btn-sm" onclick="search(this)">Filter</button>
                 <table id="" class="table">
+                    <a href="/getNewCustomerProductForm" class="btn btn-primary btn-sm"> New Customer Product </a>
                 <a href="/createExcel" style="float:right;">
                 <img src="images/excelimg.png" style="width:70px;">
                 </a>
                 <a href="/createPdf" style="float:right;"><img src="images/Pdf_by_mimooh.svg.png" style="width:40px;" margin-left:10px;> </a>
+
                   <thead class=" text-primary">
                    <tr>
                    <th>
@@ -192,29 +194,35 @@
                    <th>
                    product name
                    </th>
+
+                     <th>
+                      Added By
+                     </th>
+
                    </tr>
                   </thead>
                
                      <c:forEach var="customer" items="${customers}">
                   <tr>
-                      <td tabindex="0" class="sorting_1" class="odd">${customer.customer_id}</td>
-                      <td>${customer.customer_name}</td>
+                      <td tabindex="0" class="sorting_1" class="odd">${customer.customerId}</td>
+                      <td>${customer.customerName}</td>
                       <td>${customer.quantity}</td>
                       <td>${customer.amount} </td>
-                      <td>  ${customer.buy_date} </td>
-                      <td>${customer.permanent_address}</td>
-                      <td> ${customer.temporary_address}</td>
-                      <td>  ${customer.phone_number} </td>
-                      <td> ${customer.product_id} </td>
-                      <td> ${customer.product_name} </td>
-                      <td><a href="/addCustomer?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class=""> <i class="tim-icons icon-upload"></i></a> </td>
-                       <td> <a href="getCustomerEditForm?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-                       <td> <a href="deletecustomer?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
+                      <td>  ${customer.buyDate} </td>
+                      <td>${customer.permanentAddress}</td>
+                      <td> ${customer.temporaryAddress}</td>
+                      <td>  ${customer.phoneNumber} </td>
+                      <td> ${customer.productId} </td>
+                      <td> ${customer.productName} </td>
+                      <td>  ${customer.username}</td>
+                      <td><a href="/getCustomerProductForm?customerId=${customer.customerId}&productId=${customer.productId}" class=""> <i class="tim-icons icon-upload"></i></a> </td>
+                       <td> <a href="getCustomerEditForm?customerId=${customer.customerId}&productId=${customer.productId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+                       <td> <a href="deleteCustomer?customerId=${customer.customerId}&productId=${customer.productId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
                       </tr>
                       </c:forEach>
                       
                       
-                      <td> ${customer_id} </td>
+                      <td> ${customerId} </td>
                       <td>  </td>
                       <td> ${quantity} </td>
                       <td> ${amount} </td>
@@ -222,26 +230,27 @@
                       <td>  </td>
                       <td>  </td>
                       <td>  </td>
-                      <td> ${product_id}</td>
+                      <td> ${productId}</td>
                       <td>  </td>
                       
                       
                     
                      <c:forEach var="customer" items="${customerview}">
                   <tr>
-                      <td tabindex="0" class="sorting_1" class="odd">${customer.customer_id}</td>
-                      <td>${customer.customer_name}</td>
+                      <td tabindex="0" class="sorting_1" class="odd">${customer.customerId}</td>
+                      <td>${customer.customerName}</td>
                       <td>${customer.quantity}</td>
                       <td>${customer.amount} </td>
-                       <td>  ${customer.buy_date} </td>
-                      <td>${customer.permanent_address}</td>
-                      <td> ${customer.temporary_address}</td>
-                      <td>  ${customer.phone_number} </td>
-                      <td> ${customer.product_id} </td>
-                      <td> ${customer.product_name} </td>
-                      <td><a href="/addCustomer?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class=""> <i class="tim-icons icon-upload"></i></a> </td>
-                       <td> <a href="getCustomerEditForm?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-                       <td> <a href="deletecustomer?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
+                       <td>  ${customer.buyDate} </td>
+                      <td>${customer.permanentAddress}</td>
+                      <td> ${customer.temporaryAddress}</td>
+                      <td>  ${customer.phoneNumber} </td>
+                      <td> ${customer.productId} </td>
+                      <td> ${customer.productName} </td>
+                      <td>  ${customer.username}</td>
+                      <td><a href="/getCustomerProductForm?customerId=${customer.customerId}&productId=${customer.productId}" class=""> <i class="tim-icons icon-upload"></i></a> </td>
+                       <td> <a href="getCustomerEditForm?customerId=${customer.customerId}&productId=${customer.productId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+                       <td> <a href="deleteCustomer?customerId=${customer.customerId}&productId=${customer.productId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
                       </tr>
                       </c:forEach>
                       
@@ -257,21 +266,22 @@
                       <td>  </td>
                       
                        
-                     <c:forEach var="customer" items="${buy_date}">
+                     <c:forEach var="customer" items="${buyDate}">
                   <tr>
-                      <td tabindex="0" class="sorting_1" class="odd">${customer.customer_id}</td>
-                      <td>${customer.customer_name}</td>
+                      <td tabindex="0" class="sorting_1" class="odd">${customer.customerId}</td>
+                      <td>${customer.customerName}</td>
                       <td>${customer.quantity}</td>
                       <td>${customer.amount} </td>
-                       <td>${customer.buy_date} </td>
-                      <td>${customer.permanent_address}</td>
-                      <td> ${customer.temporary_address}</td>
-                      <td>  ${customer.phone_number} </td>
-                      <td> ${customer.product_id} </td>
-                      <td> ${customer.product_name} </td>
-                      <td><a href="/addCustomer?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class=""> <i class="tim-icons icon-upload"></i></a> </td>
-                       <td> <a href="getCustomerEditForm?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-                       <td> <a href="deletecustomer?customer_id=${customer.customer_id}&product_id=${customer.product_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
+                       <td>${customer.buyDate} </td>
+                      <td>${customer.permanentAddress}</td>
+                      <td> ${customer.temporaryAddress}</td>
+                      <td>  ${customer.phoneNumber} </td>
+                      <td> ${customer.productId} </td>
+                      <td> ${customer.productName} </td>
+                      <td>  ${customer.username}</td>
+                      <td><a href="/getCustomerProductForm?customerId=${customer.customerId}&productId=${customer.productId}" class=""> <i class="tim-icons icon-upload"></i></a> </td>
+                       <td> <a href="getCustomerEditForm?customerId=${customer.customerId}&productId=${customer.productId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+                       <td> <a href="deleteCustomer?customerId=${customer.customerId}&productId=${customer.productId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
                       </tr>
                       </c:forEach>
                       
@@ -475,10 +485,10 @@
     
   var html ='<div class="table">\
   <div class="text-primary">\
-  <form action="/getDate" method="get">\
+  <form action="/getcustomerbyDate" method="get">\
       <span class="icon"><i class="fa fa-search"></i></span>\
-      <input type="Date" name="sell_date[]" id="search" placeholder="Date..." />\
-       <input type="Date" name="sell_date[]" id="search1" placeholder="Date..." />\
+      <input type="Date" name="sellDate[]" id="search" placeholder="Date..." />\
+       <input type="Date" name="sellDate[]" id="search1" placeholder="Date..." />\
        <button type="submit" class="btn btn-fill btn-primary">Find</button>\
        </form>\
   </div>\
