@@ -60,33 +60,33 @@ Swal.fire({
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-users">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
           </li>
          
           <li>
-            <a href="/get_expenses">
+            <a href="/list-expenses">
           <i class="tim-icons icon-notes"></i>
               <p>Expenses</p>
             </a>
@@ -94,7 +94,7 @@ Swal.fire({
           
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               <p>Trash</p>
             </a>
@@ -159,19 +159,19 @@ Swal.fire({
                   </div>
                   </div>
                   <div class="row">
-                        <input type="hidden" name="supplier_id" value="${supplierEdit.supplier_id}" class="form-control" />
+                        <input type="hidden" name="supplierId" value="${supplierEdit.supplierId}" class="form-control" />
  
                     <div class="col-md-3 px-md-1">
                       <div class="form-group">
                         <label>Supplier Name</label>
-                        <input type="text"  name="supplier_name" value="${supplierEdit.supplier_name}" placeholder="productname" class="form-control" />
+                        <input type="text"  name="supplierName" value="${supplierEdit.supplierName}" placeholder="productname" class="form-control" />
                       </div>
                     </div>
                     
                     <div class="col-md-3 px-md-1">
                       <div class="form-group">
                         <label>Supplier Type</label>
-                        <input type="text" name="supplier_type" value="${supplierEdit.supplier_type}" class="form-control" />
+                        <input type="text" name="supplierType" value="${supplierEdit.supplierType}" class="form-control" />
                       </div>
                     </div>
                     </div>            
@@ -180,7 +180,7 @@ Swal.fire({
                     <div class="col-md-6 pr-md-1">
                       <div class="form-group">
                         <label> Permanent Address  </label>
-                        <input type="text"  name="permanent_address" value="${supplierEdit.permanent_address}" placeholder="" class="form-control" />
+                        <input type="text"  name="permanentAddress" value="${supplierEdit.permanentAddress}" placeholder="" class="form-control" />
                       </div>
                     </div>
                     </div>
@@ -189,7 +189,7 @@ Swal.fire({
                     <div class="col-md-6 pr-md-1">
                       <div class="form-group">
                         <label> Temporary Address  </label>
-                        <input type="text"  name="temporary_address" value="${supplierEdit.temporary_address}" placeholder="" class="form-control" />
+                        <input type="text"  name="temporaryAddress" value="${supplierEdit.temporaryAddress}" placeholder="" class="form-control" />
                       </div>
                     </div>
                     </div>
