@@ -4,5 +4,5 @@ import java.util.List;
 
 public interface UserRolesRepository {
 
-	public List<String> findRoleByUsername(String username);
+	 List<String> findRoleByUsername(String username);
 }
