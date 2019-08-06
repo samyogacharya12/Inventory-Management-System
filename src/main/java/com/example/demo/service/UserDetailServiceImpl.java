@@ -1,11 +1,10 @@
 package com.example.demo.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.example.demo.model.Usertemp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -13,8 +12,6 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.CustomUserDetails;
-import com.example.demo.model.Customer_Product;
-import com.example.demo.model.Product;
 import com.example.demo.model.Projectuser;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.repository.UserRolesRepository;
@@ -37,21 +34,39 @@ public class UserDetailServiceImpl implements UserDetailsService {
 //	{
 //		userRepository.updateExpiredProduct(product);
 //	}
+
+	public void deleteIntoUserTemp(String username) {
+		userRepository.deleteIntoUserTemp(username);
+	}
 	
 	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		// TODO Auto-generated method stub
-		Projectuser user=userRepository.findByUsername(username);
-		if(user==null)
-		{
+		Projectuser user = userRepository.findByUsername(username);
+		if (user == null) {
 			throw new UsernameNotFoundException("Username not found");
-		} 
-		List<String> roleuser=userRolesRepository.findRoleByUsername(username);
-		System.out.println(username);
-		System.out.println(roleuser);
-		return new CustomUserDetails(user,roleuser);
+		}
+				Map<String, Object> map = new HashMap<>();
+					map.put("username", user.getUsername());
+					userRepository.insetIntoUserTemp(map);
+
+			List<String> roleuser = userRolesRepository.findRoleByUsername(username);
+			System.out.println(username);
+			System.out.println(roleuser);
+			return new CustomUserDetails(user, roleuser);
 	}
+
+	public  Map getUserTempData()
+	{
+		return userRepository.getUserTempData();
+	}
+
+
+	public Projectuser getUserIdByUsername(String username) {
+		return  userRepository.getUserIdByUsername(username);
+	}
+
 	
 //	public List<Product> findByProductName(String product_name)
 //	{
@@ -134,7 +149,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 //
 //	public double getSumOfPrice(String product_name) {
 //
-//		return userRepository.getSumOfprice(product_name);
+//		return userRepository.getSumOfPrice(product_name);
 //	}
 	
 
@@ -143,7 +158,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	}
 	
 	
-//	public Customer_Product getquantitybycustomerid(long customer_id, long product_id)
+//	public CustomerProduct getquantitybycustomerid(long customer_id, long product_id)
 //	{
 //		return userRepository.getquantitybycustomerid(customer_id, product_id);
 //	}
@@ -159,10 +174,10 @@ public class UserDetailServiceImpl implements UserDetailsService {
 //		return userRepository.createExcel(products, context, request, response);
 //	}
 //
-//		public int getNoofUsers()
-//		{
-//			return userRepository.getNoofUsers();
-//		}
+		public int getNoofUsers()
+		{
+			return userRepository.getNoofUsers();
+		}
 //
 //		public int getNoOfExpiredProduct(String expiry_date) {
 //
