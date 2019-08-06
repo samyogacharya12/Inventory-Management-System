@@ -49,32 +49,32 @@ profile-usertitle-name {
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
@@ -82,14 +82,14 @@ profile-usertitle-name {
           
           
            <li>
-            <a href="/get_expenses">
+            <a href="/list-expense">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
           </li>
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               Trash
             </a>
@@ -139,9 +139,9 @@ profile-usertitle-name {
               </div>
     <div class="card-body">
                 <div class="table-responsive">
-                <img src="imagedisplay?user_id=${user.user_id}" alt="image-display" class="center" height="200px" width="200px" style="width:50%;"/>
+                <img src="imagedisplay?userId=${user.userId}" alt="image-display" class="center" height="200px" width="200px" style="width:50%;"/>
                  <div class="profile-usertitle-name">
-                 ${user.first_name} ${user.middle_name} ${user.last_name}
+                 ${user.firstName} ${user.middleName} ${user.lastName}
                  </div>
                  
                      <table class="table tablesorter " id="">
@@ -151,7 +151,7 @@ profile-usertitle-name {
                       User Id
                      </td>
                      <td>
-                     ${user.user_id}
+                     ${user.userId}
                      </td>
                      
                      <td>
@@ -169,7 +169,7 @@ profile-usertitle-name {
                    </td>
                       
                     <td> 
-                     ${user.permanent_address}
+                     ${user.permanentAddress}
                      </td>
                     
                      
@@ -177,7 +177,7 @@ profile-usertitle-name {
                      Temporary Address
                      </td>
                      <td>
-                     ${user.temporary_adddress}
+                     ${user.temporaryAdddress}
                      </td>
                     </tr>
                     
@@ -187,7 +187,7 @@ profile-usertitle-name {
                     </td>
                     
                     <td>
-                    ${user.phone_number}
+                    ${user.phoneNumber}
                     </td>
                     
                     <td>
@@ -195,7 +195,7 @@ profile-usertitle-name {
                     </td>
                     
                     <td>
-                    ${user.landline_number}
+                    ${user.landlineNumber}
                     </td>
                     </tr>
                     
@@ -224,14 +224,14 @@ profile-usertitle-name {
                     </td>
                     
                     <td>
-                    ${user.date_of_birth}
+                    ${user.dateOfBirth}
                     </td>
                     <td>
                     joined date
                     </td>
                     
                     <td>
-                    ${user.joined_date}
+                    ${user.joinedDate}
                     </td>
                     </tr>
                     </table>
