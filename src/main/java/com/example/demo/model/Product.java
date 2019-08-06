@@ -1,26 +1,33 @@
 package com.example.demo.model;
 
-import java.util.Date;
 
 import javax.validation.constraints.Min;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.util.Date;
+
+
 public class Product {
 
-	private long product_id;
-    private String product_name;
-    private String product_type;
-    private double price;
+	private long productId;
+    private String productName;
+    private String productType;
+    private Double price;
     @Min(value = 0L, message = "The value must be positive")
     private int quantity;
     private String image;
-    private String is_expired;
-    public String getIs_expired() {
-		return is_expired;
+    private String isExpired;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date magnifactureDate;
+	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private Date expiryDate;
+
+	public String getIsExpired() {
+		return isExpired;
 	}
-	public void setIs_expired(String is_expired) {
-		this.is_expired = is_expired;
+	public void setIsExpired(String isExpired) {
+		this.isExpired = isExpired;
 	}
 	public String getImage() {
 		return image;
@@ -34,45 +41,37 @@ public class Product {
 	public void setQuantity(int quantity) {
 		this.quantity = quantity;
 	}
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date magnifacture_date;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date expiry_date;
-	public long getProduct_id() {
-		return product_id;
+	public long getProductId() {
+		return productId;
 	}
-	public void setProduct_id(long product_id) {
-		this.product_id = product_id;
+	public void setProductId(long productId) {
+		this.productId = productId;
 	}
-	public String getProduct_name() {
-		return product_name;
+	public String getProductName() {
+		return productName;
 	}
-	public void setProduct_name(String product_name) {
-		this.product_name = product_name;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
-	public String getProduct_type() {
-		return product_type;
+	public String getProductType() {
+		return productType;
 	}
-	public void setProduct_type(String product_type) {
-		this.product_type = product_type;
+	public Date getMagnifactureDate() {
+		return magnifactureDate;
 	}
-	public double getPrice() {
-		return price;
+	public void setMagnifactureDate(Date magnifactureDate) {
+		this.magnifactureDate = magnifactureDate;
 	}
-	public void setPrice(double price) {
-		this.price = price;
+	public Date getExpiryDate() {
+		return expiryDate;
 	}
-	public Date getMagnifacture_date() {
-		return magnifacture_date;
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
 	}
-	public void setMagnifacture_date(Date magnifacture_date) {
-		this.magnifacture_date = magnifacture_date;
+	public void setProductType(String productType) { this.productType = productType;
 	}
-	public Date getExpiry_date() {
-		return expiry_date;
+	public Double getPrice() { return price;
 	}
-	public void setExpiry_date(Date expiry_date) {
-		this.expiry_date = expiry_date;
+	public void setPrice(Double price) { this.price = price;
 	}
-    
 }
