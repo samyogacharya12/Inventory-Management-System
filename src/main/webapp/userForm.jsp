@@ -42,46 +42,46 @@
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
           </li>
          
           <li>
-            <a href="/get_expenses">
+            <a href="/list-expense">
           <i class="tim-icons icon-notes"></i>
               <p>Expenses</p>
             </a>
           </li>
          
            <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               Trash
             </a>
@@ -139,7 +139,7 @@
                     <div class="col-md-5 pr-md-1">
                       <div class="form-group">
                         <label >User Id </label>
-                        <input type="text" name="user_id" class="form-control" />
+                        <input type="text" name="userId" class="form-control" />
                       </div>
                     </div>
                     <div class="col-md-3 px-md-1">
@@ -168,21 +168,21 @@
                     <div class="col-md-6 pr-md-1">
                        <div class="form-group has-label">
                         <label> First Name </label>
-                        <input type="text"  name="first_name" placeholder="first_name" class="form-control" required="true">
+                        <input type="text"  name="firstName" placeholder="firstName" class="form-control" required="true">
                       </div>
                     </div>
                     
                     <div class="col-md-6 pl-md-1">
                       <div class="form-group">
                         <label>Middle Name </label>
-                        <input type="text" name="middle_name" placeholder="Middle Name" class="form-control" />
+                        <input type="text" name="middleName" placeholder="Middle Name" class="form-control" />
                       </div>
                     </div>
                     
                     <div class="col-md-6 pl-md-1">
                          <div class="form-group has-label">
                         <label> Last Name </label>
-                        <input type="text"  name="last_name" placeholder="Last Name" class="form-control" required="true"/>
+                        <input type="text"  name="lastName" placeholder="Last Name" class="form-control" required="true"/>
                       </div>
                     </div>
                   </div>
@@ -190,7 +190,7 @@
                     <div class="col-md-12">
                    <div class="form-group has-label">
                         <label >Temporary Address </label>
-                        <input type="text" name="temporary_adddress" placeholder="Home Address" class="form-control" required="true"/>
+                        <input type="text" name="temporaryAdddress" placeholder="Home Address" class="form-control" required="true"/>
                       </div>
                     </div>
                   </div>
@@ -198,7 +198,7 @@
                     <div class="col-md-4 pr-md-1">
                         <div class="form-group has-label">
                         <label> Permanent Address </label>
-                        <input type="text" name="permanent_address" placeholder="City" class="form-control" required="true"/>
+                        <input type="text" name="permanentAddress" placeholder="City" class="form-control" required="true"/>
                       </div>
                     </div>
                     <div class="col-md-4 px-md-1">
@@ -210,14 +210,14 @@
                     <div class="col-md-4 pl-md-1">
                      <div class="form-group has-label">
                         <label> Phone number </label>
-                        <input type="number" name="phone_number" class="form-control"/>
+                        <input type="number" name="phoneNumber" class="form-control"/>
                       </div>
                     </div>
                     
                       <div class="col-md-4 pl-md-1">
                      <div class="form-group has-label">
                         <label> LandLine number </label>
-                        <input type="number" name="landline_number"  class="form-control"/>
+                        <input type="number" name="landlineNumber"  class="form-control"/>
                       </div>
                     </div>
                     
@@ -226,7 +226,7 @@
                   <div class="col-md-4 pl-md-1">
                     <div class="form-group has-label">
                    <label> User Role </label>   
-                  <select name="user_role_id">             
+                  <select name="userRoleId">
   <option value="1">1</option>
   <option value="2">2</option>
 </select>
