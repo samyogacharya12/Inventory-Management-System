@@ -23,8 +23,8 @@
     <script type="text/javascript">
 function validateForm()
  {
-    var supplier_id=document.getElementById("supplier_id").value;
-    if(supplier_id=="")
+    var supplierId=document.getElementById("supplierId").value;
+    if(supplierId=="")
     {
          swal("sorry!", "Your supplier id is empty");
     }
@@ -52,39 +52,39 @@ function validateForm()
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
           </li>
           
            <li>
-            <a href="/get_expenses">
+            <a href="/list-expenses">
           <i class="tim-icons icon-notes"></i>
               <p>Expenses</p>
             </a>
@@ -92,7 +92,7 @@ function validateForm()
           
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               <p>Trash</p>
             </a>
@@ -150,29 +150,29 @@ function validateForm()
                 <div class="col-sm-12 col-md-6">
                 <div class="dataTables_length" id="datatable_length">
                 </div>
-                <a href="/list_supplier" class="btn btn-primary btn-sm"> Back</a> 
+                <a href="/list-supplier" class="btn btn-primary btn-sm"> Back</a>
                 </div>
                  <div class="col-sm-12 col-md-6">
                 <div id="datatable_filter" class="dataTables_filter">
-                  <a href="supplierproduct?supplier_id=${supplierEdit.supplier_id}&product_id=${supplierEdit.product_id}" class="btn btn-primary btn-sm" onClick="validateForm()">ProductInfo</a>
+                  <a href="/getSupplierProductEditForm?supplierId=${supplierEdit.supplierId}&productId=${supplierEdit.productId}" class="btn btn-primary btn-sm" onClick="validateForm()">ProductInfo</a>
                   </div>
                   </div>
                   </div>
                   </div>
                   <div class="row">
-                        <input type="hidden" id="supplier_id" name="supplier_id" value="${supplierEdit.supplier_id}" class="form-control" />
+                        <input type="hidden" id="supplierId" name="supplierId" value="${supplierEdit.supplierId}" class="form-control" />
  
                     <div class="col-md-3 px-md-1">
                       <div class="form-group">
                         <label>Supplier Name</label>
-                        <input type="text" id="supplier_name"  name="supplier_name" value="${supplierEdit.supplier_name}" placeholder="productname" class="form-control" />
+                        <input type="text" id="supplierName"  name="supplierName" value="${supplierEdit.supplierName}" placeholder="productname" class="form-control" />
                       </div>
                     </div>
                     
                     <div class="col-md-3 px-md-1">
                       <div class="form-group">
                         <label>Supplier Type</label>
-                        <input type="text" id="supplier_type" name="supplier_type" value="${supplierEdit.supplier_type}" class="form-control" />
+                        <input type="text" id="supplierType" name="supplierType" value="${supplierEdit.supplierType}" class="form-control" />
                       </div>
                     </div>
                     </div>            
@@ -181,7 +181,7 @@ function validateForm()
                     <div class="col-md-6 pr-md-1">
                       <div class="form-group">
                         <label> Permanent Address  </label>
-                        <input type="text" id="permanent_address"  name="permanent_address" value="${supplierEdit.permanent_address}" placeholder="" class="form-control" />
+                        <input type="text" id="permanentAddress"  name="permanentAddress" value="${supplierEdit.permanentAddress}" placeholder="" class="form-control" />
                       </div>
                     </div>
                     </div>
@@ -190,7 +190,7 @@ function validateForm()
                     <div class="col-md-6 pr-md-1">
                       <div class="form-group">
                         <label> Temporary Address  </label>
-                        <input type="text"  name="temporary_address" value="${supplierEdit.temporary_address}" placeholder="" class="form-control" />
+                        <input type="text"  name="temporaryAddress" value="${supplierEdit.temporaryAddress}" placeholder="" class="form-control" />
                       </div>
                     </div>
                     </div>
