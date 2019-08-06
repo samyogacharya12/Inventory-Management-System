@@ -1,51 +1,21 @@
 package com.example.demo.repository;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.sql.DataSource;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
+import com.example.demo.model.Usertemp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 import org.springframework.stereotype.Repository;
 
-import com.example.demo.model.Customer;
-import com.example.demo.model.Customer_Product;
-import com.example.demo.model.Customer_View;
-import com.example.demo.model.Product;
 import com.example.demo.model.Projectuser;
-import com.example.demo.model.Supplier_View;
-import com.example.demo.model.Trash;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 
 @Repository
 public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository{
@@ -68,33 +38,42 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 					public Projectuser mapRow(ResultSet rs, int arg1) throws SQLException {
 						// TODO Auto-generated method stub
 					    Projectuser user=new Projectuser();
-					    user.setUser_id(rs.getLong("user_id"));
+					    user.setUserId(rs.getLong("user_id"));
 					    user.setUsername(rs.getString("username"));
 					    user.setPassword(rs.getString("password"));
-					    user.setFirst_name(rs.getString("first_name"));
-					    user.setMiddle_name(rs.getString("middle_name"));
-					    user.setLast_name(rs.getString("last_name"));
-					    user.setTemporary_adddress(rs.getString("permanent_address"));
-					    user.setPermanent_address(rs.getString("temporary_adddress"));
+					    user.setFirstName(rs.getString("first_name"));
+					    user.setMiddleName(rs.getString("middle_name"));
+					    user.setLastName(rs.getString("last_name"));
+					    user.setTemporaryAdddress(rs.getString("permanent_address"));
+					    user.setPermanentAddress(rs.getString("temporary_adddress"));
 					    user.setEmail(rs.getString("email"));
-					    user.setPhone_number(rs.getInt("phone_number"));
-					    user.setUser_role_id(rs.getInt("user_role_id"));
+					    user.setPhoneNumber(rs.getInt("phone_number"));
+					    user.setUserRoleId(rs.getInt("user_role_id"));
 					    user.setCountry(rs.getString("country"));
 					    user.setGender(rs.getString("gender"));
 					    user.setImage(rs.getString("image"));
-					    user.setLandline_number(rs.getInt("landline_number"));
-					    user.setDate_of_birth(rs.getDate("date_of_birth"));
-					    user.setJoined_date(rs.getDate("joined_date"));
+					    user.setLandlineNumber(rs.getInt("landline_number"));
+					    user.setDateOfBirth(rs.getDate("date_of_birth"));
+					    user.setJoinedDate(rs.getDate("joined_date"));
 						return user;
 					}
 				});
-	    
+
+	}
+
+	@Override
+	public Projectuser getUserIdByUsername(String username) {
+
+    	String sql="SELECT user_id FROM  inventoryuser WHERE username=?";
+    	RowMapper<Projectuser> rowMapper=new BeanPropertyRowMapper<>(Projectuser.class);
+    	Projectuser projectuser=getJdbcTemplate().queryForObject(sql, rowMapper, username);
+    	return  projectuser;
 	}
 //	@Override
 //	public void updateExpiredProduct(Product product) {
 //		// TODO Auto-generated method stub
 //		String sql="UPDATE product SET is_expired=? WHERE product_id=?";
-//		this.getJdbcTemplate().update(sql, new Object[] {product.getIs_expired(), product.getProduct_id()});
+//		this.getJdbcTemplate().update(sql, new Object[] {product.getIsExpired(), product.getProductId()});
 //	}
 	
 //	@Override
@@ -113,13 +92,13 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 //	   for(Map<String, Object> rows:row)
 //	   {
 //		   Product obj=new Product();
-//		   obj.setProduct_id((Long)rows.get("product_id"));
-//		   obj.setProduct_name((String) rows.get("product_name"));
-//		   obj.setProduct_type((String) rows.get("product_type"));
+//		   obj.setProductId((Long)rows.get("product_id"));
+//		   obj.setProductName((String) rows.get("product_name"));
+//		   obj.setProductType((String) rows.get("product_type"));
 //		   obj.setQuantity((Integer) rows.get("quantity"));
 //		   obj.setPrice((Double) rows.get("price"));
-//		   obj.setMagnifacture_date((Date) rows.get("magnifacture_date"));
-//		   obj.setExpiry_date((Date)rows.get("expiry_date"));
+//		   obj.setMagnifactureDate((Date) rows.get("magnifacture_date"));
+//		   obj.setExpiryDate((Date)rows.get("expiry_date"));
 //		   obj.setImage((String)rows.get("image"));
 //		   product.add(obj);
 //	   }
@@ -130,7 +109,7 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 	public void Insert(Projectuser projectuser) {
 		// TODO Auto-generated method stub
 		String sql="INSERT INTO inventoryuser "+"(user_id, username, password, first_name, middle_name, last_name, permanent_address, temporary_adddress, email, phone_number,country,user_role_id, gender,image, landline_number, date_of_birth, joined_date) SELECT ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?";
-		getJdbcTemplate().update(sql, new Object[] {projectuser.getUser_id(), projectuser.getUsername(), projectuser.getPassword(), projectuser.getFirst_name(), projectuser.getMiddle_name(), projectuser.getLast_name(), projectuser.getPermanent_address(), projectuser.getTemporary_adddress(),projectuser.getEmail(), projectuser.getPhone_number(), projectuser.getCountry(), projectuser.getUser_role_id(), projectuser.getGender(),projectuser.getImage(), projectuser.getLandline_number(), projectuser.getDate_of_birth(), projectuser.getJoined_date()});
+		getJdbcTemplate().update(sql, new Object[] {projectuser.getUserId(), projectuser.getUsername(), projectuser.getPassword(), projectuser.getFirstName(), projectuser.getMiddleName(), projectuser.getLastName(), projectuser.getPermanentAddress(), projectuser.getTemporaryAdddress(),projectuser.getEmail(), projectuser.getPhoneNumber(), projectuser.getCountry(), projectuser.getUserRoleId(), projectuser.getGender(),projectuser.getImage(), projectuser.getLandlineNumber(), projectuser.getDateOfBirth(), projectuser.getJoinedDate()});
 	}
 	@Override
 	public Projectuser getUserById(long id) {
@@ -144,23 +123,23 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 			public Projectuser mapRow(ResultSet rs, int arg1) throws SQLException {
 				// TODO Auto-generated method stub
 			    Projectuser user=new Projectuser();
-			    user.setUser_id(rs.getLong("user_id"));
+			    user.setUserId(rs.getLong("user_id"));
 			    user.setUsername(rs.getString("username"));
 			    user.setPassword(rs.getString("password"));
-			    user.setFirst_name(rs.getString("first_name"));
-			    user.setMiddle_name(rs.getString("middle_name"));
-			    user.setLast_name(rs.getString("last_name"));
-			    user.setTemporary_adddress(rs.getString("permanent_address"));
-			    user.setPermanent_address(rs.getString("temporary_adddress"));
+			    user.setFirstName(rs.getString("first_name"));
+			    user.setMiddleName(rs.getString("middle_name"));
+			    user.setLastName(rs.getString("last_name"));
+			    user.setTemporaryAdddress(rs.getString("permanent_address"));
+			    user.setPermanentAddress(rs.getString("temporary_adddress"));
 			    user.setEmail(rs.getString("email"));
-			    user.setPhone_number(rs.getInt("phone_number"));
-			    user.setUser_role_id(rs.getInt("user_role_id"));
+			    user.setPhoneNumber(rs.getInt("phone_number"));
+			    user.setUserRoleId(rs.getInt("user_role_id"));
 			    user.setCountry(rs.getString("country"));
 			    user.setGender(rs.getString("gender"));
 			    user.setImage(rs.getString("image"));
-			    user.setLandline_number(rs.getInt("landline_number"));
-			    user.setDate_of_birth(rs.getDate("date_of_birth"));
-			    user.setJoined_date(rs.getDate("joined_date"));
+			    user.setLandlineNumber(rs.getInt("landline_number"));
+			    user.setDateOfBirth(rs.getDate("date_of_birth"));
+			    user.setJoinedDate(rs.getDate("joined_date"));
 				return user;
 			}
 		});
@@ -176,7 +155,7 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 //	public void insertintoproduct(Product product) {
 //		// TODO Auto-generated method stub
 //		String sql="INSERT INTO product "+"(product_id, product_name,product_type,price,quantity,magnifacture_date,expiry_date, image) SELECT ?,?,?,?,?,?::Date,?::Date,?";
-//        getJdbcTemplate().update(sql, new Object[] {product.getProduct_id(), product.getProduct_name(), product.getProduct_type(), product.getPrice(), product.getQuantity(), product.getMagnifacture_date(), product.getExpiry_date(), product.getImage()});
+//        getJdbcTemplate().update(sql, new Object[] {product.getProductId(), product.getProductName(), product.getProductType(), product.getPrice(), product.getQuantity(), product.getMagnifactureDate(), product.getExpiryDate(), product.getImage()});
 //	}
 //
 
@@ -184,7 +163,7 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 //	public void updateintoproduct(Product product) {
 //		// TODO Auto-generated method stub
 //		String sql="UPDATE product SET product_name=?,product_type=?, price=?,quantity=?,magnifacture_date=?, expiry_date=?, image=? WHERE product_id=?";
-//		getJdbcTemplate().update(sql, new Object[] {product.getProduct_name(),product.getProduct_type(),product.getPrice(),product.getQuantity(),product.getMagnifacture_date(),product.getExpiry_date(),product.getImage(),product.getProduct_id()});
+//		getJdbcTemplate().update(sql, new Object[] {product.getProductName(),product.getProductType(),product.getPrice(),product.getQuantity(),product.getMagnifactureDate(),product.getExpiryDate(),product.getImage(),product.getProductId()});
 //	}
 //	@Override
 //	public Product getquantitybyid(long id) {
@@ -209,13 +188,33 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 	public void updateIntoUser(Projectuser projectuser) {
 		// TODO Auto-generated method stub
 	  String sql="UPDATE inventoryuser SET username=?, password=?,first_name=?,middle_name=?,last_name=?,temporary_adddress=?, permanent_address=?,email=?, gender=?, phone_number=?, landline_number=?,user_role_id=?, date_of_birth=?, joined_date=?, image=? WHERE user_id=?";	
-      getJdbcTemplate().update(sql, new Object[] {projectuser.getUsername(), projectuser.getPassword(), projectuser.getFirst_name(), projectuser.getMiddle_name(), projectuser.getLast_name(), projectuser.getTemporary_adddress(), projectuser.getPermanent_address(),projectuser.getEmail(), projectuser.getGender(), projectuser.getPhone_number(), projectuser.getLandline_number(), projectuser.getUser_role_id(), projectuser.getDate_of_birth(), projectuser.getJoined_date(), projectuser.getImage(), projectuser.getUser_id()});
+      getJdbcTemplate().update(sql, new Object[] {projectuser.getUsername(), projectuser.getPassword(), projectuser.getFirstName(), projectuser.getMiddleName(), projectuser.getLastName(), projectuser.getTemporaryAdddress(), projectuser.getPermanentAddress(),projectuser.getEmail(), projectuser.getGender(), projectuser.getPhoneNumber(), projectuser.getLandlineNumber(), projectuser.getUserRoleId(), projectuser.getDateOfBirth(), projectuser.getJoinedDate(), projectuser.getImage(), projectuser.getUserId()});
 	}
+
 	@Override
-	public void deleteUserInfo(long user_id) {
+	public void insetIntoUserTemp(Map map) {
+		String sql="INSERT INTO user_temp(username) SELECT ?";
+		getJdbcTemplate().update(sql, new Object[] {map.get("username")});
+	}
+
+	@Override
+	public Map getUserTempData() {
+		String sql="SELECT * FROM user_temp";
+	    Map map=this.getJdbcTemplate().queryForMap(sql);
+	    return map;
+	}
+
+	@Override
+	public void deleteIntoUserTemp(String username) {
+		String sql="DELETE FROM user_temp WHERE username=?";
+		getJdbcTemplate().update(sql,username);
+	}
+
+	@Override
+	public void deleteUserInfo(long userId) {
 		// TODO Auto-generated method stub
 	  String sql="DELETE FROM inventoryuser WHERE user_id=?";
-	  getJdbcTemplate().update(sql, user_id); 
+	  getJdbcTemplate().update(sql, userId);
 	}
 //	@Override
 //	public Product getproductbyid(long product_id) {
@@ -232,11 +231,11 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 //	 getJdbcTemplate().update(sql, product_id);
 //	}
 //	@Override
-//	public Customer_Product getquantitybycustomerid(long customer_id, long product_id) {
+//	public CustomerProduct getquantitybycustomerid(long customer_id, long product_id) {
 //		// TODO Auto-generated method stub
 //		String sql="SELECT * FROM customer_product WHERE customer_customer_id=? and product_product_id=?";
-//		RowMapper<Customer_Product> rowmapper=new BeanPropertyRowMapper<Customer_Product>(Customer_Product.class);
-//		Customer_Product customerproduct=getJdbcTemplate().queryForObject(sql,rowmapper, customer_id, product_id);
+//		RowMapper<CustomerProduct> rowmapper=new BeanPropertyRowMapper<CustomerProduct>(CustomerProduct.class);
+//		CustomerProduct customerproduct=getJdbcTemplate().queryForObject(sql,rowmapper, customer_id, product_id);
 //		return customerproduct;
 //	}
 
@@ -270,7 +269,7 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 //		return total;
 //	}
 //	@Override
-//	public double getSumOfprice(String product_name) {
+//	public double getSumOfPrice(String product_name) {
 //		// TODO Auto-generated method stub
 //		String sql="SELECT SUM(price) FROM product WHERE product_name=?";
 //		double total=this.getJdbcTemplate().queryForObject(sql, Double.class, product_name);
@@ -401,8 +400,8 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 //
 //			   for(Product product:products)
 //			    {
-//				   System.out.println(product.getProduct_id());
-//			    	 String product_id1=String.valueOf(product.getProduct_id());
+//				   System.out.println(product.getProductId());
+//			    	 String product_id1=String.valueOf(product.getProductId());
 //			    	 PdfPCell product_idvalue=new PdfPCell(new Paragraph(product_id1, tableBody));
 //			    	 product_idvalue.setBorderColor(BaseColor.BLACK);
 //			    	 product_idvalue.setPaddingLeft(10);
@@ -413,8 +412,8 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 //			    	 product_idvalue.setExtraParagraphSpace(5);
 //					 table.addCell(product_idvalue);
 //
-//					 System.out.println(product.getProduct_name());
-//					 String product_name1=String.valueOf(product.getProduct_name());
+//					 System.out.println(product.getProductName());
+//					 String product_name1=String.valueOf(product.getProductName());
 //			    	 PdfPCell product_namevalue=new PdfPCell(new Paragraph(product_name1, tableBody));
 //			    	 product_namevalue.setBorderColor(BaseColor.BLACK);
 //			    	 product_namevalue.setPaddingLeft(10);
@@ -425,8 +424,8 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 //			    	 product_namevalue.setExtraParagraphSpace(5);
 //					 table.addCell(product_namevalue);
 //
-//					 System.out.println(product.getProduct_type());
-//			    	 PdfPCell product_typevalue=new PdfPCell(new Paragraph(product.getProduct_type(), tableBody));
+//					 System.out.println(product.getProductType());
+//			    	 PdfPCell product_typevalue=new PdfPCell(new Paragraph(product.getProductType(), tableBody));
 //			    	 product_typevalue.setBorderColor(BaseColor.BLACK);
 //			    	 product_typevalue.setPaddingLeft(10);
 //			    	 product_typevalue.setPaddingRight(10);
@@ -459,8 +458,8 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 //					 table.addCell(quantity_value);
 //
 //
-//					 PdfPCell magnifacture_date1=new PdfPCell(new Paragraph(product.getMagnifacture_date().toLocaleString()));
-//					System.out.println(product.getMagnifacture_date());
+//					 PdfPCell magnifacture_date1=new PdfPCell(new Paragraph(product.getMagnifactureDate().toLocaleString()));
+//					System.out.println(product.getMagnifactureDate());
 //					 magnifacture_date1.setBorderColor(BaseColor.BLACK);
 //					 magnifacture_date1.setPaddingLeft(10);
 //					 magnifacture_date1.setPaddingRight(10);
@@ -470,7 +469,7 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 //					 magnifacture_date1.setExtraParagraphSpace(5);
 //					 table.addCell(magnifacture_date1);
 //
-//					 PdfPCell expiry_date1=new PdfPCell(new Paragraph(product.getExpiry_date().toLocaleString()));
+//					 PdfPCell expiry_date1=new PdfPCell(new Paragraph(product.getExpiryDate().toLocaleString()));
 //					 expiry_date1.setBorderColor(BaseColor.BLACK);
 //					 expiry_date1.setPaddingLeft(10);
 //					 expiry_date1.setPaddingRight(10);
@@ -487,7 +486,7 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 //
 //			   for(Product product:products)
 //			   {
-//				   int product_id1=(int) product.getProduct_id();
+//				   int product_id1=(int) product.getProductId();
 //				   count=count+1;
 //			   }
 //			     value=String.valueOf(count);
@@ -646,22 +645,22 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 //		    	 bodycellstyle.setFillBackgroundColor(HSSFColor.WHITE.index);
 //
 //		    	 HSSFCell product_idValue=bodyRow.createCell(0);
-//		    	 product_idValue.setCellValue(product.getProduct_id());
-//		    	 System.out.println(product.getProduct_id());
+//		    	 product_idValue.setCellValue(product.getProductId());
+//		    	 System.out.println(product.getProductId());
 //		    	 product_idValue.setCellStyle(bodycellstyle);
 //
 //		    	 HSSFCell product_nameValue=bodyRow.createCell(1);
-//		    	 product_nameValue.setCellValue(product.getProduct_name());
-//		    	 System.out.println(product.getProduct_name());
+//		    	 product_nameValue.setCellValue(product.getProductName());
+//		    	 System.out.println(product.getProductName());
 //		    	 product_nameValue.setCellStyle(bodycellstyle);
 //
 //		    	 HSSFCell product_typeValue=bodyRow.createCell(2);
-//		    	 product_typeValue.setCellValue(product.getProduct_type());
+//		    	 product_typeValue.setCellValue(product.getProductType());
 //		    	 product_typeValue.setCellStyle(bodycellstyle);
 //
 //		    	 HSSFCell priceValue=bodyRow.createCell(3);
 //		    	 priceValue.setCellValue(product.getPrice());
-//		    	 System.out.println(product.getProduct_type());
+//		    	 System.out.println(product.getProductType());
 //		    	 priceValue.setCellStyle(bodycellstyle);
 //
 //
@@ -672,12 +671,12 @@ public class UserRepositoryImpl extends JdbcDaoSupport implements UserRepository
 //
 //
 //		    	 HSSFCell magnifacture_dateValue=bodyRow.createCell(5);
-//		    	 magnifacture_dateValue.setCellValue(product.getMagnifacture_date());
+//		    	 magnifacture_dateValue.setCellValue(product.getMagnifactureDate());
 //		    	 magnifacture_dateValue.setCellStyle(bodycellstyle);
 //
 //
 //		     	 HSSFCell expiry_dateValue=bodyRow.createCell(6);
-//		    	 expiry_dateValue.setCellValue(product.getExpiry_date());
+//		    	 expiry_dateValue.setCellValue(product.getExpiryDate());
 //		    	 expiry_dateValue.setCellStyle(bodycellstyle);
 //
 //		    	 i++;
