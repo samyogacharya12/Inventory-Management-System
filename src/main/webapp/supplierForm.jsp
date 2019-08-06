@@ -57,39 +57,39 @@
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
           </li>
          
           <li>
-            <a href="/get_expenses">
+            <a href="/list-expenses">
           <i class="tim-icons icon-notes"></i>
               <p>Expenses</p>
             </a>
@@ -97,7 +97,7 @@
           
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               <p>Trash</p>
             </a>
@@ -152,7 +152,7 @@
               <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
                  <div class="col-sm-12 col-md-6">
-               <a href="/list_supplier" class="btn btn-primary btn-sm"> Back</a>
+               <a href="/list-supplier" class="btn btn-primary btn-sm"> Back</a>
                </div>      
                   </div>
                   
@@ -162,20 +162,20 @@
                     <div class="col-md-5 pr-md-1">
                        <div class="form-group has-label">
                         <label >Supplier Id </label>
-                        <input type="text" name="supplier_id" class="form-control"  required="true" />
+                        <input type="text" name="supplierId" class="form-control"  required="true" />
                       </div>
                     </div>
                     <div class="col-md-3 px-md-1">
                       <div class="form-group has-label">
                         <label> supplier name</label>
-                        <input type="text"  name="supplier_name"  placeholder="username" class="form-control" required="true"/>
+                        <input type="text"  name="supplierName"  placeholder="username" class="form-control" required="true"/>
                       </div>
                     </div>
                     
                     <div class="col-md-3 px-md-1">
                          <div class="form-group has-label">
                         <label>supplier type</label>
-                        <input type="text" name="supplier_type" placeholder="" class="form-control" required="true" />
+                        <input type="text" name="supplierType" placeholder="" class="form-control" required="true" />
                       </div>
                     </div>
                     </div>
@@ -183,7 +183,7 @@
                     <div class="col-md-4 pl-md-1">
                       <div class="form-group has-label">
                         <label> permanent address</label>
-                        <input type="text" name="permanent_address"  placeholder="" class="form-control" required="true"/>
+                        <input type="text" name="permanentAddress"  placeholder="" class="form-control" required="true"/>
                       </div>
                     </div>
              
@@ -191,7 +191,7 @@
                     <div class="col-md-6 pr-md-1">
                   <div class="form-group has-label">
                         <label> temporary address </label>
-                        <input type="text"  name="temporary_address"  placeholder="first_name" class="form-control" required="true"/>
+                        <input type="text"  name="temporaryAddress"  placeholder="firstName" class="form-control" required="true"/>
                       </div>
                     </div>
                     </div>
