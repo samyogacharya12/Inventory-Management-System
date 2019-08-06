@@ -42,32 +42,32 @@
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
@@ -75,7 +75,7 @@
           
           
            <li>
-            <a href="/get_expenses">
+            <a href="/list-expenses">
           <i class="tim-icons icon-notes"></i>
               <p>Expenses</p>
             </a>
@@ -83,7 +83,7 @@
           
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               Trash
             </a>
@@ -135,13 +135,13 @@
                 <h5 class="title"></h5>
               </div>
               <div class="card-body">
-              <a href="supplier?supplier_id=${supplierproduct.supplier_id}&product_id=${supplierproduct.product_id}" class="btn btn-primary btn-sm">Back</a> 
+              <a href="/getSupplierBySupplierIdAndProductId?supplierId=${supplierproduct.supplierId}&productId=${supplierproduct.productId}" class="btn btn-primary btn-sm">Back</a>
                 <form action="/update_supplierproduct" method="post"  enctype="multipart/form-data" onsubmit="return validateForm()">
             
                     <div class="col-md-4 px-md-1">
                       <div class="form-group">
                     <label>Supplier Id </label>
-                       <input type="text" name="supplier_id"  value="${supplierproduct.supplier_id}" readonly class="form-control"/>
+                       <input type="text" name="supplierId"  value="${supplierproduct.supplierId}" readonly class="form-control"/>
                          </div>
                          </div>
             
@@ -149,7 +149,7 @@
                  <div class="col-md-4 px-md-1">
                       <div class="form-group">
                          <label>Product Id </label>
-                        <input type="text" name="product_id" value="${supplierproduct.product_id}" placeholder="" class="form-control" />
+                        <input type="text" name="productId" value="${supplierproduct.productId}" placeholder="" class="form-control" />
                       </div>
                     </div> 
                             
