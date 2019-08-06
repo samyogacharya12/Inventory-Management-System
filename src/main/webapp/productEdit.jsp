@@ -52,46 +52,46 @@ label {
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
           </li>
          
            <li>
-            <a href="/get_expenses">
+            <a href="/list-expenses">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
           </li>
          
            <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               Trash
             </a>
@@ -143,21 +143,21 @@ label {
                 <h5 class="title">Add Product</h5>
               </div>
               <div class="card-body">
-                <form action="/update_product" method="post"  enctype="multipart/form-data">
+                <form action="/update-product" method="post"  enctype="multipart/form-data">
                   <div class="row">
-                        <input type="hidden" name="product_id" value="${productEdit.product_id}" class="form-control" />
+                        <input type="hidden" name="productId" value="${productEdit.productId}" class="form-control" />
  
                     <div class="col-md-3 px-md-1">
                       <div class="form-group">
                         <label>Product Name</label>
-                        <input type="text"  name="product_name" value="${productEdit.product_name}" placeholder="productname" class="form-control" />
+                        <input type="text"  name="productName" value="${productEdit.productName}" placeholder="productname" class="form-control" />
                       </div>
                     </div>
                     
                     <div class="col-md-3 px-md-1">
                       <div class="form-group">
                         <label>Product Type</label>
-                        <input type="text" name="product_type" value="${productEdit.product_type}" class="form-control" />
+                        <input type="text" name="productType" value="${productEdit.productType}" class="form-control" />
                       </div>
                     </div>
                     </div>
@@ -180,15 +180,15 @@ label {
                     
                        <div class="col-md-4 px-md-1">
                    <div class="form-group">
-    <label class="label-control">Datetime Picker</label>
-                             <input type="text" class="form-control datetimepicker" value="${magnifacture_date}"/>
+    <label class="label-control">Magnifacture Date</label>
+                             <input type="text" name="magnifactureDate" class="form-control" value="${productEdit.magnifactureDate}"/>
                       </div>
                       </div>
                   
               <!-- input with datetimepicker -->
 <div class="form-group">
-    <label class="label-control">Datetime Picker</label>
-    <input type="text" class="form-control datetimepicker" value="10/05/2016"/>
+    <label class="label-control">Expiry Date</label>
+    <input type="text" name="expiryDate" class="form-control" value="${productEdit.expiryDate}"/>
 </div>
       
          <div class="col-md-4 px-md-1">
