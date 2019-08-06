@@ -46,39 +46,39 @@
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-users">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
           </li>
          
           <li>
-            <a href="/get_expenses">
+            <a href="/list-expenses">
           <i class="tim-icons icon-notes"></i>
               <p>Expenses</p>
             </a>
@@ -86,7 +86,7 @@
           
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               <p>Trash</p>
             </a>
@@ -142,7 +142,7 @@
                 <div class="toolbar">
                   <!--        Here you can write extra buttons/actions for the toolbar              -->
                 </div>
-                <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4">
+<%--                <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4">--%>
                 <div class="row">
                 <div class="col-sm-12 col-md-6">
                 <div class="dataTables_length" id="datatable_length">
@@ -196,14 +196,14 @@
                   <tbody>
                      <c:forEach var="supplier" items="${supplierinfo}">
                   <tr>
-                      <td> ${supplier.supplier_id}</td>
-                      <td>${supplier.supplier_name}</td>
-                      <td>${supplier.supplier_type}</td>
-                      <td>${supplier.permanent_address} </td>
-                      <td>${supplier.temporary_address}</td>
-                      <td> <img src="supplierimagedisplay?supplier_id=${supplier.supplier_id}" alt="image-display" class="center" height="200px" width="200px" style="width:50%;"/> </td>
-     <td><a href="/addSupplierProduct?supplier_id=${supplier.supplier_id}" class=""> <i class="tim-icons icon-upload"></i>  </a> </td>
-    <td> <a href="/supplierEdit?supplier_id=${supplier.supplier_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+                      <td> ${supplier.supplierId}</td>
+                      <td>${supplier.supplierName}</td>
+                      <td>${supplier.supplierType}</td>
+                      <td>${supplier.permanentAddress} </td>
+                      <td>${supplier.temporaryAddress}</td>
+                      <td> <img src="supplierimagedisplay?supplierId=${supplier.supplierId}" alt="image-display" class="center" height="200px" width="200px" style="width:50%;"/> </td>
+     <td><a href="/addSupplierProduct?supplierId=${supplier.supplierId}" class=""> <i class="tim-icons icon-upload"></i>  </a> </td>
+    <td> <a href="/supplierEdit?supplierId=${supplier.supplierId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
                       </tr>
                       </c:forEach>
                       </tbody>
@@ -217,7 +217,11 @@
            </div>                
            </div>
            </div> 
-           </div>      
+           </div>
+           </div>
+    </div>
+    </div>
+</body>
   <!--   Core JS Files   -->
   
 	<script src="static/jquery.tablesorter.js.download"></script>
@@ -393,6 +397,5 @@
   </script>
   
 
-  
-</body>
+
 </html>
