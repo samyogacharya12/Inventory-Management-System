@@ -29,7 +29,7 @@ public class ImageDisplayController {
 	@GetMapping(value="/imagedisplay")
 	public void showImage(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		int id=Integer.parseInt(request.getParameter("user_id"));
+		int id=Integer.parseInt(request.getParameter("userId"));
 		Projectuser projectuser=userRepository.getUserById(id);
 		File file=new File(projectuser.getImage());
 		BufferedInputStream input=null;
