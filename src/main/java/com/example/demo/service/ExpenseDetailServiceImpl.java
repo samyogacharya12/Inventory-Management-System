@@ -17,8 +17,13 @@ public class ExpenseDetailServiceImpl {
 
 	@Autowired
 	private ExpenseRepository expenseRepository;
-	
-	
+
+	@Autowired
+	private ExcelService excelService;
+
+	@Autowired
+	private PdfService pdfService;
+
 	public List<Expense> getAllExpenseInfo()
 	{
 		return expenseRepository.getAllExpenseInfo();
@@ -80,13 +85,13 @@ public class ExpenseDetailServiceImpl {
 	public double totalCost(String expense_name) {
 	    return expenseRepository.totalCost(expense_name);
 	}
-	public boolean createPdf(List<Expense> expenses, ServletContext context, HttpServletRequest request, HttpServletResponse response)
+	public boolean createPdfForExpenses(List<Expense> expenses, ServletContext context, HttpServletRequest request, HttpServletResponse response)
 	{
-	return expenseRepository.createPdf(expenses, context, request, response);
+		return pdfService.createPdfForExpenses(expenses, context, request, response);
     }
 	
-	 public boolean createExcel(List<Expense> expenses, ServletContext context, HttpServletResponse response, HttpServletRequest request)
+	 public boolean createExcelForExpenses(List<Expense> expenses, ServletContext context, HttpServletResponse response, HttpServletRequest request)
 	 {
-		 return expenseRepository.createExcel(expenses, context, response, request);
+	 	return excelService.createExcelForExpenses(expenses, context, response, request);
 	 }
 }
