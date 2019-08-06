@@ -1,6 +1,8 @@
 <!DOCTYPE html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html lang="en">
-
 <head>
 <style>
 body {
@@ -60,7 +62,7 @@ body {
             
           </a>
           <a href="javascript:void(0)" class="simple-text logo-normal">
-     
+            <b>Welcome ${username}</b>
           </a>
         </div>
         <ul class="nav">
@@ -71,46 +73,46 @@ body {
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               <p>Suppliers</p>
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               <p>Products</p>
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               <p>Customers</p>
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               <p>Users</p>
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               <p>Summary Report</p>
             </a>
           </li>
          
            <li>
-            <a href="/get_expenses">
+            <a href="/list-expense">
           <i class="tim-icons icon-notes"></i>
               <p>Expenses</p>
             </a>
           </li>
           
                 <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               <p>Trash</p>
             </a>
@@ -153,7 +155,9 @@ body {
               </a>  
                 <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
                   <li class="nav-link">
-                    <a href="#" class="nav-item dropdown-item">${product_name} is expired</a>
+                    <c:forEach var="product" items="${productName}">
+                    <a href="#" class="nav-item dropdown-item">${product} is expired</a>
+                    </c:forEach>
                   </li>
                 </ul>
               </li>
@@ -200,11 +204,6 @@ body {
                 <h3 class="card-title"> <i class="tim-icons icon-trash-simple" style="color:blue"></i>
                      ${expiredproduct}</h3>
               
-              </div>
-              <div class="card-body">
-                <div class="chart-area">
-                  <canvas id="CountryChart"></canvas>
-                </div>
               </div>
             </div>
           </div>
