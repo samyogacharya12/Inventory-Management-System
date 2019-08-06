@@ -1,13 +1,11 @@
 package com.example.demo.model;
 
 import java.util.Collection;
-import java.util.Collections;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.util.StringUtils;
 
@@ -20,19 +18,19 @@ public class CustomUserDetails implements UserDetails {
 	@Autowired
 	private Projectuser projectUser;
 	@Autowired
-	private List<String> roleuser;
-	public CustomUserDetails(Projectuser projectUser,List<String> roleuser)
+	private List<String> roleUser;
+	public CustomUserDetails(Projectuser projectUser,List<String> roleUser)
 	{
 		super();
 		this.projectUser=projectUser;
-		this.roleuser=roleuser;
+		this.roleUser =roleUser;
 	}
 	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
-      String roles=StringUtils.collectionToCommaDelimitedString(roleuser);
-      System.out.println(roleuser);
+      String roles=StringUtils.collectionToCommaDelimitedString(roleUser);
+      System.out.println(roleUser);
       System.out.println(roles);
       return AuthorityUtils.commaSeparatedStringToAuthorityList(roles);
 	}
