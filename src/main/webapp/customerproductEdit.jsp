@@ -42,32 +42,32 @@
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-users">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
@@ -75,14 +75,14 @@
           
           
            <li>
-            <a href="/get_expenses">
+            <a href="/list-expenses">
           <i class="tim-icons icon-notes"></i>
               <p>Expenses</p>
             </a>
           </li>
 
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               <p>Trash</p>
             </a>
@@ -134,13 +134,13 @@
                 <h5 class="title"></h5>
               </div>
               <div class="card-body">
-              <a href="customer?customer_id=${customerproduct.customer_id}&product_id=${customerproduct.product_id}" class="btn btn-primary btn-sm">Back</a> 
-                <form action="/update_customerproduct" method="post"  enctype="multipart/form-data">
+              <a href="getCustomerEditForm?customerId=${customerproduct.customerId}&productId=${customerproduct.productId}" class="btn btn-primary btn-sm">Back</a>
+                <form action="/updateCustomerProduct" method="post"  enctype="multipart/form-data">
             
                     <div class="col-md-4 px-md-1">
                       <div class="form-group">
                     <label>Customer Id </label>
-                       <input type="text" name="customer_customer_id" value="${customerproduct.customer_customer_id}" readonly class="form-control" />
+                       <input type="text" name="customerId" value="${customerproduct.customerId}" readonly class="form-control" />
                          </div>
                          </div>
             
@@ -148,26 +148,41 @@
                  <div class="col-md-4 px-md-1">
                       <div class="form-group">
                          <label>Product Id </label>
-                        <input type="text" name="product_product_id" value="${customerproduct.product_product_id}" placeholder="" class="form-control" />
+                        <input type="text" name="productId" value="${customerproduct.productId}"  readonly placeholder="" class="form-control" />
                       </div>
-                    </div> 
-                            
-                      <div class="col-md-4 pl-md-1">
+                    </div>
+
+                  <div class="col-md-4 px-md-1">
+                    <div class="form-group">
+                      <input type="hidden" name="customerPurchaseId" value="${customerproduct.customerPurchaseId}" placeholder="" class="form-control" />
+                    </div>
+                  </div>
+
+                  <div class="col-md-4 pl-md-1">
                       <div class="form-group">
                         <label> Quantity</label>
                         <input type="number" name="quantity" value="${customerproduct.quantity}" placeholder="" class="form-control"/>
                       </div>
                     </div>
+
+                  <div class="col-md-4 pl-md-1">
+                    <div class="form-group">
+                      <label> Buy Date</label>
+                      <input type="text" name="buyDate" value="${customerproduct.buyDate}" placeholder="" class="form-control"/>
+                    </div>
+                  </div>
+
+
              
                   <div class="row">
                     <div class="col-md-6 pr-md-1">
                       <div class="form-group">
                         <label> Amount </label>
-                        <input type="number"  name="amount" value="${customerproduct.amount}" placeholder="" class="form-control" />
+                        <input type="hidden"  name="amount" value="${customerproduct.amount}" placeholder="" class="form-control" />
                       </div>
                     </div>
-                    </div>          
-                            
+                    </div>
+
                                 
               <div class="card-footer">
                <div class="col-md-4">
