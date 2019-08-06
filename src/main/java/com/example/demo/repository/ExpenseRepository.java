@@ -7,24 +7,20 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.example.demo.model.Expense;
-import com.example.demo.model.Supplier;
-import com.example.demo.model.Supplier_View;
 
 public interface ExpenseRepository {
 
-	   public List<Expense> getAllExpenseInfo();
-	   public void insertIntoExpenses(Expense expense);
-	   public Expense getExpenseById(long expense_id);
-	   public void updateIntoExpenses(Expense expense);
-	   public void deleteExpenses(long expense_id);
-	   public List<Expense> getExpenseByExpenseName(String expense_name);
-	   public List<Expense> getExpenseByExpenseDate(String[] expense_date);
-	   public int countTotalId();
-	   public double totalCost();
-	   public int countTotalId(String[] expense_date);
-	   public Double totalCost(String[] expense_date);
-	   public int countTotalId(String expense_name);
-	   public double totalCost(String expense_name);
-	   public boolean createExcel(List<Expense> expenses, ServletContext context, HttpServletResponse response, HttpServletRequest request);
-	   public boolean createPdf(List<Expense> expenses, ServletContext context, HttpServletRequest request, HttpServletResponse response);
+	    List<Expense> getAllExpenseInfo();
+	    void insertIntoExpenses(Expense expense);
+	    Expense getExpenseById(long expenseId);
+	    void updateIntoExpenses(Expense expense);
+	    void deleteExpenses(long expenseId);
+	    List<Expense> getExpenseByExpenseName(String expenseName);
+	    List<Expense> getExpenseByExpenseDate(String[] expenseDate);
+	    int countTotalId();
+	    double totalCost();
+	    int countTotalId(String[] expenseDate);
+	    Double totalCost(String[] expenseDate);
+	    int countTotalId(String expenseName);
+	   double totalCost(String expenseName);
 }
