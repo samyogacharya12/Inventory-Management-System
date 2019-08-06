@@ -42,25 +42,25 @@
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
@@ -74,7 +74,7 @@
           </li>
           
            <li>
-            <a href="/get_expenses">
+            <a href="/list-expense">
           <i class="tim-icons icon-notes"></i>
               <p>Expenses</p>
             </a>
@@ -82,7 +82,7 @@
           
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               <p>Trash</p>
             </a>
@@ -135,12 +135,12 @@
                 <h5 class="title">Update Profile</h5>
               </div>
               <div class="card-body">
-                <form action="/update_product" method="post" enctype="multipart/form-data">
+                <form action="/update-user" method="post" enctype="multipart/form-data">
                   <div class="row">
                     <div class="col-md-5 pr-md-1">
                       <div class="form-group">
                         <label >User Id </label>
-                        <input type="hidden" name="user_id" value="${userEdit.user_id}" class="form-control" />
+                        <input type="hidden" name="userId" value="${userEdit.userId}" class="form-control" />
                       </div>
                     </div>
                     <div class="col-md-3 px-md-1">
@@ -169,21 +169,21 @@
                     <div class="col-md-6 pr-md-1">
                       <div class="form-group">
                         <label> First Name </label>
-                        <input type="text"  name="first_name" value="${userEdit.first_name}" placeholder="first_name" class="form-control" />
+                        <input type="text"  name="firstName" value="${userEdit.firstName}" placeholder="firstName" class="form-control" />
                       </div>
                     </div>
                     
                     <div class="col-md-6 pl-md-1">
                       <div class="form-group">
                         <label>Middle Name </label>
-                        <input type="text" name="middle_name" value="${userEdit.middle_name}" placeholder="Middle Name" class="form-control" />
+                        <input type="text" name="middleName" value="${userEdit.middleName}" placeholder="Middle Name" class="form-control" />
                       </div>
                     </div>
                     
                     <div class="col-md-6 pl-md-1">
                       <div class="form-group">
                         <label> Last Name </label>
-                        <input type="text"  name="last_name" value="${userEdit.last_name}" placeholder="Last Name" class="form-control" />
+                        <input type="text"  name="lastName" value="${userEdit.lastName}" placeholder="Last Name" class="form-control" />
                       </div>
                     </div>
                   </div>
@@ -191,7 +191,7 @@
                     <div class="col-md-12">
                       <div class="form-group">
                         <label >Temporary Address </label>
-                        <input type="text" name="temporary_adddress" value="${userEdit.temporary_adddress}" placeholder="Home Address" class="form-control" />
+                        <input type="text" name="temporaryAdddress" value="${userEdit.temporaryAdddress}" placeholder="Home Address" class="form-control" />
                       </div>
                     </div>
                   </div>
@@ -199,7 +199,7 @@
                     <div class="col-md-4 pr-md-1">
                       <div class="form-group">
                         <label> Permanent Address </label>
-                        <input type="text" name="permanent_address" value="${userEdit.permanent_address}" placeholder="City" class="form-control" />
+                        <input type="text" name="permanentAddress" value="${userEdit.permanentAddress}" placeholder="City" class="form-control" />
                       </div>
                     </div>
                     <div class="col-md-4 px-md-1">
@@ -211,14 +211,14 @@
                     <div class="col-md-4 pl-md-1">
                       <div class="form-group">
                         <label> Phone number </label>
-                        <input type="number" name="phone_number" value="${userEdit.phone_number}" class="form-control" />
+                        <input type="number" name="phoneNumber" value="${userEdit.phoneNumber}" class="form-control" />
                       </div>
                     </div>
                     
                       <div class="col-md-4 pl-md-1">
                       <div class="form-group">
                         <label> LandLine number </label>
-                        <input type="number" name="landline_number" value="${userEdit.landline_number}"  class="form-control" />
+                        <input type="number" name="landlineNumber" value="${userEdit.landlineNumber}"  class="form-control" />
                       </div>
                     </div>
                     
@@ -227,9 +227,9 @@
                   <div class="col-md-4 pl-md-1">
                     <div class="form-group">
                    <label> User Role </label>   
-                  <select name="user_role_id">             
-  <option value="1"${userEdit.user_role_id=='1'?'selected':''}>1</option>
-  <option value="2" ${userEdit.user_role_id=='2'?'selected':''}>2</option>
+                  <select name="userRoleId">
+  <option value="1"${userEdit.userRoleId=='1'?'selected':''}>1</option>
+  <option value="2" ${userEdit.userRoleId=='2'?'selected':''}>2</option>
 </select>
 </div>
 </div>
