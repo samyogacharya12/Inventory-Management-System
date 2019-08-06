@@ -32,7 +32,7 @@ public class ProductImageDisplayController {
 	@GetMapping(value="/productimagedisplay")
 	public void showImage(HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		long id=Integer.parseInt(request.getParameter("product_id"));
+		long id=Integer.parseInt(request.getParameter("productId"));
 		Product product=productDetailService.getProductById(id);
 		File file=new File(product.getImage());
 		BufferedInputStream input=null;
