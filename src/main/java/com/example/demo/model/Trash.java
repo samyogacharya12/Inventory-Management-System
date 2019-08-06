@@ -8,41 +8,41 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class Trash {
 
-	private long trash_id;
-	private long product_id;
-    private String product_name;
-    private String product_type;
+	private long trashId;
+	private long productId;
+    private String productName;
+    private String productType;
     private double price;
     @Min(value = 0L, message = "The value must be positive")
     private int quantity;
     private String image;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date magnifacture_date;
+	private Date magnifactureDate;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-    private Date expiry_date;
-	public long getProduct_id() {
-		return product_id;
+    private Date expiryDate;
+	public long getProductId() {
+		return productId;
 	}
-	public long getTrash_id() {
-		return trash_id;
+	public long getTrashId() {
+		return trashId;
 	}
-	public void setTrash_id(long trash_id) {
-		this.trash_id = trash_id;
+	public void setTrashId(long trashId) {
+		this.trashId = trashId;
 	}
-	public void setProduct_id(long product_id) {
-		this.product_id = product_id;
+	public void setProductId(long productId) {
+		this.productId = productId;
 	}
-	public String getProduct_name() {
-		return product_name;
+	public String getProductName() {
+		return productName;
 	}
-	public void setProduct_name(String product_name) {
-		this.product_name = product_name;
+	public void setProductName(String productName) {
+		this.productName = productName;
 	}
-	public String getProduct_type() {
-		return product_type;
+	public String getProductType() {
+		return productType;
 	}
-	public void setProduct_type(String product_type) {
-		this.product_type = product_type;
+	public void setProductType(String productType) {
+		this.productType = productType;
 	}
 	public double getPrice() {
 		return price;
@@ -62,17 +62,17 @@ public class Trash {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public Date getMagnifacture_date() {
-		return magnifacture_date;
+	public Date getMagnifactureDate() {
+		return magnifactureDate;
 	}
-	public void setMagnifacture_date(Date magnifacture_date) {
-		this.magnifacture_date = magnifacture_date;
+	public void setMagnifactureDate(Date magnifactureDate) {
+		this.magnifactureDate = magnifactureDate;
 	}
-	public Date getExpiry_date() {
-		return expiry_date;
+	public Date getExpiryDate() {
+		return expiryDate;
 	}
-	public void setExpiry_date(Date expiry_date) {
-		this.expiry_date = expiry_date;
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
 	}
 	
 }
