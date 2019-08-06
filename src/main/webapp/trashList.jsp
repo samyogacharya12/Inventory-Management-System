@@ -72,46 +72,46 @@ body {
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               <p>Suppliers</p>
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               <p>Products</p>
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               <p>Customers</p>
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               <p>Users</p>
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               <p>Summary Report</p>
             </a>
           </li>
          
            <li>
-            <a href="/get_expenses">
+            <a href="/list-expense">
           <i class="tim-icons icon-notes"></i>
               <p>Expenses</p>
             </a>
           </li>
           
                 <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               <p>Trash</p>
             </a>
@@ -191,14 +191,14 @@ body {
                         <tbody>
                  <c:forEach var="trashes" items="${trash}">
 <tr>   
-    <td> ${trashes.trash_id} </td>
-    <td>${trashes.product_id } </td>
-    <td> ${trashes.product_name} </td>
-    <td> ${trashes.product_type} </td>
+    <td> ${trashes.trashId} </td>
+    <td>${trashes.productId } </td>
+    <td> ${trashes.productName} </td>
+    <td> ${trashes.productType} </td>
     <td> ${trashes.price} </td>
     <td> ${trashes.quantity} </td>
-    <td> ${trashes.magnifacture_date}</td>
-    <td> ${trashes.expiry_date}</td>
+    <td> ${trashes.magnifactureDate}</td>
+    <td> ${trashes.expiryDate}</td>
     </tr>
 </c:forEach>                         
 </tbody>
