@@ -41,39 +41,39 @@
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
           </li>
           
              <li>
-            <a href="/get_expenses">
+            <a href="/list-expense">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
@@ -81,7 +81,7 @@
           
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               <p>Trash</p>
             </a>
@@ -157,7 +157,7 @@
                     <div class="col-md-4 px-md-1">
                       <div class="form-group">
                         <label></label>
-                        <input type="hidden"  name="customer_customer_id" value="${customer_customer_id}" class="form-control" />
+                        <input type="hidden"  name="customerId" value="${customerId}" class="form-control" />
                       </div>
                     </div>
                     
@@ -179,7 +179,7 @@
                      <div class="col-md-4 px-md-1">
                       <div class="form-group has-label">
                          <label>Buy Date </label>
-                        <input type="date" name="buy_date" placeholder="" class="form-control" required="true"/>
+                        <input type="date" name="buyDate" placeholder="" class="form-control" required="true"/>
                       </div>
                     </div>
       
