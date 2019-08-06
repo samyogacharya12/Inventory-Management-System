@@ -7,6 +7,6 @@ import com.example.demo.model.Trash;
 
 public interface TrashRepository {
 
-	  public void insertIntoTrash(Product product);
-	  public List<Trash> getAllTrashInfo();
+	   void insertIntoTrash(Product product);
+	   List<Trash> getAllTrashInfo();
 }
