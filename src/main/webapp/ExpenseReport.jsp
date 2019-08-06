@@ -41,39 +41,39 @@
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
           </li>
           
            <li>
-            <a href="/get_expenses">
+            <a href="/list-expenses">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
@@ -81,7 +81,7 @@
           
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               Trash
             </a>
@@ -158,7 +158,7 @@
                 <div id="datatable_filter" class="dataTables_filter">
                 
                 <form action="/getByExpenseName" method="get">
-                  <label><input type="search" name="expense_name" class="form-control form-control-sm" placeholder="Search records" aria-controls="datatable"></label>
+                  <label><input type="search" name="expenseName" class="form-control form-control-sm" placeholder="Search records" aria-controls="datatable"></label>
                 <button class="btn btn-primary btn-sm">Search</button>
                 </form>
                 </div></div></div>
@@ -166,7 +166,7 @@
               
        <div class="row">
        <div class="col-sm-12">
-          <a href="/expense_Form" class="btn btn-primary btn-sm"> Add new </a>
+          <a href="/expense-Form" class="btn btn-primary btn-sm"> Add new </a>
                 <button class="btn btn-primary btn-sm" onclick="search(this)">Filter</button>
                   <table class="table" id="">
                   <a href="/createExcelExpenses" style="float:right;"><img src="images/excelimg.png" style="width:80px;"> </a>
@@ -184,63 +184,75 @@
                         </th>
                         <th>
                           Expense Date
-                        </th>           
+                        </th>
+
+                          <th>
+                            Added By
+                          </th>
+
                       </tr>
                     </thead>
-                   <tbody>
+                      <tbody>
                <c:forEach var="expenses" items="${expense}">
                   <tr>
-                      <td>${expenses.expense_id}</td>
-                      <td>${expenses.expense_name}</td>
+                      <td>${expenses.expenseId}</td>
+                      <td>${expenses.expenseName}</td>
                       <td>${expenses.cost}</td>
-                      <td>${expenses.expense_date} </td>
-                       <td> <a href="expense?expense_id=${expenses.expense_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-                       <td> <a href="deleteexpense?expense_id=${expenses.expense_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
+                      <td>${expenses.expenseDate} </td>
+                      <td> ${expenses.username}</td>
+                       <td> <a href="/getExpenseEditForm?expenseId=${expenses.expenseId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+                       <td> <a href="/delete-expense?expenseId=${expenses.expenseId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
                       </tr>
                       </c:forEach>
                       <td>${total_id}</td>
                       <td>           </td>
                       <td>  ${cost}</td>
                       <td>         </td>
-                      
-                      
-                      
-                         <c:forEach var="expenses" items="${expense_name}">
+
+                         <c:forEach var="expenses" items="${expenseName}">
                   <tr>
-                      <td>${expenses.expense_id}</td>
-                      <td>${expenses.expense_name}</td>
+                      <td>${expenses.expenseId}</td>
+                      <td>${expenses.expenseName}</td>
                       <td>${expenses.cost}</td>
-                      <td>${expenses.expense_date} </td>
-                       <td> <a href="expense?expense_id=${expenses.expense_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-                       <td> <a href="deleteexpense?expense_id=${expenses.expense_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
+                      <td>${expenses.expenseDate} </td>
+                      <td> ${expenses.username}</td>
+                       <td> <a href="expense?expenseId=${expenses.expenseId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+                       <td> <a href="deleteexpense?expenseId=${expenses.expenseId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
                       </tr>
                       </c:forEach>
                     <td>${totalnumberofid2}</td>
                       <td>           </td>
                       <td>  ${cost2}</td>
                       <td>         </td>
-                      
-                         <c:forEach var="expenses" items="${expense_date}">
+
+
+                         <c:forEach var="expenses" items="${expenseDate}">
                   <tr>
-                      <td>${expenses.expense_id}</td>
-                      <td>${expenses.expense_name}</td>
+                      <td>${expenses.expenseId}</td>
+                      <td>${expenses.expenseName}</td>
                       <td>${expenses.cost}</td>
-                      <td>${expenses.expense_date} </td>
-                       <td> <a href="expense?expense_id=${expenses.expense_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-                       <td> <a href="deleteexpense?expense_id=${expenses.expense_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
+                      <td>${expenses.expenseDate} </td>
+                      <td> ${expenses.username}</td>
+                       <td> <a href="expense?expenseId=${expenses.expenseId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+                       <td> <a href="deleteexpense?expenseId=${expenses.expenseId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
                       </tr>
                       </c:forEach>
                         <td>${total_id1}</td>
                       <td>           </td>
                       <td>  ${cost1}</td>
                       <td>         </td>
+                  </tbody>
             </table>      
            </div>
            </div>
            </div>                
            </div>
            </div> 
-           </div>      
+           </div>
+      </div>
+     </div>
+    </div>
+</body>
   <!--   Core JS Files   -->
   
 	<script src="static/jquery.tablesorter.js.download"></script>
@@ -420,10 +432,10 @@
     
   var html ='<div class="table">\
   <div class="text-primary">\
-  <form action="/getDataByDate" method="get">\
+  <form action="/getExpenseByDate" method="get">\
       <span class="icon"><i class="fa fa-search"></i></span>\
-      <input type="Date" name="expense_date[]" id="search" placeholder="Date..." />\
-       <input type="Date" name="expense_date[]" id="search1" placeholder="Date..." />\
+      <input type="Date" name="expenseDate[]" id="search" placeholder="Date..." />\
+       <input type="Date" name="expenseDate[]" id="search1" placeholder="Date..." />\
        <button type="submit" class="btn btn-fill btn-primary">Find</button>\
        </form>\
   </div>\
@@ -433,6 +445,4 @@ function search(elem) {
   elem.outerHTML = html;
 }
   </script>
-  
-</body>
 </html>
