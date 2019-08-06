@@ -6,22 +6,29 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 public class Expense {
 
-	private long expense_id;
-	private String expense_name;
+	private long expenseId;
+	private String expenseName;
 	private double cost;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date expense_date;
-	public long getExpense_id() {
-		return expense_id;
+	private Date expenseDate;
+	private String username;
+	public String getUsername() {
+		return username;
 	}
-	public void setExpense_id(long expense_id) {
-		this.expense_id = expense_id;
+	public void setUsername(String username) {
+		this.username = username;
 	}
-	public String getExpense_name() {
-		return expense_name;
+	public long getExpenseId() {
+		return expenseId;
 	}
-	public void setExpense_name(String expense_name) {
-		this.expense_name = expense_name;
+	public void setExpenseId(long expenseId) {
+		this.expenseId = expenseId;
+	}
+	public String getExpenseName() {
+		return expenseName;
+	}
+	public void setExpenseName(String expenseName) {
+		this.expenseName = expenseName;
 	}
 	public double getCost() {
 		return cost;
@@ -29,11 +36,11 @@ public class Expense {
 	public void setCost(double cost) {
 		this.cost = cost;
 	}
-	public Date getExpense_date() {
-		return expense_date;
+	public Date getExpenseDate() {
+		return expenseDate;
 	}
-	public void setExpense_date(Date expense_date) {
-		this.expense_date = expense_date;
+	public void setExpenseDate(Date expenseDate) {
+		this.expenseDate = expenseDate;
 	}
 	
 	
