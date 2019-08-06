@@ -46,32 +46,32 @@
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/get-users">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
@@ -79,7 +79,7 @@
           
           
            <li>
-            <a href="/get_expenses">
+            <a href="/list-expense">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
@@ -87,7 +87,7 @@
           
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               <p>Trash</p>
             </a>
@@ -137,21 +137,21 @@
                 <h5 class="title">Add Expenses</h5>
               </div>
                <div class="col-sm-12 col-md-6">
-               <a href="/get_expenses" class="btn btn-primary btn-sm"> Back</a>
+               <a href="/get-expenses" class="btn btn-primary btn-sm"> Back</a>
                </div>   
    <div class="card-body">
-                <form action="/update_expense" method="post">
+                <form action="/update-expense" method="post">
                  <div class="col-md-3 px-md-1">
                       <div class="form-group">
                         <label> Expense Id </label>
-                        <input type="text"  name="expense_id" value="${expenseEdit.expense_id}"   placeholder=""  class="form-control" />
+                        <input type="text"  name="expenseId" value="${expenseEdit.expenseId}"   placeholder=""  class="form-control" />
                       </div>
                     </div>
                      
                     <div class="col-md-4 pl-md-1">
                       <div class="form-group">
                         <label> Expense Name</label>
-                        <input type="text" name="expense_name" value="${expenseEdit.expense_name}"  placeholder="" class="form-control"/>
+                        <input type="text" name="expenseName" value="${expenseEdit.expenseName}"  placeholder="" class="form-control"/>
                       </div>
                     </div>
               
@@ -168,7 +168,7 @@
                          <div class="col-md-4 pl-md-1">
                       <div class="form-group">
                         <label> expense date </label>
-                        <input type="text" name="expense_date" value="${expenseEdit.expense_date}" placeholder="" class="form-control"/>
+                        <input type="text" name="expenseDate" value="${expenseEdit.expenseDate}" placeholder="" class="form-control"/>
                       </div>
                     </div>
                        
