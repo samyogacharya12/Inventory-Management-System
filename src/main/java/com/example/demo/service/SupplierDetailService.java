@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.model.Supplier;
-import com.example.demo.model.Supplier_Product;
-import com.example.demo.model.Supplier_View;
+import com.example.demo.model.SupplierProduct;
+import com.example.demo.model.SupplierView;
 import com.example.demo.repository.SupplierRepository;
 
 @Service
@@ -20,31 +20,37 @@ public class SupplierDetailService {
 	@Autowired
 	private SupplierRepository supplierRepository;
 
+	@Autowired
+	private ExcelService excelService;
+
+	@Autowired
+	private PdfService pdfService;
+
     public void insertIntoSupplier(Supplier supplier)
     {
     	supplierRepository.insertIntoSupplier(supplier);
     	
     }
    
-    public void insertIntoSupplierProduct(Supplier_Product supplierproduct)
+    public void insertIntoSupplierProduct(SupplierProduct supplierproduct)
     {
     	supplierRepository.insertIntoSupplierProduct(supplierproduct);
     }
     
-    public List<Supplier_View> getAllSupplierInfo()
+    public List<SupplierView> getAllSupplierInfo()
     {
     	return supplierRepository.getAllSupplierInfo();
     }
     
   
-    public Supplier_View getSupplierBySupplierIdAndProductId(long supplier_id, long product_id)
+    public SupplierView getSupplierBySupplierIdAndProductId(long supplierId, long productId)
     {
-    	return supplierRepository.getSupplierBySupplierIdAndProductId(supplier_id, product_id);
+    	return supplierRepository.getSupplierBySupplierIdAndProductId(supplierId, productId);
     }
     
-    public Supplier getSupplierId(long supplier_id)
+    public Supplier getSupplierId(long supplierId)
     {
-    	return supplierRepository.getSupplierId(supplier_id);
+    	return supplierRepository.getSupplierId(supplierId);
     }
     
     public void updateIntoSupplier(Supplier supplierview)
@@ -52,24 +58,24 @@ public class SupplierDetailService {
     	supplierRepository.updateIntoSupplier(supplierview);
     }
     
-    public void updateIntoSupplierView(Supplier_Product supplierview)
+    public void updateIntoSupplierView(SupplierProduct supplierview)
     {
     	supplierRepository.updateIntoSupplierView(supplierview);
     }
     
-    public void deleteIntoSupplierView(long supplier_id, long product_id)
+    public void deleteIntoSupplierView(long supplierId, long productId)
     {
-    	supplierRepository.deleteIntoSupplierView(supplier_id, product_id);
+    	supplierRepository.deleteIntoSupplierView(supplierId, productId);
     }
     
-    public void deleteIntoSupplier(long supplier_id, long product_id)
+    public void deleteIntoSupplier(long supplierId, long productId)
     {
-    	supplierRepository.deleteIntoSupplier(supplier_id, product_id);
+    	supplierRepository.deleteIntoSupplier(supplierId, productId);
     }
     
-    public List<Supplier_View> getSupplierByBuyDate(String[] buy_date)
+    public List<SupplierView> getSupplierByBuyDate(String[] buyDate)
     {
-        return supplierRepository.getSupplierByBuyDate(buy_date);
+        return supplierRepository.getSupplierByBuyDate(buyDate);
     }
     
     public List<Supplier> getAllSupplier()
@@ -77,12 +83,12 @@ public class SupplierDetailService {
     	return supplierRepository.getAllSupplier();
     }
     
-    public List<Supplier_View> getSupplierByName(String supplier_name)
+    public List<SupplierView> getSupplierByName(String supplierName)
     {
-    	return supplierRepository.getSupplierByName(supplier_name);
+    	return supplierRepository.getSupplierByName(supplierName);
     }
     
-    public List<Supplier_View> getSupplierInformation()
+    public List<SupplierView> getSupplierInformation()
     {
     	return supplierRepository.getSupplierInformaton();
     }
@@ -106,42 +112,42 @@ public class SupplierDetailService {
 		return supplierRepository.getNoofProduct();
 	}
 	
-	public double getSumofCost(String supplier_name) {
-		return supplierRepository.getSumofCost(supplier_name);
+	public double getSumofCost(String supplierName) {
+		return supplierRepository.getSumofCost(supplierName);
 	}
 	
-	  public int getNoofQuantity(String supplier_name)
+	  public int getNoofQuantity(String supplierName)
 	  {
-		  return supplierRepository.getNoofQuantity(supplier_name);
+		  return supplierRepository.getNoofQuantity(supplierName);
 	  }
 	
-	public int getNoofSupplier(String supplier_name) {
+	public int getNoofSupplier(String supplierName) {
 		
-		return supplierRepository.getNoofSupplier(supplier_name);
+		return supplierRepository.getNoofSupplier(supplierName);
 	}
 	
-	public int getNoofProduct(String supplier_name)
+	public int getNoofProduct(String supplierName)
 	{
-		return supplierRepository.getNoofProduct(supplier_name);
+		return supplierRepository.getNoofProduct(supplierName);
 	}
-	public Double getSumofCost(String[] buy_date) {
+	public Double getSumofCost(String[] buyDate) {
 		
-		return supplierRepository.getSumofCost(buy_date);
-	}
-	
-	public int getNoofSupplier(String[] buy_date) {
-		
-		return supplierRepository.getNoofSupplier(buy_date);
+		return supplierRepository.getSumofCost(buyDate);
 	}
 	
-	public Integer getNoofQuantity(String[] buy_date) {
+	public int getNoofSupplier(String[] buyDate) {
 		
-		return supplierRepository.getNoofQuantity(buy_date);
+		return supplierRepository.getNoofSupplier(buyDate);
 	}
 	
-	public int getNoofProduct(String[] buy_date) {
+	public Integer getNoofQuantity(String[] buyDate) {
 		
-		return supplierRepository.getNoofProduct(buy_date);
+		return supplierRepository.getNoofQuantity(buyDate);
+	}
+	
+	public int getNoofProduct(String[] buyDate) {
+		
+		return supplierRepository.getNoofProduct(buyDate);
 	}
 	
 	
@@ -149,14 +155,19 @@ public class SupplierDetailService {
 		return supplierRepository.NoofSupplier();
 	}
     
-    public boolean createExcel(List<Supplier_View> supplierproducts, ServletContext context, HttpServletResponse response,
-			HttpServletRequest request)
+    public boolean createExcelForSuppliers(List<SupplierView> supplierproducts, ServletContext context, HttpServletResponse response,
+										   HttpServletRequest request)
     {
-    	return supplierRepository.createExcel(supplierproducts, context, response, request);
+    	return excelService.createExcelForSuppliers(supplierproducts, context, response, request);
     }
     
-    public boolean createPdf(List<Supplier_View> supplierproducts, ServletContext context, HttpServletResponse response, HttpServletRequest request)
+    public boolean createPdfForSuppliers(List<SupplierView> supplierproducts, ServletContext context, HttpServletResponse response, HttpServletRequest request)
     {
-    	return supplierRepository.createPdf(supplierproducts, context, response, request);
+    	return pdfService.createPdfForSuppliers(supplierproducts, context, response, request);
     }
+
+	public Double getCostFromExpiredProduct(String[] buy_date)
+	{
+		return supplierRepository.getCostFromExpiredProduct(buy_date);
+	}
 }
