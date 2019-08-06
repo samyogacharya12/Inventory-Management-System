@@ -41,46 +41,46 @@
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/get-users">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
           </li>
      
           <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
           </li>
           
              <li>
-            <a href="/get_expenses">
+            <a href="/list-expense">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
           </li>
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               <p>Trash</p>
             </a>
@@ -136,7 +136,7 @@
                 <h5 class="title">Add Profile</h5>
               </div>
                <div class="col-sm-12 col-md-6">
-               <a href="/list_Customer" class="btn btn-primary btn-sm"> Back</a>
+               <a href="/list-Customer" class="btn btn-primary btn-sm"> Back</a>
                </div>
             
               <div class="card-body">
@@ -144,7 +144,7 @@
                  <div class="col-md-3 px-md-1">
                       <div class="form-group">
                         <label> Customer Id </label>
-                        <input type="text"  name="customer_customer_id" value="${customer.customer_customer_id}"  readonly class="form-control" />
+                        <input type="text"  name="customerId" value="${customer.customerId}"  readonly class="form-control" />
                       </div>
                     </div>
                 
@@ -152,13 +152,11 @@
                       <div class="form-group">
                        <div>
 <label> product id </label>
-<select name="product_product_id">
-<option value="1">1 </option>
-<option value="2"> 2 </option>
-<option value="3"> 3</option>
-<option value="4"> 4</option>
-<option value="5"> 5</option>
-</select>
+                           <select name="productId">
+                           <c:forEach var="products" items="${product}">
+    <option value="${products}"> ${products}</option>
+                           </c:forEach>
+                           </select>
 </div>
                       </div>
                     </div>
@@ -171,17 +169,17 @@
                     </div>
               
                     
-                    <div class="col-md-4 pl-md-1">
-                      <div class="form-group">
-                        <label> Amount </label>
-                        <input type="number" name="amount" placeholder="" class="form-control"/>
-                      </div>
-                    </div>
+<%--                    <div class="col-md-4 pl-md-1">--%>
+<%--                      <div class="form-group">--%>
+<%--                        <label> Amount </label>--%>
+<%--                        <input type="number" name="amount" placeholder="" class="form-control"/>--%>
+<%--                      </div>--%>
+<%--                    </div>--%>
                     
                     <div class="col-md-4 px-md-1">
                       <div class="form-group has-label">
                          <label>Buy Date </label>
-                        <input type="date" name="buy_date" placeholder="" class="form-control" required="true"/>
+                        <input type="date" name="buyDate" placeholder="" class="form-control" required="true"/>
                       </div>
                     </div>
                     
