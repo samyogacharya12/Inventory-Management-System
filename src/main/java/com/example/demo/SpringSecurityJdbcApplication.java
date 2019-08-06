@@ -7,8 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 
 @SpringBootApplication
 public class SpringSecurityJdbcApplication{
-	
-	
+
 	public static void main(String[] args) {
 		SpringApplication.run(SpringSecurityJdbcApplication.class, args);
 	}
