@@ -41,25 +41,25 @@
             </a>
           </li>
           <li>
-            <a href="/list_supplier">
+            <a href="/list-supplier">
               <i class="tim-icons icon-single-02"></i>
               Suppliers
             </a>
           </li>
           <li>
-            <a href="/list_product"">
+            <a href="/list-product">
             <i class="tim-icons icon-basket-simple"></i>
               Products
             </a>
           </li>
           <li>
-            <a href="/list_Customer">
+            <a href="/list-Customer">
               <i class="tim-icons icon-single-02"></i>
               Customers
             </a>
           </li>
           <li>
-            <a href="/get_list">
+            <a href="/list-user">
               <i class="tim-icons icon-single-02"></i>
               Users
             </a>
@@ -73,14 +73,14 @@
           </li>
           
              <li>
-            <a href="/get_expenses">
+            <a href="/list-expense">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
           </li>
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               <p>Trash</p>
             </a>
@@ -138,7 +138,7 @@
               <div id="datatable_wrapper" class="dataTables_wrapper dt-bootstrap4">
                 <div class="row">
                  <div class="col-sm-12 col-md-6">
-                <a href="/list_Customer" class="btn btn-primary btn-sm"> Back</a> 
+                <a href="/list-Customer" class="btn btn-primary btn-sm"> Back</a>
                 </div>
                 </div>
                
@@ -148,13 +148,13 @@
                     <div class="col-md-5 pr-md-1">
                       <div class="form-group">
                         <label >customer Id </label>
-                        <input type="text" name="customer_id" class="form-control" />
+                        <input type="text" name="customerId" class="form-control" />
                       </div>
                     </div>
                     <div class="col-md-3 px-md-1">
                       <div class="form-group">
                         <label> customer name</label>
-                        <input type="text"  name="customer_name" placeholder="username" class="form-control" />
+                        <input type="text"  name="customerName" placeholder="username" class="form-control" />
                       </div>
                     </div>
                     
@@ -163,7 +163,7 @@
                     <div class="col-md-4 pl-md-1">
                       <div class="form-group">
                         <label> permanent address</label>
-                        <input type="text" name="permanent_address"  class="form-control"/>
+                        <input type="text" name="permanentAddress"  class="form-control"/>
                       </div>
                     </div>
              
@@ -171,7 +171,7 @@
                     <div class="col-md-6 pr-md-1">
                       <div class="form-group">
                         <label> temporary address </label>
-                        <input type="text"  name="temporary_address"  class="form-control" />
+                        <input type="text"  name="temporaryAddress"  class="form-control" />
                       </div>
                     </div>
                     
@@ -179,7 +179,7 @@
                     <div class="col-md-6 pl-md-1">
                       <div class="form-group">
                         <label> phone number </label>
-                        <input type="number"  name="phone_number"  class="form-control" />
+                        <input type="number"  name="phoneNumber"  class="form-control" />
                       </div>
                     </div>
                   </div>
@@ -204,6 +204,7 @@
           </div>
           </div>
         </div>
+ </div>
        
   <!--   Core JS Files   -->
   <script src="static/black-dashboard-html-v1.0.1/assets/js/core/jquery.min.js"></script>
