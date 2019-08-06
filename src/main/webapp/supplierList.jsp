@@ -7,7 +7,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
   <link rel="apple-touch-icon"  href="static/black-dashboard-html-v1.0.1/assets/img/apple-icon.png">
   <link rel="icon" type="image/png" href="static/black-dashboard-html-v1.0.1/assets/img/favicon.png">
-<title>Insert title here</title>
+<title>Supplier Information</title>
 <link rel="shortcut icon" type="image/ico" href="http://www.datatables.net/favicon.ico">
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
   <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
@@ -37,35 +37,35 @@
    <li><a href="/"> <i class="tim-icons icon-chart-pie-36"></i> Dashboard <span class="fa fa-chevron-right"></span></a>
                   </li>
                   
-                  <li><a href="/list_supplier">  <i class="tim-icons icon-single-02"></i> Supplier <span class="fa fa-chevron-right"></span></a></li>
-                  <li><a href="/list_product">  <i class="tim-icons icon-basket-simple"></i> Product <span class="fa fa-chevron-right"></span></a>
+                  <li><a href="/list-supplier">  <i class="tim-icons icon-single-02"></i> Supplier <span class="fa fa-chevron-right"></span></a></li>
+                  <li><a href="/list-product">  <i class="tim-icons icon-basket-simple"></i> Product <span class="fa fa-chevron-right"></span></a>
                    
                   </li>
-                 <li><a href="/list_Customer"> <i class="tim-icons icon-single-02"></i> Customer <span class="fa fa-chevron-right"></span></a>
+                 <li><a href="/list-Customer"> <i class="tim-icons icon-single-02"></i> Customer <span class="fa fa-chevron-right"></span></a>
                    
                   </li>
                     
-                    <li><a href="/get_list"> <i class="tim-icons icon-single-02"></i> User <span class="fa fa-chevron-right"></span></a>
+                    <li><a href="/list-trash"> <i class="tim-icons icon-single-02"></i> User <span class="fa fa-chevron-right"></span></a>
                    
                   </li>
 
 
                     <li>
-            <a href="/get_report">
+            <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
           </li>
           
            <li>
-            <a href="/get_expenses">
+            <a href="/list-expenses">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
           </li>
           
             <li>
-            <a href="/get_trash">
+            <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               Trash
             </a>
@@ -138,22 +138,22 @@
                 <form action="/getSupplierByName" method="get">           
              
              
-                 <select id="myInput" name="supplier_name" class="chosen">
+                 <select id="myInput" name="supplierName" class="chosen">
                 <c:forEach var="supplier1" items="${supplier3}">
                 <option>
-                 ${supplier1.supplier_name}              
+                 ${supplier1.supplierName}
                  </option>
 				 </c:forEach>
 				 
 				 <c:forEach var="supplier12" items="${supplier1}"> 
 				 <option>
-                 ${supplier12.supplier_name}
+                 ${supplier12.supplierName}
                  </option>
                  </c:forEach>
                  
                  <c:forEach var="supplier13" items="${supplier2}"> 
 				 <option>
-                 ${supplier13.supplier_name}
+                 ${supplier13.supplierName}
                  </option>
                  </c:forEach>
                  
@@ -166,7 +166,7 @@
               
        <div class="row">
        <div class="col-sm-12">
-          <a href="/supplier_Form" class="btn btn-primary btn-sm"> Add new </a>
+          <a href="/getSupplierForm" class="btn btn-primary btn-sm"> Add new </a>
           <button class="btn btn-primary btn-sm" onclick="search(this)">Filter</button>
           <a href="/supplier_Report" class="btn btn-primary btn-sm"> Supplier Report</a>
                   
@@ -212,6 +212,11 @@
                         <th>
                         product name
                         </th>
+
+                         <th>
+                          Added By
+                         </th>
+
                       </tr>
                     </thead>
         
@@ -219,19 +224,20 @@
                     <tbody id="myTable">
                  <c:forEach var="suppliers" items="${supplier}">
 <tr>   
-    <td> ${suppliers.supplier_id} </td>
-    <td><a href="supplier_name?supplier_id=${suppliers.supplier_id}"> ${suppliers.supplier_name} </a> </td>
-    <td> ${suppliers.supplier_type} </td>
+    <td> ${suppliers.supplierId} </td>
+    <td><a href="supplierName?supplierId=${suppliers.supplierId}"> ${suppliers.supplierName} </a> </td>
+    <td> ${suppliers.supplierType} </td>
     <td> ${suppliers.quantity} </td>
     <td> ${suppliers.cost} </td>
-     <td> ${suppliers.buy_date} </td>
-    <td> ${suppliers.permanent_address} </td>
-    <td> ${suppliers.temporary_address}</td>
-    <td> ${suppliers.product_id} </td>
-    <td> ${suppliers.product_name} </td>
-     <td><a href="/getSupplier?supplier_id=${suppliers.supplier_id}" class=""> <i class="tim-icons icon-upload"></i>  </a> </td>
-    <td> <a href="supplier?supplier_id=${suppliers.supplier_id}&product_id=${suppliers.product_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-    <td> <a href="deletesupplier?supplier_id=${suppliers.supplier_id}&product_id=${suppliers.product_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
+     <td> ${suppliers.buyDate} </td>
+    <td> ${suppliers.permanentAddress} </td>
+    <td> ${suppliers.temporaryAddress}</td>
+    <td> ${suppliers.productId} </td>
+    <td> ${suppliers.productName} </td>
+    <td> ${suppliers.username}  </td>
+     <td><a href="/getSupplierProductAddForm?supplierId=${suppliers.supplierId}" class=""> <i class="tim-icons icon-upload"></i>  </a> </td>
+    <td> <a href="/getSupplierBySupplierIdAndProductId?supplierId=${suppliers.supplierId}&productId=${suppliers.productId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+    <td> <a href="deletesupplier?supplierId=${suppliers.supplierId}&productId=${suppliers.productId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
     </tr>
 </c:forEach> 
 
@@ -249,21 +255,22 @@
 <td>     </td>      
 <td>     </td>  
 
-                 <c:forEach var="suppliers" items="${supply}">
+                 <c:forEach var="suppliers" items="${getSupplierByName}">
 <tr>   
-    <td> ${suppliers.supplier_id} </td>
-    <td><a href="supplier_name?supplier_id=${suppliers.supplier_id}"> ${suppliers.supplier_name} </a> </td>
-    <td> ${suppliers.supplier_type} </td>
+    <td> ${suppliers.supplierId} </td>
+    <td><a href="supplierName?supplierId=${suppliers.supplierId}"> ${suppliers.supplierName} </a> </td>
+    <td> ${suppliers.supplierType} </td>
     <td> ${suppliers.quantity} </td>
     <td> ${suppliers.cost} </td>
-    <td> ${suppliers.buy_date} </td>
-    <td> ${suppliers.permanent_address} </td>
-    <td> ${suppliers.temporary_address}</td>
-    <td> ${suppliers.product_id} </td>
-    <td> ${suppliers.product_name} </td>
-     <td><a href="/getSupplier?supplier_id=${suppliers.supplier_id}" class=""> <i class="tim-icons icon-upload"></i>  </a> </td>
-    <td> <a href="supplier?supplier_id=${suppliers.supplier_id}&product_id=${suppliers.product_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-    <td> <a href="deletesupplier?supplier_id=${suppliers.supplier_id}&product_id=${suppliers.product_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td> 
+    <td> ${suppliers.buyDate} </td>
+    <td> ${suppliers.permanentAddress} </td>
+    <td> ${suppliers.temporaryAddress}</td>
+    <td> ${suppliers.productId} </td>
+    <td> ${suppliers.productName} </td>
+    <td>  ${suppliers.username}</td>
+     <td><a href="/getSupplier?supplierId=${suppliers.supplierId}" class=""> <i class="tim-icons icon-upload"></i>  </a> </td>
+    <td> <a href="supplier?supplierId=${suppliers.supplierId}&productId=${suppliers.productId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+    <td> <a href="deletesupplier?supplierId=${suppliers.supplierId}&productId=${suppliers.productId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
     </tr>
     </c:forEach>
 <td>${totalsupplier} </td>
@@ -285,21 +292,22 @@
 <td>     </td>         
    
 
-                 <c:forEach var="begins" items="${begin_date}">
+                 <c:forEach var="datevalue" items="${getSupplierByDate}">
 <tr>   
-    <td> ${begins.supplier_id} </td>
-    <td><a href="supplier_name?supplier_id=${begins.supplier_id}"> ${begins.supplier_name} </a> </td>
-    <td> ${begins.supplier_type} </td>
-    <td> ${begins.quantity} </td>
-    <td> ${begins.cost} </td>
-    <td> ${begins.buy_date} </td>
-    <td> ${begins.permanent_address} </td>
-    <td> ${begins.temporary_address}</td>
-    <td> ${begins.product_id} </td>
-    <td> ${begins.product_name} </td>
-     <td><a href="/getSupplier?supplier_id=${begins.supplier_id}" class=""> <i class="tim-icons icon-upload"></i>  </a> </td>
-    <td> <a href="supplier?supplier_id=${begins.supplier_id}&product_id=${begins.product_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-    <td> <a href="deletesupplier?supplier_id=${begins.supplier_id}&product_id=${begins.product_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
+    <td> ${datevalue.supplierId} </td>
+    <td><a href="supplierName?supplierId=${datevalue.supplierId}"> ${datevalue.supplierName} </a> </td>
+    <td> ${datevalue.supplierType} </td>
+    <td> ${datevalue.quantity} </td>
+    <td> ${datevalue.cost} </td>
+    <td> ${datevalue.buyDate} </td>
+    <td> ${datevalue.permanentAddress} </td>
+    <td> ${datevalue.temporaryAddress}</td>
+    <td> ${datevalue.productId} </td>
+    <td> ${datevalue.productName} </td>
+    <td> ${datevalue.username}</td>
+     <td><a href="/getSupplier?supplierId=${datevalue.supplierId}" class=""> <i class="tim-icons icon-upload"></i>  </a> </td>
+    <td> <a href="supplier?supplierId=${datevalue.supplierId}&productId=${datevalue.productId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+    <td> <a href="deletesupplier?supplierId=${datevalue.supplierId}&productId=${datevalue.productId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
     </tr>
 </c:forEach>    
 <td>${totalsupplier1} </td>
@@ -318,16 +326,17 @@
   
 <tr>   
  <c:forEach var="supply" items="${suppliers}">
-    <td> ${supply.supplier_id} </td>
-    <td><a href="supplier_name?supplier_id=${supply.supplier_id}"> ${supply.supplier_name} </a> </td>
-    <td> ${supply.supplier_type} </td>
+    <td> ${supply.supplierId} </td>
+    <td><a href="supplierName?supplierId=${supply.supplierId}"> ${supply.supplierName} </a> </td>
+    <td> ${supply.supplierType} </td>
     <td> ${supply.quantity} </td>
     <td> ${supply.cost} </td>
-    <td> ${supply.buy_date} </td>
-    <td> ${supply.permanent_address} </td>
-    <td> ${supply.temporary_address}</td>
-   <td> <a href="supplier_name?supplier_id=${supply.supplier_id}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-    <td> <a href="deleteuser?supplier_id=${supply.supplier_id}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
+    <td> ${supply.buyDate} </td>
+    <td> ${supply.permanentAddress} </td>
+    <td> ${supply.temporaryAddress}</td>
+     <td> ${supply.username}</td>
+   <td> <a href="supplierName?supplierId=${supply.supplierId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
+    <td> <a href="deleteuser?supplierId=${supply.supplierId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
     </c:forEach>
     </tr>
     </tbody>
@@ -365,10 +374,10 @@
     
   var html ='<div class="table">\
   <div class="text-primary">\
-  <form action="/getDate" method="get">\
+  <form action="/getSupplierByDate" method="get">\
       <span class="icon"><i class="fa fa-search"></i></span>\
-      <input type="Date" name="buy_date[]" id="search" placeholder="Date..." />\
-       <input type="Date" name="buy_date[]" id="search1" placeholder="Date..." />\
+      <input type="Date" name="buyDate[]" id="search" placeholder="Date..." />\
+       <input type="Date" name="buyDate[]" id="search1" placeholder="Date..." />\
        <button type="submit" class="btn btn-fill btn-primary">Find</button>\
        </form>\
   </div>\
