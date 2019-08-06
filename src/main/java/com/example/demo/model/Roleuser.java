@@ -2,13 +2,13 @@ package com.example.demo.model;
 
 public class Roleuser {
 
-	private long user_id;
+	private long userId;
 	private String role;
-	public long getUser_id() {
-		return user_id;
+	public long getUserId() {
+		return userId;
 	}
-	public void setUser_id(long user_id) {
-		this.user_id = user_id;
+	public void setUserId(long userId) {
+		this.userId = userId;
 	}
 	public String getRole() {
 		return role;
