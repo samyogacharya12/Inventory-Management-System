@@ -16,11 +16,11 @@ public interface ExpenseRepository {
 	    void updateIntoExpenses(Expense expense);
 	    void deleteExpenses(long expenseId);
 	    List<Expense> getExpenseByExpenseName(String expenseName);
-	    List<Expense> getExpenseByExpenseDate(String[] expenseDate);
+	    List<Expense> getExpenseByExpenseDate(String expenseStartDate, String expenseLastDate);
 	    int countTotalId();
 	    double totalCost();
-	    int countTotalId(String[] expenseDate);
-	    Double totalCost(String[] expenseDate);
+	    int countTotalId(String expenseStartDate, String expenseLastDate);
+	    Double totalCost(String expenseStartDate, String expenseLastDate);
 	    int countTotalId(String expenseName);
 	   double totalCost(String expenseName);
 }
