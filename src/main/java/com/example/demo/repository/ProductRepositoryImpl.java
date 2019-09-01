@@ -36,8 +36,8 @@ public class ProductRepositoryImpl extends JdbcDaoSupport implements ProductRepo
 
     @Override
     public void insertIntoProductAnalysis(Map map) {
-        String sql="INSERT INTO product_analysis "+"(product_id, past_price, present_price, price_increament, price_decreament, reference_product_id) SELECT ?,?,?,?,?,?";
-        getJdbcTemplate().update(sql, new Object[] {map.get("productId"), map.get("pastPrice"), map.get("presentPrice"), map.get("priceIncreament"), map.get("priceDecreament"), map.get("referenceProductId")});
+        String sql="INSERT INTO product_analysis "+"(product_id, product_name ,past_price, present_price, price_increament, price_decreament, reference_product_id) SELECT ?,?,?,?,?,?,?";
+        getJdbcTemplate().update(sql, new Object[] {map.get("productId"), map.get("productName") ,map.get("pastPrice"), map.get("presentPrice"), map.get("priceIncreament"), map.get("priceDecreament"), map.get("referenceProductId")});
     }
 
 
@@ -86,7 +86,6 @@ public class ProductRepositoryImpl extends JdbcDaoSupport implements ProductRepo
     @Override
     public List<PurchaseProduct> findByProductName(String productName) {
         String sql="SELECT p.product_id, p.product_name, p.product_type, p.price, p.quantity, p.magnifacture_date, p.expiry_date, p.image, ph.purchase_date, ph.username FROM product p INNER JOIN purchase ph on p.product_id=ph.product_id WHERE p.is_expired='false' and p.product_name=? ";
-//        String sql="SELECT * FROM product WHERE product_name=?";
         List<Map<String, Object>> row=getJdbcTemplate().queryForList(sql,productName);
         List<PurchaseProduct> product=new ArrayList<PurchaseProduct>();
         for(Map<String, Object> rows:row)
@@ -106,6 +105,42 @@ public class ProductRepositoryImpl extends JdbcDaoSupport implements ProductRepo
         }
         return product;
     }
+    @Override
+    public List<ProductAnalysis> getDataByName(String productName) {
+      String sql="SELECT * FROM product_analysis WHERE product_name=?";
+        List<Map<String, Object>> row=getJdbcTemplate().queryForList(sql,productName);
+        List<ProductAnalysis> productAnalysisList=new ArrayList<>();
+        for(Map<String, Object> rows: row)
+        {
+            ProductAnalysis productAnalysis=new ProductAnalysis();
+            productAnalysis.setProductId((Long) rows.get("product_id"));
+            productAnalysis.setProductName((String) rows.get("product_name"));
+            productAnalysis.setPastPrice((Double) rows.get("past_price"));
+            productAnalysis.setPresentPrice((Double) rows.get("present_price"));
+            productAnalysis.setPriceIncreament((Double) rows.get("price_increament"));
+            productAnalysis.setPriceDecreament((Double) rows.get("price_decreament"));
+            productAnalysis.setReferenceProductId((Long) rows.get("reference_product_id"));
+            productAnalysisList.add(productAnalysis);
+        }
+        return productAnalysisList;
+    }
+
+
+    @Override
+    public List<Product> getExpiredProduct(String expiryDate) {
+        String sql="SELECT product_id,product_name FROM product WHERE expiry_date<=?::Date and is_expired='false'";
+        List<Map<String, Object>> row=getJdbcTemplate().queryForList(sql, expiryDate);
+        List<Product> productList=new ArrayList<>();
+        for(Map<String, Object> rows: row )
+        {
+            Product product=new Product();
+            product.setProductId((Long) rows.get("product_id"));
+            product.setProductName((String) rows.get("product_name"));
+            productList.add(product);
+        }
+        return productList;
+    }
+
 
     @Override
     public void updateExpiredProduct(Product product) {
@@ -122,21 +157,15 @@ public class ProductRepositoryImpl extends JdbcDaoSupport implements ProductRepo
 
     }
 
-//    @Override
-//    public Product getproductbyid(long product_id) {
-//        String sql="SELECT * FROM product WHERE product_id=?";
-//        RowMapper<Product> rowmapper=new BeanPropertyRowMapper<Product>(Product.class);
-//        Product product=getJdbcTemplate().queryForObject(sql, rowmapper, product_id);
-//        return product;
-//    }
-
     @Override
     public List<PurchaseProduct> getAllProductInfo() {
          String sql="SELECT p.product_id, p.product_name, p.product_type, p.price, p.quantity, p.magnifacture_date, p.expiry_date, p.image, ph.purchase_date, ph.username FROM product p INNER JOIN purchase ph on p.product_id=ph.product_id WHERE p.is_expired='false'";
-//        String sql="SELECT * FROM product WHERE is_expired='false' ";
         RowMapper<PurchaseProduct> rowmapper=new BeanPropertyRowMapper<PurchaseProduct> (PurchaseProduct.class);
         return this.getJdbcTemplate().query(sql, rowmapper);
     }
+
+
+
     @Override
     public List<ProductAnalysis> getAllProductAnalysis() {
         String sql="SELECT * FROM product_analysis";
@@ -157,13 +186,7 @@ public class ProductRepositoryImpl extends JdbcDaoSupport implements ProductRepo
         getJdbcTemplate().update(sql, productId);
     }
 
-//    @Override
-//    public Product getQuantityById(long productId) {
-//        String sql="SELECT * FROM product WHERE product_id=?";
-//        RowMapper<Product> rowmapper=new BeanPropertyRowMapper<Product>(Product.class);
-//        Product product= this.getJdbcTemplate().queryForObject(sql, rowmapper, productId);
-//         return  product;
-//    }
+
 
     @Override
     public CustomerProduct getQuantityByCustomerId(long customerId, long productId) {
@@ -172,13 +195,6 @@ public class ProductRepositoryImpl extends JdbcDaoSupport implements ProductRepo
         CustomerProduct customerproduct=getJdbcTemplate().queryForObject(sql,rowmapper, customerId, productId);
         return customerproduct;
     }
-//    @Override
-//    public PurchaseProduct getProductByNameTypeAndPurchaseDate(String productName, String productType, Date purchaseDate) {
-//        String sql="SELECT p.product_id, p.product_name, p.product_type, p.price, p.quantity, p.magnifacture_date, p.expiry_date, ph.purchase_date FROM product p INNER JOIN purchase ph on p.product_id=ph.product_id WHERE p.is_expired='false' and p.product_name=? and p.product_type=? and ph.purchase_date>=?";
-//        RowMapper<PurchaseProduct> rowMapper=new BeanPropertyRowMapper<>(PurchaseProduct.class);
-//        PurchaseProduct purchaseProduct=getJdbcTemplate().queryForObject(sql, rowMapper, productName, productType, purchaseDate);
-//        return purchaseProduct;
-//    }
 
 
     @Override
@@ -224,25 +240,13 @@ public class ProductRepositoryImpl extends JdbcDaoSupport implements ProductRepo
         return total;
     }
 
-//    @Override
-//    public double getSumOfPrice(String product_name) {
-//        String sql="SELECT SUM(price) FROM product WHERE product_name=?";
-//        double total=this.getJdbcTemplate().queryForObject(sql, Double.class, product_name);
-//        return total;
-//    }
-
     @Override
-    public int getTotalNoOfQuantity(String productName) {
+    public Integer getTotalNoOfQuantity(String productName) {
         String sql="SELECT SUM(quantity) FROM product WHERE product_name=? and is_expired='false'";
         int total=this.getJdbcTemplate().queryForObject(sql, Integer.class, productName);
         return total;
     }
 
-    @Override
-    public List<String> getExpiredProduct(String expiryDate) {
-        String sql="SELECT product_name FROM product WHERE expiry_date<=?::Date and is_expired='false'";
-        return this.getJdbcTemplate().queryForList(sql, new Object[] {expiryDate}, String.class);
-    }
 
     @Override
     public int getNoOfExpiredProduct(String expiryDate) {
