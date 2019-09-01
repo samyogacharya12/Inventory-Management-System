@@ -120,7 +120,7 @@ public class CustomerDetailServiceImpl {
 		return product;
 	}
 
-	public Map calculationOfAmount(int productId, int quantity)
+	public Map calculationOfAmount(long productId, int quantity)
 	{
 		Product product=productDetailService.getProductById(productId);
 		double amount=product.getPrice()*quantity;
@@ -149,9 +149,9 @@ public class CustomerDetailServiceImpl {
 		customerRepository.deleteIntoCustomer(customerId, productId);
 	}
 	
-	public List<CustomerView> getCustomerBuyDate(String buyDate[])
+	public List<CustomerView> getCustomerBuyDate(String buyDateStart, String buyDateEnd)
 	{
-		return customerRepository.getCustomerByBuyDate(buyDate);
+		return customerRepository.getCustomerByBuyDate(buyDateStart, buyDateEnd);
 	}
 	
 	public List<CustomerView> getCustomerByName(String customerName)
@@ -199,24 +199,24 @@ public class CustomerDetailServiceImpl {
 		return customerRepository.getTotalProduct(customerName);
 	}
 	
-	public int getTotalCustomer(String[] buyDate) {
+	public int getTotalCustomer(String buyDateStart, String buyDateEnd) {
 		
-		return customerRepository.getTotalCustomer(buyDate);
+		return customerRepository.getTotalCustomer(buyDateStart, buyDateEnd);
 	}
 	
-	public Double sumOfAmount(String[] buyDate) {
+	public Double sumOfAmount(String buyDateStart, String buyDateEnd) {
 		
-		return customerRepository.sumOfAmount(buyDate);
+		return customerRepository.sumOfAmount(buyDateStart, buyDateEnd);
 	}
 	
-	public Integer sumOfQuantity(String[] buyDate) {
+	public Integer sumOfQuantity(String buyDateStart, String buyDateEnd) {
 		
-		return customerRepository.sumOfQuantity(buyDate);
+		return customerRepository.sumOfQuantity(buyDateStart, buyDateEnd);
 	}
 	
-	 public int getTotalProduct(String[] buyDate)
+	 public int getTotalProduct(String buyDateStart, String buyDateEnd)
 	 {
-		 return customerRepository.getTotalProduct(buyDate);
+		 return customerRepository.getTotalProduct(buyDateStart, buyDateEnd);
 	 }
 	
 		public int getPresentDate(String buyDate)
