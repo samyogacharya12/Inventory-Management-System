@@ -148,15 +148,16 @@ body {
           </button>
           <div class="collapse navbar-collapse" id="navigation">
             <ul class="navbar-nav ml-auto">
-              <li class="dropdown nav-item">          
-              <a href="javascript:void(0)" class="notification"  data-toggle="dropdown">
+              <li  class="dropdown nav-item">
+              <a  href="javascript:void(0)" class="notification"  data-toggle="dropdown">
               <span>Inbox</span>
-             <span class="badge">${expiredproduct}</span>
+             <span id="countExpiredProduct"  class="badge"> </span>
               </a>  
-                <ul class="dropdown-menu dropdown-menu-right dropdown-navbar">
-                  <li class="nav-link">
+                <ul id="expiredProductList" class="dropdown-menu dropdown-menu-right dropdown-navbar">
+                  <li  class="nav-link">
+
                     <c:forEach var="product" items="${productName}">
-                    <a href="#" class="nav-item dropdown-item">${product} is expired</a>
+                    <a href="#"    class="nav-item dropdown-item">${product} is expired</a>
                     </c:forEach>
                   </li>
                 </ul>
@@ -174,10 +175,10 @@ body {
               <div class="card-header">
                <h3 align="center"> Current position </h3>
                 <h5 class="card-category">Number of Users</h5>
-                <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> ${user}</h3>
+                <h3 id="numberOfUsers" class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> ${user}</h3>
               
                   <h5 class="card-category">Number of Suppliers</h5>
-                <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> ${numberofsuppliers}</h3>
+                <h3 id="numberOfSuppliers" class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> ${numberofsuppliers}</h3>
               
               
               </div>
@@ -194,15 +195,15 @@ body {
               <div class="card-header">
              
                 <h5 class="card-category">Number of Sales</h5>
-                <h3 class="card-title"> <i class="tim-icons icon-trash-simple" style="color:blue"></i>
-                    ${numberofsales}</h3>
+                <h3 id="numberofsales" class="card-title"> <i class="tim-icons icon-trash-simple" style="color:blue"></i>
+                  </h3>
                   <h5 class="card-category">Today's Revenue</h5>
-                <h3 class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> ${revenue}</h3>
+                <h3 id="revenue" class="card-title"><i class="tim-icons icon-delivery-fast text-info"></i> </h3>
               
               
                 <h5 class="card-category">Number of Expired Product</h5>
-                <h3 class="card-title"> <i class="tim-icons icon-trash-simple" style="color:blue"></i>
-                     ${expiredproduct}</h3>
+                <h3 id="numberOfExpiredProduct" class="card-title"> <i id="expiredIcon" class="tim-icons icon-trash-simple" style="color:blue"></i>
+                     </h3>
               
               </div>
             </div>
@@ -211,10 +212,10 @@ body {
             <div class="card card-chart">
               <div class="card-header">
                 <h5 class="card-category">Today Number of Customers</h5>
-                <h3 class="card-title"><i class="tim-icons icon-user-run" style="color:blue"></i> ${numberofcustomers}</h3>
+                <h3 id="numberOfCustomers" class="card-title"><i class="tim-icons icon-user-run" style="color:blue"></i> </h3>
              
              <h5 class="card-category">Total Number of product in Stock</h5>
-                <h3 class="card-title"><i class="tim-icons icon-bag-16" style="color:blue"></i> ${numberofproducts}</h3>
+                <h3 id="numberOfProducts" class="card-title"><i class="tim-icons icon-bag-16" style="color:blue"></i> ${numberofproducts}</h3>
              
               </div>
               <div class="card-body">
@@ -247,6 +248,7 @@ body {
   <script src="static/black-dashboard-html-v1.0.1/assets/js/black-dashboard.min.js?v=1.0.0"></script>
   <!-- Black Dashboard DEMO methods, don't include it in your project! -->
   <script src="static/black-dashboard-html-v1.0.1/assets/demo/demo.js"></script>
+  <script src="static/RestJs/home.js"></script>
   <script>
    document.getElementById("connect").click();
 </script>  
