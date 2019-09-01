@@ -9,4 +9,5 @@ public interface TrashRepository {
 
 	   void insertIntoTrash(Product product);
 	   List<Trash> getAllTrashInfo();
+	   List<Trash> getTrashByProductName(String productName);
 }
