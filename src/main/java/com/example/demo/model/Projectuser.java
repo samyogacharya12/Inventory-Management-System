@@ -3,6 +3,7 @@ package com.example.demo.model;
 import java.util.Date;
 
 import javax.validation.constraints.Max;
+import javax.validation.constraints.Past;
 
 public class Projectuser {
 
@@ -21,6 +22,7 @@ public class Projectuser {
     private String country;
     @Max(999999)
     private int landlineNumber;
+    @Past
     private Date dateOfBirth;
     private Date joinedDate;
 	private String gender;
