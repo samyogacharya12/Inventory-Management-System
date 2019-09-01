@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.example.demo.model.Supplier;
 import com.example.demo.repository.SupplierRepository;
 import com.example.demo.service.SupplierDetailService;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class SupplierImageDisplayController {
@@ -25,10 +26,10 @@ public class SupplierImageDisplayController {
 	private SupplierDetailService supplierDetailService;
 	private int DEFAULT_BUFFER_SIZE=1024;
 	@GetMapping("/supplierimagedisplay")
-	public void showImage(HttpServletRequest request, HttpServletResponse response) throws IOException
+	public void showImage(@RequestParam long supplierId, HttpServletResponse response) throws IOException
 	{
-		long id=Integer.parseInt(request.getParameter("supplier_id"));
-		Supplier supplier=supplierDetailService.getSupplierId(id);
+		System.out.println(supplierId);
+		Supplier supplier=supplierDetailService.getSupplierId(supplierId);
 		File file=new File(supplier.getImage());
 		BufferedInputStream input=null;
 		BufferedOutputStream output=null;
