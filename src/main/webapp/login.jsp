@@ -6,6 +6,7 @@
  
 <html>
 <head>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link rel="icon" type="image/png" href="resources/black-dashboard-html-v1.0.1/assets/img/icons/favicon.ico"/>
 <!--===============================================================================================-->
 	<link rel="stylesheet" type="text/css" href="static/black-dashboard-html-v1.0.1/assets/vendor/bootstrap/css/bootstrap.min.css">

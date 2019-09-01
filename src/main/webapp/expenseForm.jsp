@@ -26,6 +26,12 @@
 	<script type="text/javascript"  src="static/media/js/jquery.dataTables.js"></script>
 	<script type="text/javascript"  src="static/resources/syntax/shCore.js"></script>
 	<script type="text/javascript"  src="static/resources/demo.js"></script>
+    <link href="static/black-dashboard-html-v1.0.1/assets/demo/demo.css" rel="stylesheet" />
+    <link href="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.css" rel="stylesheet"/>
+    <script src="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.js"> </script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript"  src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript", src="static/RestJs/saveExpense.js"> </script>
 </head>
 <body class="nav-md">
     <div class="wrapper">
@@ -139,19 +145,19 @@
                <div class="col-sm-12 col-md-6">
                <a href="/list-expense" class="btn btn-primary btn-sm"> Back</a>
                </div>   
-   <div class="card-body">
-                <form action="/save-expense" method="post">
+                <div class="card-body">
+                <form id="saveExpenseForm" action="/save-expense" method="post">
                  <div class="col-md-3 px-md-1">
                       <div class="form-group">
                         <label> Expense Id </label>
-                        <input type="text"  name="expenseId"   placeholder=""  class="form-control" />
+                        <input type="text" id="expenseId"  name="expenseId"   placeholder=""  class="form-control" />
                       </div>
                     </div>
                      
                     <div class="col-md-4 pl-md-1">
                       <div class="form-group">
                         <label> Expense Name</label>
-                        <input type="text" name="expenseName"  placeholder="" class="form-control"/>
+                        <input type="text" id="expenseName" name="expenseName"  placeholder="" class="form-control"/>
                       </div>
                     </div>
               
@@ -159,7 +165,7 @@
                     <div class="col-md-4 pl-md-1">
                       <div class="form-group">
                         <label> cost </label>
-                        <input type="number" name="cost" placeholder="" class="form-control"/>
+                        <input type="number" id="cost" name="cost" placeholder="" class="form-control"/>
                       </div>
                     </div>
                     
@@ -168,7 +174,7 @@
                          <div class="col-md-4 pl-md-1">
                       <div class="form-group">
                         <label> expense date </label>
-                        <input type="date" name="expenseDate" placeholder="" class="form-control"/>
+                        <input type="date" id="expenseDate" name="expenseDate" placeholder="" class="form-control"/>
                       </div>
                     </div>
                        

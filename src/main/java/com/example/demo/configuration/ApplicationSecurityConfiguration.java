@@ -30,7 +30,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 	 
 	 
 	 @Bean
-	 public AuthenticationProvider authprovider()
+	 public AuthenticationProvider authenticationProvider()
 	 {
 		 DaoAuthenticationProvider provider=new DaoAuthenticationProvider();
 		 provider.setUserDetailsService(userDetailService);
@@ -42,10 +42,10 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
 	 @Bean 
 	 public GrantedAuthoritiesMapper authoritiesMapper()
 	 {
-		 SimpleAuthorityMapper authoritymapper=new SimpleAuthorityMapper();
-		 authoritymapper.setConvertToLowerCase(true);
-		 authoritymapper.setDefaultAuthority("admin");
-		 return authoritymapper;
+		 SimpleAuthorityMapper authorityMapper=new SimpleAuthorityMapper();
+		 authorityMapper.setConvertToLowerCase(true);
+		 authorityMapper.setDefaultAuthority("admin");
+		 return authorityMapper;
 	 }
 	 
 	 @Override

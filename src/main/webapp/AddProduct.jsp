@@ -4,22 +4,23 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-  <link rel="apple-touch-icon"  href="static/black-dashboard-html-v1.0.1/assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="static/black-dashboard-html-v1.0.1/assets/img/favicon.png">
-<title>Insert title here</title>
-<link rel="shortcut icon" type="image/ico" href="http://www.datatables.net/favicon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
-  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-  <!-- Nucleo Icons -->
-  <link href="static/black-dashboard-html-v1.0.1/assets/css/nucleo-icons.css" rel="stylesheet" />
-  <!-- CSS Files -->
-  <link href="static/black-dashboard-html-v1.0.1/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-	<link href="static/resources/jquery.dynatable.css" rel="stylesheet"/>
-	<style type="text/css" class="init">
-	
-	</style>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="apple-touch-icon" sizes="76x76" href="static/black-dashboard-html-v1.0.1/assets/img/apple-icon.png">
+    <link rel="icon" type="image/png" href="static/black-dashboard-html-v1.0.1/assets/img/favicon.png">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!-- Nucleo Icons -->
+    <link href="static/black-dashboard-html-v1.0.1/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link href="static/black-dashboard-html-v1.0.1/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="static/black-dashboard-html-v1.0.1/assets/demo/demo.css" rel="stylesheet" />
+    <link href="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.css" rel="stylesheet"/>
+    <script src="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.js"> </script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript"  src="https://code.jquery.com/jquery-3.3.1.js"></script>
+   <script type="text/javascript", src="static/RestJs/saveProduct.js"> </script>
 
 </head>
 <body class="nav-md">
@@ -144,7 +145,7 @@
                <a href="/list-product" class="btn btn-primary btn-sm"> Back</a>
                </div> 
               <div class="card-body">
-                <form action="/save-product" method="post"  enctype="multipart/form-data">
+                <form id="saveProductForm" action="/save-product" method="post"  enctype="multipart/form-data">
                   <div class="row">
                     <div class="col-md-5 pr-md-1">
                      <div class="form-group has-label">
@@ -209,7 +210,7 @@
 
               <div class="card-footer">
                <div class="col-md-4">
-                <button type="submit" class="btn btn-fill btn-primary">Save</button>
+                <button id="saveButton" type="submit" class="btn btn-fill btn-primary">Save</button>
               </div>
               </div>
 

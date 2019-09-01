@@ -22,19 +22,16 @@
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="static/black-dashboard-html-v1.0.1/assets/demo/demo.css" rel="stylesheet" />
   		<link rel="stylesheet" type="text/css" href="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.css">
-  <script type="text/script">
-   function validateform()
-{
-   swal({
-  position: 'top-end',
-  type: 'success',
-  title: 'Your data has been saved',
-  timer: 4000,
-  showConfirmButton: true,
-});
-}
-  </script>
-  
+  <script
+          src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script
+          src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+  <script
+          src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.2.1.js"> </script>
+  <script src="https://code.jquery.com/jquery-3.2.1.min.js"> </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="static/RestJs/saveSupplierPersonal.js"> </script>
 </head>
 
 <body class="">
@@ -80,36 +77,36 @@
               Users
             </a>
           </li>
-     
+
           <li>
             <a href="/get-report">
              <i class="tim-icons icon-bag-16"></i>
               Summary Report
             </a>
           </li>
-         
+
           <li>
             <a href="/list-expenses">
           <i class="tim-icons icon-notes"></i>
               <p>Expenses</p>
             </a>
           </li>
-          
-          
+
+
             <li>
             <a href="/list-trash">
           <i class="tim-icons icon-trash-simple"></i>
               <p>Trash</p>
             </a>
           </li>
-         
+
          <li>
             <a href="/logout">
               <i class="icon-double-right"></i>
               Logout
             </a>
           </li>
-         
+
         </ul>
       </div>
     </div>
@@ -153,11 +150,11 @@
                 <div class="row">
                  <div class="col-sm-12 col-md-6">
                <a href="/list-supplier" class="btn btn-primary btn-sm"> Back</a>
-               </div>      
+               </div>
                   </div>
-                  
-              
-                <form action="/save_supplier" method="post"  enctype="multipart/form-data">
+
+
+                <form  id="supplierPersonalAdd" action="/save-supplier" method="post"  enctype="multipart/form-data">
                   <div class="row">
                     <div class="col-md-5 pr-md-1">
                        <div class="form-group has-label">
@@ -171,7 +168,7 @@
                         <input type="text"  name="supplierName"  placeholder="username" class="form-control" required="true"/>
                       </div>
                     </div>
-                    
+
                     <div class="col-md-3 px-md-1">
                          <div class="form-group has-label">
                         <label>supplier type</label>
@@ -179,14 +176,23 @@
                       </div>
                     </div>
                     </div>
-                    
+
+                  <div class="col-md-3 px-md-1">
+                    <div class="form-group has-label">
+                      <label>email</label>
+                      <input type="email" name="email" placeholder="" class="form-control" required="true" />
+                    </div>
+                  </div>
+              </div>
+
+
                     <div class="col-md-4 pl-md-1">
                       <div class="form-group has-label">
                         <label> permanent address</label>
                         <input type="text" name="permanentAddress"  placeholder="" class="form-control" required="true"/>
                       </div>
                     </div>
-             
+
                   <div class="row">
                     <div class="col-md-6 pr-md-1">
                   <div class="form-group has-label">
@@ -195,7 +201,7 @@
                       </div>
                     </div>
                     </div>
-                    
+
                       <div class="row">
                     <div class="col-md-8">
                       <div class="form-group">
@@ -203,18 +209,18 @@
                     </div>
                     </div>
                     </div>
-                    
 
-                  
+
+
 
               <div class="card-footer">
                <div class="col-md-4">
-                <button class="btn btn-primary btn-fill" onclick="validateform()">Save</button>
+                <button id="saveSupplierPersonal" class="btn btn-primary btn-fill" >Save</button>
               </div>
               </div>
 
                 </form>
-              </div>            
+              </div>
             </div>
             </div>
           </div>
@@ -222,7 +228,7 @@
         </div>
         </div>
        </div>
-       
+
   <!--   Core JS Files   -->
   <script src="static/black-dashboard-html-v1.0.1/assets/js/core/jquery.min.js"></script>
   <script src="static/black-dashboard-html-v1.0.1/assets/js/core/popper.min.js"></script>
@@ -239,7 +245,7 @@
   <script src="static/black-dashboard-html-v1.0.1/assets/js/black-dashboard.min.js?v=1.0.0"></script>
   <!-- Black Dashboard DEMO methods, don't include it in your project! -->
   <script src="static/black-dashboard-html-v1.0.1/assets/demo/demo.js"></script>
-  	    <script src="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.js"> </script> 
+  	    <script src="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.js"> </script>
 	<script src="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.min.js"> </script>
   <script>
     $(document).ready(function() {
@@ -351,8 +357,8 @@
         });
       });
     });
-  
-  
+
+
     $(document).ready(function() {
       $().ready(function() {
         $sidebar = $('.sidebar');
@@ -463,5 +469,5 @@
       });
     });
   </script>
-  
+
 </body>

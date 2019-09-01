@@ -15,12 +15,56 @@
   <link href="static/black-dashboard-html-v1.0.1/assets/css/nucleo-icons.css" rel="stylesheet" />
   <!-- CSS Files -->
   <link href="static/black-dashboard-html-v1.0.1/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
 	<link href="static/resources/jquery.dynatable.css" rel="stylesheet"/>
 	<style type="text/css" class="init">
-	
 	</style>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"> </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"> </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="static/RestJs/expenseList.js"> </script>
+    <script src="static/RestJs/expenseEdit.js"> </script>
+    <script src="static/RestJs/listExpenseByName.js"> </script>
+    <link href="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.css" rel="stylesheet"/>
+    <script src="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.js"> </script>
+    <script type="text/javascript" src="static/RestJs/updateExpense.js"> </script>
+    <script type="text/javascript" src="static/RestJs/listExpenseDataByDate.js"> </script>
+    <style type="text/css" class="init">
+        #expenseDateForm {
+            display: none;
+        }
 
+        #updateExpenseForm
+        {
+            display: none;
+        }
+
+    </style>
+    <script>
+        $(document).ready(function() {
+            $("#filter").click(function() {
+                $("#expenseDateForm").show();
+            });
+        });
+
+
+        $(document).ready(function () {
+            $("#expenseList").on('click', 'a[id="expenseEdit"]', function (e) {
+                $("#updateExpenseForm").show();
+                $("#expenseAddFormButton").hide();
+                $("#filter").hide();
+                $("#expenseList").hide();
+                $("#searchExpenseByName").hide();
+                $("#excelExpenses").hide();
+                $("#pdfExpenses").hide();
+            });
+        })
+    </script>
 </head>
 <body class="nav-md">
     <div class="wrapper">
@@ -73,7 +117,7 @@
           </li>
           
            <li>
-            <a href="/list-expenses">
+            <a href="/list-expense">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
@@ -157,8 +201,8 @@
                <div class="col-sm-12 col-md-6">
                 <div id="datatable_filter" class="dataTables_filter">
                 
-                <form action="/getByExpenseName" method="get">
-                  <label><input type="search" name="expenseName" class="form-control form-control-sm" placeholder="Search records" aria-controls="datatable"></label>
+                <form id="searchExpenseByName" action="/getByExpenseName" method="get">
+                  <label><input type="search" id="expenseName" name="expenseName" class="form-control form-control-sm" placeholder="Search records" aria-controls="datatable"></label>
                 <button class="btn btn-primary btn-sm">Search</button>
                 </form>
                 </div></div></div>
@@ -166,11 +210,17 @@
               
        <div class="row">
        <div class="col-sm-12">
-          <a href="/expense-Form" class="btn btn-primary btn-sm"> Add new </a>
-                <button class="btn btn-primary btn-sm" onclick="search(this)">Filter</button>
-                  <table class="table" id="">
-                  <a href="/createExcelExpenses" style="float:right;"><img src="images/excelimg.png" style="width:80px;"> </a>
-                     <a href="/createPdfExpenses" style="float:right;"><img src="images/Pdf_by_mimooh.svg.png" style="width:40px; margin-left:10px;"> </a>
+          <a  id="expenseAddFormButton" href="/expense-Form" class="btn btn-primary btn-sm"> Add new </a>
+                <button id="filter" class="btn btn-primary btn-sm">Filter</button>
+           <form id="expenseDateForm" action="/getExpenseDataByDate" method="GET">
+               <span class="icon"><i class="fa fa-search"></i></span>
+               <input type="Date" id="expenseStartDate" name="expenseStartDate" placeholder="Date..." />
+               <input type="Date" id="expenseLastDate" name="expenseLastDate"  placeholder="Date..." />
+               <button  type="submit" class="btn btn-fill btn-primary">Find</button>
+           </form>
+                  <table id="expenseList" class="table">
+                  <a id="excelExpenses" href="/createExcelExpenses" style="float:right;"><img src="images/excelimg.png" style="width:80px;"> </a>
+                     <a id="pdfExpenses" href="/createPdfExpenses" style="float:right;"><img src="images/Pdf_by_mimooh.svg.png" style="width:40px; margin-left:10px;"> </a>
                     <thead class=" text-primary">
                       <tr>
                         <th>
@@ -192,58 +242,65 @@
 
                       </tr>
                     </thead>
-                      <tbody>
-               <c:forEach var="expenses" items="${expense}">
-                  <tr>
-                      <td>${expenses.expenseId}</td>
-                      <td>${expenses.expenseName}</td>
-                      <td>${expenses.cost}</td>
-                      <td>${expenses.expenseDate} </td>
-                      <td> ${expenses.username}</td>
-                       <td> <a href="/getExpenseEditForm?expenseId=${expenses.expenseId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-                       <td> <a href="/delete-expense?expenseId=${expenses.expenseId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
-                      </tr>
-                      </c:forEach>
-                      <td>${total_id}</td>
-                      <td>           </td>
-                      <td>  ${cost}</td>
-                      <td>         </td>
+                      <tbody id="expenseData">
+                      </tbody>
 
-                         <c:forEach var="expenses" items="${expenseName}">
-                  <tr>
-                      <td>${expenses.expenseId}</td>
-                      <td>${expenses.expenseName}</td>
-                      <td>${expenses.cost}</td>
-                      <td>${expenses.expenseDate} </td>
-                      <td> ${expenses.username}</td>
-                       <td> <a href="expense?expenseId=${expenses.expenseId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-                       <td> <a href="deleteexpense?expenseId=${expenses.expenseId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
+                      <tbody id="expenseDataByName">
+
+                      </tbody>
+
+                      <tbody id="expenseDataByDate">
+
+                      </tbody>
+
+                      <tr id="aggregateTables">
+
                       </tr>
-                      </c:forEach>
-                    <td>${totalnumberofid2}</td>
-                      <td>           </td>
-                      <td>  ${cost2}</td>
-                      <td>         </td>
+            </table>
+           <div class="card-body">
+               <form id="updateExpenseForm" action="/update-expense" method="post">
+
+                   <div class="col-sm-12 col-md-6">
+                       <a href="/list-expense" class="btn btn-primary btn-sm"> Back</a>
+               </div>
+                   <div class="col-md-3 px-md-1">
+                       <div class="form-group">
+                           <input type="hidden" id="expenseIdEdit"  name="expenseId" value="${expenseEdit.expenseId}"   placeholder=""  class="form-control" />
+                       </div>
+                   </div>
+
+                   <div class="col-md-4 pl-md-1">
+                       <div class="form-group">
+                           <label> Expense Name</label>
+                           <input type="text" id="expenseNameEdit" name="expenseName" value="${expenseEdit.expenseName}"  placeholder="" class="form-control"/>
+                       </div>
+                   </div>
 
 
-                         <c:forEach var="expenses" items="${expenseDate}">
-                  <tr>
-                      <td>${expenses.expenseId}</td>
-                      <td>${expenses.expenseName}</td>
-                      <td>${expenses.cost}</td>
-                      <td>${expenses.expenseDate} </td>
-                      <td> ${expenses.username}</td>
-                       <td> <a href="expense?expenseId=${expenses.expenseId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-                       <td> <a href="deleteexpense?expenseId=${expenses.expenseId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
-                      </tr>
-                      </c:forEach>
-                        <td>${total_id1}</td>
-                      <td>           </td>
-                      <td>  ${cost1}</td>
-                      <td>         </td>
-                  </tbody>
-            </table>      
+                   <div class="col-md-4 pl-md-1">
+                       <div class="form-group">
+                           <label> cost </label>
+                           <input type="number" id="cost" name="cost" value="${expenseEdit.cost}" placeholder="" class="form-control"/>
+                       </div>
+                   </div>
+
+
+
+                   <div class="col-md-4 pl-md-1">
+                       <div class="form-group">
+                           <label> expense date </label>
+                           <input type="text" id="expenseDate" name="expenseDate" value="${expenseEdit.expenseDate}" placeholder="" class="form-control"/>
+                       </div>
+                   </div>
+
+                   <div class="card-footer">
+                       <div class="col-md-4">
+                           <button type="submit" class="btn btn-fill btn-primary">Save</button>
+                       </div>
+                   </div>
+               </form>
            </div>
+       </div>
            </div>
            </div>                
            </div>
