@@ -115,10 +115,10 @@ public class ExpenseRepositoryImpl extends JdbcDaoSupport implements ExpenseRepo
 
 
 	@Override
-	public List<Expense> getExpenseByExpenseDate(String[] expenseDate) {
+	public List<Expense> getExpenseByExpenseDate(String expenseStartDate, String expenseLastDate) {
 		// TODO Auto-generated method stub
 		String sql="SELECT * FROM expense WHERE expense_date>=?::Date and expense_date<=?::Date";
-		   List<Map<String, Object>> row=getJdbcTemplate().queryForList(sql, expenseDate);
+		   List<Map<String, Object>> row=getJdbcTemplate().queryForList(sql, expenseStartDate, expenseLastDate);
 		    List<Expense> expense=new ArrayList<Expense>();
 		    for(Map<String, Object> rows:row)
 		    {
@@ -153,19 +153,19 @@ public class ExpenseRepositoryImpl extends JdbcDaoSupport implements ExpenseRepo
 
 
 	@Override
-	public int countTotalId(String[] expenseDate) {
+	public int countTotalId(String expenseStartDate, String expenseLastDate) {
 		// TODO Auto-generated method stub
 		String sql="SELECT COUNT(expense_id) FROM expense WHERE expense_date>=?::Date and expense_date<=?::Date";
-		int total=this.getJdbcTemplate().queryForObject(sql, Integer.class, expenseDate);
+		int total=this.getJdbcTemplate().queryForObject(sql, Integer.class, expenseStartDate, expenseLastDate);
 		return total;
 	}
 
 
 	@Override
-	public Double totalCost(String[] expenseDate) {
+	public Double totalCost(String expenseStartDate, String expenseLastDate) {
 		// TODO Auto-generated method stub
 		String sql="SELECT SUM(cost) FROM expense WHERE expense_date>=?::Date and expense_date<=?::Date";
-		Double total=this.getJdbcTemplate().queryForObject(sql, Double.class, expenseDate);
+		Double total=this.getJdbcTemplate().queryForObject(sql, Double.class, expenseStartDate, expenseLastDate);
 		return total;
 	}
 
