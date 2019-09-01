@@ -5,9 +5,16 @@ public class Supplier {
 	private long supplierId;
 	private String supplierName;
 	private String supplierType;
+	private String email;
 	private String temporaryAddress;
 	private String permanentAddress;
     private String image;
+
+	public String getEmail() { return email;
+	}
+
+	public void setEmail(String email) { this.email = email;
+	}
 	public String getImage() {
 		return image;
 	}
