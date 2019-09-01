@@ -7,4 +7,5 @@ import java.util.Map;
 public interface PurchaseRepository {
 
     void insertIntoPurchase(Map map);
+    void deletePurchase(long productId);
 }
