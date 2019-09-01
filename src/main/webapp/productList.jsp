@@ -17,10 +17,39 @@
   <link href="static/black-dashboard-html-v1.0.1/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
 	<link href="static/resources/jquery.dynatable.css" rel="stylesheet"/>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"> </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"> </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="static/RestJs/productList.js"> </script>
+    <script src="static/RestJs/productEdit.js"></script>
+    <script type="text/javascript", src="static/RestJs/listProductByName.js"></script>
+    <script type="text/javascript", src="static/RestJs/updateProduct.js"></script>
+    <link href="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.css" rel="stylesheet"/>
+    <script src="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.js"> </script>
 	<style type="text/css" class="init">
-	
+        #updateProductForm{
+            display: none;
+        }
 	</style>
-
+    <script>
+        $(document).ready(function () {
+            $("#productList").on('click', 'a[id="productEdit"]', function (e) {
+              $("#productList").hide();
+              $("#updateProductForm").show();
+              $("#searchProductForm").hide();
+              $("#productAddButton").hide();
+              $("#productAnalysisButton").hide();
+              $("#createExcelProduct").hide();
+              $("#createPdfProduct").hide();
+            });
+        });
+    </script>
 </head>
 <body class="nav-md">
     <div class="wrapper">
@@ -73,7 +102,7 @@
           </li>
          
            <li>
-            <a href="/list-expenses">
+            <a href="/list-expense">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
@@ -156,18 +185,18 @@
                 
                 <div class="col-sm-12 col-md-6">
                 <div id="datatable_filter" class="dataTables_filter">
-                <form action="/getProductByName" method="get">
-                <label><input type="search" name="productName" class="form-control form-control-sm" placeholder="Search records" aria-controls="datatable"></label>
+                <form id="searchProductForm" action="/getProductByName" method="get">
+                <label><input type="search" id="productName" name="productName" class="form-control form-control-sm" placeholder="Search records" aria-controls="datatable"></label>
                 <button class="btn btn-primary btn-sm">Search</button>
                 </form>
                 </div></div></div>
          
                 <div class="row"><div class="col-sm-12">
-                    <a href="/addProduct" class="btn btn-primary btn-sm"> Add new </a>
-                 
-                  <table class="table" id="">
-                    <a href="/createExcelProduct" style="float:right;"><img src="images/excelimg.png" style="width:80px;"> </a>
-                     <a href="/createPdfProduct" style="float:right;"><img src="images/Pdf_by_mimooh.svg.png" style="width:40px; margin-left:10px;"> </a>
+                    <a id="productAddButton" href="/getSaveProductForm" class="btn btn-primary btn-sm"> Add new </a>
+                     <a id="productAnalysisButton" href="/getProductAnalysis"  class="btn btn-primary btn-sm"> Product Analysis </a>
+                  <table id="productList" class="table">
+                    <a id="createExcelProduct" href="/createExcelProduct" style="float:right;"><img src="images/excelimg.png" style="width:80px;"> </a>
+                     <a id="createPdfProduct" href="/createPdfProduct" style="float:right;"><img src="images/Pdf_by_mimooh.svg.png" style="width:40px; margin-left:10px;"> </a>
                   <thead class=" text-primary">
                    <tr>
                    <th>
@@ -211,65 +240,88 @@
                    </th>
                    </tr>
                   </thead>
-                  <tbody>
-                     <c:forEach var="products" items="${purchaseProducts}">
-                  <tr>
-                      <td tabindex="0" class="sorting_1" class="odd">${products.productId}</td>
-                      <td>${products.productName}</td>
-                      <td>${products.productType}</td>
-                      <td>${products.price} </td>
-                      <td>${products.quantity}</td>
-                      <td>${products.magnifactureDate}</td>
-                       <td>${products.expiryDate}</td>
-                       <td>${products.purchaseDate}</td>
-                       <td>${products.username}</td>
-                       <td> <img src="productimagedisplay?productId=${products.productId}" alt="image-display" class="center" height="200px" width="200px" style="width:50%;"/> </td>
-                        <td class="text-right" style="display: none;"><a href="add_new?productId=${products.productId}"></a> </td>
-                       <td> <a href="getProductEditForm?productId=${products.productId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-                       <td> <a href="delete-product?productId=${products.productId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
-                       <td><a href="addToTrash?productId=${products.productId}"><i class="tim-icons icon-trash-simple"></i></a></td>
-                      </tr>
-                      </c:forEach>
-                     
-                     
-                      <td>${totalproduct}  </td>
-                      <td>  </td>
-                      <td>  </td>
-                      <td> ${price} </td>
-                      <td> ${quantity}</td>
-                      <td>  </td>
-                      <td>  </td>
-                      <td>  </td>
-                     
-                     
-                         <c:forEach var="product" items="${producter}">
-                          <tr>
-                          <td> ${product.productId} </td>
-                          <td> ${product.productName} </td>
-                          <td> ${product.productType} </td>
-                          <td> ${product.price} </td>
-                          <td> ${product.quantity} </td>
-                          <td> ${product.magnifactureDate} </td>
-                          <td> ${product.expiryDate} </td>
-                              <td> ${product.purchaseDate}</td>
-                              <td> ${product.username}</td>
-                          <td> <img src="productimagedisplay?productId=${product.productId}" alt="image-display" class="center" height="200px" width="200px" style="width:50%;"/> </td>
-                          <td> <a href="product?productId=${product.productId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-                       <td> <a href="deleteproduct?productId=${product.productId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
-                              <td><a href="addToTrash?productId=${product.productId}"><i class="tim-icons icon-trash-simple"></i></a></td>
-                          </tr>
-                          </c:forEach>
-                           <td>${totalproduct1}  </td>
-                      <td>  </td>
-                      <td>  </td>
-                      <td> ${price1} </td>
-                      <td> ${totalquantity1}</td>
-                      <td>  </td>
-                      <td>  </td>
-                      <td>  </td>
-                          
+                  <tbody id="productData">
+                  </tbody>
+
+                      <tbody id="getProductByName">
+
                       </tbody>
+
+                      <tr id="aggregateTables">
+                      </tr>
+
+
                       </table>
+
+                    <div class="card-body">
+                        <form id="updateProductForm" action="/update-product" method="post"  enctype="multipart/form-data">
+                            <div class="row">
+                                <input type="hidden" id="productId" name="productId" value="${productEdit.productId}" class="form-control" />
+
+                                <div class="col-md-3 px-md-1">
+                                    <div class="form-group">
+                                        <label>Product Name</label>
+                                        <input type="text" id="productNameEdit"  name="productName" value="${productEdit.productName}" placeholder="productname" class="form-control" />
+                                    </div>
+                                </div>
+
+                                <div class="col-md-3 px-md-1">
+                                    <div class="form-group">
+                                        <label>Product Type</label>
+                                        <input type="text" id="productType" name="productType" value="${productEdit.productType}" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 pl-md-1">
+                                <div class="form-group">
+                                    <label> Quantity</label>
+                                    <input type="number" id="quantity" name="quantity" value="${productEdit.quantity}" placeholder="" class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 pr-md-1">
+                                    <div class="form-group">
+                                        <label> Price </label>
+                                        <input type="number" id="price"  name="price" value="${productEdit.price}" placeholder="" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 px-md-1">
+                                <div class="form-group">
+                                    <label class="label-control">Magnifacture Date</label>
+                                    <input type="text" id="magnifactureDate" id="magnifactureDate" name="magnifactureDate" class="form-control" value="${productEdit.magnifactureDate}"/>
+                                </div>
+                            </div>
+
+                            <!-- input with datetimepicker -->
+                            <div class="col-md-4 px-md-1">
+                                <div class="form-group">
+                                    <label class="label-control">Expiry Date</label>
+                                    <input type="text" id="expiryDate" name="expiryDate" class="form-control" value="${productEdit.expiryDate}"/>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4 px-md-1">
+                                <div class="form-group">
+                                    <label>Image </label>
+                                    <input type="file" id="file" name="file" value="${productEdit.image}" placeholder="" class="form-control" />
+                                </div>
+                            </div>
+
+
+                            <div class="card-footer">
+                                <div class="col-md-4">
+                                    <button id="updateButton" type="submit" class="btn btn-fill btn-primary">Save</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+
                 </div>
               </div>
            </div>
