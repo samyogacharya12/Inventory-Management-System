@@ -16,13 +16,13 @@ public interface ProductRepository {
      void insertIntoProductAnalysis(Map map);
      List<ProductAnalysis> getAllProductAnalysis();
      Integer countProductByNameAndType(String productName, String productType);
-//     PurchaseProduct getProductByNameTypeAndPurchaseDate(String productName, String productType, Date purchaseDate);
      List<PurchaseProduct> getProductByNameTypeAndPurchaseDate(Date purchaseDate);
      List<PurchaseProduct> getProductByNameTypeLessThanPurchaseDate(String productName, String productType, Date purchaseDate);
      List<PurchaseProduct> findByProductName(String productName);
      void updateExpiredProduct(Product product);
      Product getProductById(long productId);
      List<PurchaseProduct> getAllProductInfo();
+     List<ProductAnalysis> getDataByName(String productName);
      void updateIntoProduct(Product product);
      void deleteProductInfo(long productId);
 //     Product getQuantityById(long id);
@@ -32,8 +32,8 @@ public interface ProductRepository {
      int getTotalNoOfQuantity();
      int getTotalNoOfProduct(String productName);
      double getSumOfPrice(String productName);
-     int getTotalNoOfQuantity(String productName);
-     List<String> getExpiredProduct(String expiryDate);
+     Integer getTotalNoOfQuantity(String productName);
+     List<Product> getExpiredProduct(String expiryDate);
      int getNoOfExpiredProduct(String expiryDate);
 
 }
