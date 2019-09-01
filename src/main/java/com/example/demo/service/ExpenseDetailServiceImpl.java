@@ -53,9 +53,9 @@ public class ExpenseDetailServiceImpl {
 	}
 	
 	
-	public List<Expense> getExpenseByExpenseDate(String[] expense_date)
+	public List<Expense> getExpenseByExpenseDate(String expenseStartDate, String expenseLastDate)
 	{
-		return expenseRepository.getExpenseByExpenseDate(expense_date);
+		return expenseRepository.getExpenseByExpenseDate(expenseStartDate, expenseLastDate);
 	}
 	
 	public int countTotalId() {
@@ -67,13 +67,13 @@ public class ExpenseDetailServiceImpl {
 		return expenseRepository.totalCost();
 	}
 	
-	public int countTotalId(String[] expense_date) {
-		return expenseRepository.countTotalId(expense_date);
+	public int countTotalId(String expenseStartDate, String expenseLastDate) {
+		return expenseRepository.countTotalId( expenseStartDate, expenseLastDate);
 	}
 	
-	public Double totalCost(String[] expense_date) {
+	public Double totalCost(String expenseStartDate, String expenseLastDate) {
 		
-		return expenseRepository.totalCost(expense_date);
+		return expenseRepository.totalCost(expenseStartDate, expenseLastDate);
 	}
 	
 	
