@@ -17,10 +17,101 @@
   <link href="static/black-dashboard-html-v1.0.1/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
 	<link href="static/resources/jquery.dynatable.css" rel="stylesheet"/>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"> </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"> </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="static/RestJs/supplierList.js"> </script>
+    <script src="static/RestJs/listSupplierByName.js"> </script>
+    <script src="static/RestJs/saveSupplierProduct.js"> </script>
+    <script src="static/RestJs/listSupplierDataByDate.js"> </script>
+    <script src="static/RestJs/supplierProductAdd.js" > </script>
+    <script src="static/RestJs/supplierEdit.js" > </script>
+    <script src="static/RestJs/updateSupplierPersonal.js" > </script>
+    <script src="static/RestJs/updateSupplierProduct.js" > </script>
+    <link href="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.css" rel="stylesheet"/>
+    <script src="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.js"> </script>
 	<style type="text/css" class="init">
-	
-	</style>
+        #supplierDateForm {
+            display: none;
+        }
+        #saveSupplierProductForm
+        {
+            display: none;
+        }
+        #supplierPersonalUpdateForm
+        {
+            display: none;
+        }
 
+        #supplierProductUpdateForm
+        {
+          display: none;
+        }
+	</style>
+    <script>
+        $(document).ready(function () {
+            $("#supplierList").on('click', 'a[id="supplierProductAdd"]', function (e) {
+              $("#supplierList").hide();
+              $("#SupplierProductAnalysisButton").hide();
+              $("#saveSupplierProductForm").show();
+              $("#filter").hide();
+              $("#supplierDateForm").hide();
+              $("#supplierForm").hide();
+              $("#supplierPersonalAddButton").hide();
+              $("#excelFile").hide();
+              $("#pdfFile").hide();
+              $("#supplierReportButton").hide();
+            });
+        });
+
+        $(document).ready(function () {
+            $("#supplierList").on('click', 'a[id="supplierEdit"]', function (e) {
+                $("#supplierList").hide();
+                $("#SupplierProductAnalysisButton").hide();
+                $("#saveSupplierProductForm").hide();
+                $("#supplierPersonalUpdateForm").show();
+                $("#filter").hide();
+                $("#supplierDateForm").hide();
+                $("#supplierForm").hide();
+                $("#supplierPersonalAddButton").hide();
+                $("#excelFile").hide();
+                $("#pdfFile").hide();
+                $("#supplierReportButton").hide();
+            });
+        });
+        $(document).ready(function () {
+            $("#supplierProductInfoButton").click(function () {
+                $("#supplierList").hide();
+                $("#SupplierProductAnalysisButton").hide();
+                $("#saveSupplierProductForm").hide();
+                $("#supplierPersonalUpdateForm").hide();
+                $("#supplierProductUpdateForm").show();
+                $("#filter").hide();
+                $("#supplierDateForm").hide();
+                $("#supplierForm").hide();
+                $("#supplierPersonalAddButton").hide();
+                $("#excelFile").hide();
+                $("#pdfFile").hide();
+                $("#supplierReportButton").hide();
+            })
+        })
+
+        $(document).ready(function () {
+            $("#supplierProductBackButton").click(function () {
+                $("#SupplierProductAnalysisButton").hide();
+                $("#supplierPersonalUpdateForm").show();
+                $("#supplierProductUpdateForm").hide();
+            });
+        });
+
+
+    </script>
 </head>
 <body class="nav-md">
     <div class="wrapper">
@@ -58,7 +149,7 @@
           </li>
           
            <li>
-            <a href="/list-expenses">
+            <a href="/list-expense">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
@@ -66,7 +157,7 @@
           
             <li>
             <a href="/list-trash">
-          <i class="tim-icons icon-trash-simple"></i>
+          <i class="tim-icons icon-trash-sismple"></i>
               Trash
             </a>
           </li>
@@ -135,44 +226,31 @@
               
                <div class="col-sm-12 col-md-6">
                 <div id="datatable_filter" class="dataTables_filter">
-                <form action="/getSupplierByName" method="get">           
-             
-             
-                 <select id="myInput" name="supplierName" class="chosen">
-                <c:forEach var="supplier1" items="${supplier3}">
-                <option>
-                 ${supplier1.supplierName}
-                 </option>
-				 </c:forEach>
-				 
-				 <c:forEach var="supplier12" items="${supplier1}"> 
-				 <option>
-                 ${supplier12.supplierName}
-                 </option>
-                 </c:forEach>
-                 
-                 <c:forEach var="supplier13" items="${supplier2}"> 
-				 <option>
-                 ${supplier13.supplierName}
-                 </option>
-                 </c:forEach>
-                 
-                </select>
-                <button class="btn btn-primary btn-sm">Search</button>
-                </form>
+                    <form id="supplierForm" action="/getSupplierByName" method="get">
+                        <select  name="supplierName" id="supplierFormSelect">
+
+                        </select>
+                        <button class="btn btn-primary btn-sm">Search</button>
+                    </form>
                 </div>
                 </div>
                 </div>
               
        <div class="row">
        <div class="col-sm-12">
-          <a href="/getSupplierForm" class="btn btn-primary btn-sm"> Add new </a>
-          <button class="btn btn-primary btn-sm" onclick="search(this)">Filter</button>
-          <a href="/supplier_Report" class="btn btn-primary btn-sm"> Supplier Report</a>
-                  
-                  <table class="table" id="">
-                    <a href="/createExcelSupplier" style="float:right;"><img src="images/excelimg.png" style="width:80px;"> </a>
-                     <a href="/createPdfSupplier" style="float:right;"><img src="images/Pdf_by_mimooh.svg.png" style="width:40px; margin-left:10px;"> </a>
+          <a id="supplierPersonalAddButton" href="/getSupplierForm" class="btn btn-primary btn-sm"> Add new </a>
+          <button id="filter"  class="btn btn-primary btn-sm">Filter</button>
+          <a id="supplierReportButton" href="/getSupplierPersonalInfo" class="btn btn-primary btn-sm"> Supplier Report</a>
+           <a id="SupplierProductAnalysisButton" href="/getSupplierProductAnalysis"  class="btn btn-primary btn-sm">Supplier Product Analysis </a>
+           <form id="supplierDateForm" action="/getSupplierDataByDate" method="GET">
+               <span class="icon"><i class="fa fa-search"></i></span>
+               <input type="Date" id="supplyDateFirst" name="supplyStartDate" placeholder="Date..." />
+               <input type="Date" id="supplyDateLast" name="supplyLastDate"  placeholder="Date..." />
+               <button  type="submit" class="btn btn-fill btn-primary">Find</button>
+           </form>
+                  <table id="supplierList" class="table">
+                    <a id="excelFile" href="/createExcelSupplier" style="float:right;"><img src="images/excelimg.png" style="width:80px;"> </a>
+                     <a id="pdfFile" href="/createPdfSupplier" style="float:right;"><img src="images/Pdf_by_mimooh.svg.png" style="width:40px; margin-left:10px;"> </a>
                     <thead class="text-primary">
                       <tr>
                         <th>
@@ -221,131 +299,222 @@
                     </thead>
         
        
-                    <tbody id="myTable">
-                 <c:forEach var="suppliers" items="${supplier}">
-<tr>   
-    <td> ${suppliers.supplierId} </td>
-    <td><a href="supplierName?supplierId=${suppliers.supplierId}"> ${suppliers.supplierName} </a> </td>
-    <td> ${suppliers.supplierType} </td>
-    <td> ${suppliers.quantity} </td>
-    <td> ${suppliers.cost} </td>
-     <td> ${suppliers.buyDate} </td>
-    <td> ${suppliers.permanentAddress} </td>
-    <td> ${suppliers.temporaryAddress}</td>
-    <td> ${suppliers.productId} </td>
-    <td> ${suppliers.productName} </td>
-    <td> ${suppliers.username}  </td>
-     <td><a href="/getSupplierProductAddForm?supplierId=${suppliers.supplierId}" class=""> <i class="tim-icons icon-upload"></i>  </a> </td>
-    <td> <a href="/getSupplierBySupplierIdAndProductId?supplierId=${suppliers.supplierId}&productId=${suppliers.productId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-    <td> <a href="deletesupplier?supplierId=${suppliers.supplierId}&productId=${suppliers.productId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
-    </tr>
-</c:forEach> 
+                    <tbody id="supplerData">
+                    </tbody>
 
-<td> ${supplier5} </td>
-<td>     </td>
-<td>     </td>
-<td>  ${supplier6}    </td>
-<td>  ${supplier4} </td> 
-<td>     </td>
-<td>     </td>
-<td>     </td>
-<td>  ${supplier7}    </td>
-<td>     </td>         
-<td>     </td>
-<td>     </td>      
-<td>     </td>  
 
-                 <c:forEach var="suppliers" items="${getSupplierByName}">
-<tr>   
-    <td> ${suppliers.supplierId} </td>
-    <td><a href="supplierName?supplierId=${suppliers.supplierId}"> ${suppliers.supplierName} </a> </td>
-    <td> ${suppliers.supplierType} </td>
-    <td> ${suppliers.quantity} </td>
-    <td> ${suppliers.cost} </td>
-    <td> ${suppliers.buyDate} </td>
-    <td> ${suppliers.permanentAddress} </td>
-    <td> ${suppliers.temporaryAddress}</td>
-    <td> ${suppliers.productId} </td>
-    <td> ${suppliers.productName} </td>
-    <td>  ${suppliers.username}</td>
-     <td><a href="/getSupplier?supplierId=${suppliers.supplierId}" class=""> <i class="tim-icons icon-upload"></i>  </a> </td>
-    <td> <a href="supplier?supplierId=${suppliers.supplierId}&productId=${suppliers.productId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-    <td> <a href="deletesupplier?supplierId=${suppliers.supplierId}&productId=${suppliers.productId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
-    </tr>
-    </c:forEach>
-<td>${totalsupplier} </td>
-<td>     </td>
-<td>     </td>
-<td> ${totalquantity}    </td>
-<td> ${totalcost} </td> 
-<td>     </td>
-<td>     </td>
-<td>     </td>
-<td> ${totalproduct}    </td>
-<td>     </td>         
-<td>     </td>
-<td>     </td>      
-<td>     </td>      
-<td>     </td>         
-<td>     </td>
-<td>     </td>      
-<td>     </td>         
-   
+                      <tbody id="supplierDataByName">
 
-                 <c:forEach var="datevalue" items="${getSupplierByDate}">
-<tr>   
-    <td> ${datevalue.supplierId} </td>
-    <td><a href="supplierName?supplierId=${datevalue.supplierId}"> ${datevalue.supplierName} </a> </td>
-    <td> ${datevalue.supplierType} </td>
-    <td> ${datevalue.quantity} </td>
-    <td> ${datevalue.cost} </td>
-    <td> ${datevalue.buyDate} </td>
-    <td> ${datevalue.permanentAddress} </td>
-    <td> ${datevalue.temporaryAddress}</td>
-    <td> ${datevalue.productId} </td>
-    <td> ${datevalue.productName} </td>
-    <td> ${datevalue.username}</td>
-     <td><a href="/getSupplier?supplierId=${datevalue.supplierId}" class=""> <i class="tim-icons icon-upload"></i>  </a> </td>
-    <td> <a href="supplier?supplierId=${datevalue.supplierId}&productId=${datevalue.productId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-    <td> <a href="deletesupplier?supplierId=${datevalue.supplierId}&productId=${datevalue.productId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
-    </tr>
-</c:forEach>    
-<td>${totalsupplier1} </td>
-<td>     </td>
-<td>     </td>
-<td> ${totalquantity1}    </td>
-<td> ${totalcost1} </td> 
-<td>     </td>
-<td>     </td>
-<td>     </td>
-<td> ${totalproduct1}    </td>
-<td>     </td>         
-<td>     </td>
-<td>     </td>      
-<td>     </td>
-  
-<tr>   
- <c:forEach var="supply" items="${suppliers}">
-    <td> ${supply.supplierId} </td>
-    <td><a href="supplierName?supplierId=${supply.supplierId}"> ${supply.supplierName} </a> </td>
-    <td> ${supply.supplierType} </td>
-    <td> ${supply.quantity} </td>
-    <td> ${supply.cost} </td>
-    <td> ${supply.buyDate} </td>
-    <td> ${supply.permanentAddress} </td>
-    <td> ${supply.temporaryAddress}</td>
-     <td> ${supply.username}</td>
-   <td> <a href="supplierName?supplierId=${supply.supplierId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-    <td> <a href="deleteuser?supplierId=${supply.supplierId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
-    </c:forEach>
-    </tr>
-    </tbody>
+                      </tbody>
+
+                      <tbody id="supplierDataByDate">
+
+                      </tbody>
+
+
+                      <tr id="aggregateTables">
+
+                      </tr>
                   </table>
                 </div>
               </div>
            </div>
            </div>
-           </div>
+                <div class="card-body">
+                    <form id="saveSupplierProductForm" action="/save-supplierproduct" method="post">
+                        <div class="col-sm-12 col-md-6">
+                            <a  href="/list-supplier" class="btn btn-primary btn-sm"> Back</a>
+                        </div>
+                        <div class="col-md-4 px-md-1">
+                            <div class="form-group">
+                                <label>Supplier Id </label>
+                                <input type="text" id="supplierId" name="supplierId" value="${supplierAdd.supplierId}" readonly class="form-control" />
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 pl-md-1">
+                            <div  class="form-group has-label">
+                                <label> Product Id</label>
+                                <br>
+                                <select id="productIdSelect" name="productId">
+                                    <c:forEach var="product2" items="${product1}">
+                                        <option  value="${product2.productId}">
+                                                ${product2.productId}
+                                        </option>
+                                    </c:forEach>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 pr-md-1">
+                                <div class="form-group has-label">
+                                    <label> Cost </label>
+                                    <input type="number" id="cost"  name="cost"  placeholder="" class="form-control" required="true"/>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-6 pr-md-1">
+                                <div class="form-group has-label">
+                                    <label> Buy Date </label>
+                                    <input type="date" id="buyDate"  name="buyDate"  placeholder="" class="form-control" required="true"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card-footer">
+                            <div class="col-md-4">
+                                <!-- markup -->
+                                <button id="supplierProductButton" class="btn btn-primary btn-fill">Save</button>
+                                <!-- for more actions that you can use onclick, please check out assets/assets-for-demo/js/demo.js -->
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-body">
+                    <form id="supplierPersonalUpdateForm" action="/update-supplierpersonal" method="post"  enctype="multipart/form-data">
+                        <div i class="dataTables_wrapper dt-bootstrap4">
+                            <div class="row">
+                                <div class="col-sm-12 col-md-6">
+                                    <div class="dataTables_length">
+                                    </div>
+                                    <a href="/list-supplier" class="btn btn-primary btn-sm"> Back</a>
+                                </div>
+                                <div class="col-sm-12 col-md-6">
+                                    <div  class="dataTables_filter">
+                                        <a id="supplierProductInfoButton"  class="btn btn-primary btn-sm">ProductInfo</a>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <input type="hidden" id="updateSupplierId" name="supplierId" value="${supplierEdit.supplierId}" class="form-control" />
+                            <input type="hidden" id="supplierUniqueId" name="supplierUniqueId" value="${supplierEdit.supplierId}" class="form-control" />
+                            <div class="col-md-3 px-md-1">
+                                <div class="form-group">
+                                    <label>Supplier Name</label>
+                                    <input type="text" id="supplierName"   name="supplierName" value="${supplierEdit.supplierName}" placeholder="productname" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-3 px-md-1">
+                                <div class="form-group">
+                                    <label>Supplier Type</label>
+                                    <input type="text" id="supplierType" name="supplierType" value="${supplierEdit.supplierType}" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-6 pr-md-1">
+                                <div class="form-group">
+                                    <label> Permanent Address  </label>
+                                    <input type="text" id="permanentAddress"  name="permanentAddress" value="${supplierEdit.permanentAddress}" placeholder="" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 pr-md-1">
+                                <div class="form-group">
+                                    <label> Temporary Address  </label>
+                                    <input type="text" id="temporaryAddress"  name="temporaryAddress" value="${supplierEdit.temporaryAddress}" placeholder="" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+                            <div class="row">
+                                <div class="col-md-6 pr-md-1">
+                                    <div class="form-group">
+                                        <label> Email  </label>
+                                        <input type="email" id="email"  name="email" placeholder="" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+                        <div class="col-md-4 px-md-1">
+                            <div class="form-group">
+                                <label>Image </label>
+                                <input type="file" id="file" name="file" value="${supplierEdit.image}" />
+                            </div>
+                        </div>
+
+
+                        <div class="card-footer">
+                            <div class="col-md-4">
+                                <button id="updateSupplierPersonal" type="submit" class="btn btn-fill btn-primary">Save</button>
+                            </div>
+                        </div>
+                        </div>
+                    </form>
+
+                </div>
+
+                <div class="card-body">
+                    <form id="supplierProductUpdateForm" action="/update-supplierproduct" method="post">
+                        <a id="supplierProductBackButton" class="btn btn-primary btn-sm">Back</a>
+                        <div class="col-md-4 px-md-1">
+                            <div class="form-group">
+                                <label>Supplier Id </label>
+                                <input type="text" id="supplierProductId" name="supplierId"  value="${supplierproduct.supplierId}" readonly class="form-control"/>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-4 px-md-1">
+                            <div class="form-group">
+                                <label>Product Id </label>
+                                <select id="productId" name="productId" class="chosen">
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4 pl-md-1">
+                            <div class="form-group">
+                                <label> Quantity</label>
+                                <input type="number" id="quantity" name="quantity" value="${supplierproduct.quantity}" placeholder="" class="form-control"/>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                        <div class="col-md-6 pr-md-1">
+                            <div class="form-group">
+                                <label> Cost </label>
+                                <input type="number" id="supplierProductCost"  name="cost" value="${supplierproduct.cost}" placeholder="" class="form-control" />
+                            </div>
+                        </div>
+                </div>
+
+
+                        <div class="row">
+                            <div class="col-md-6 pr-md-1">
+                                <div class="form-group">
+                                    <label> buyDate </label>
+                                    <input type="text" id="supplierProductBuyDate"  name="buyDate" value="${supplierproduct.cost}" placeholder="" class="form-control" />
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="card-footer">
+                            <div class="col-md-4">
+                                <button id="supplierProductUpdateButton" type="submit"  class="btn btn-fill btn-primary">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+
+
+
+
+
+            </div>
            </div>   
            </div>
            </div>
@@ -371,21 +540,11 @@
   <!-- Black Dashboard DEMO methods, don't include it in your project! -->
   <script src="../assets/demo/demo.js"></script>  
      <script>
-    
-  var html ='<div class="table">\
-  <div class="text-primary">\
-  <form action="/getSupplierByDate" method="get">\
-      <span class="icon"><i class="fa fa-search"></i></span>\
-      <input type="Date" name="buyDate[]" id="search" placeholder="Date..." />\
-       <input type="Date" name="buyDate[]" id="search1" placeholder="Date..." />\
-       <button type="submit" class="btn btn-fill btn-primary">Find</button>\
-       </form>\
-  </div>\
-</div>';
-
-function search(elem) {
-  elem.outerHTML = html;
-}
+         $(document).ready(function() {
+             $("#filter").click(function() {
+                 $("#supplierDateForm").show();
+             });
+         });
   </script>
   <script>
 function goBack() {
