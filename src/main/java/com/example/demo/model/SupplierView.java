@@ -2,7 +2,7 @@ package com.example.demo.model;
 
 import java.util.Date;
 
-import org.springframework.format.annotation.DateTimeFormat;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 public class SupplierView {
 
@@ -10,15 +10,45 @@ public class SupplierView {
 	private String supplierName;
 	private String supplierType;
 	private int quantity;
+	private String email;
 	private double cost;
 	private String temporaryAddress;
 	private String permanentAddress;
 	private long productId;
 	private String image;
 	private String productName;
+	private String productType;
 	private String username;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	private  long supplierUniqueId;
+	@JsonFormat(pattern = "yyyy-MM-dd")
 	private Date buyDate;
+
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getProductType() {
+		return productType;
+	}
+
+	public void setProductType(String productType) {
+		this.productType = productType;
+	}
+
+	public long getSupplierUniqueId() {
+		return supplierUniqueId;
+	}
+
+	public void setSupplierUniqueId(long supplierUniqueId) {
+		this.supplierUniqueId = supplierUniqueId;
+	}
+
+
 	public String getUsername() {
 		return username;
 	}
