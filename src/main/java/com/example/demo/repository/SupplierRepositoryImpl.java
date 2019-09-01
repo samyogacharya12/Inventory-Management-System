@@ -1,24 +1,17 @@
 package com.example.demo.repository;
 
-import java.io.File;
-import java.io.FileOutputStream;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+
 import javax.sql.DataSource;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.hssf.util.HSSFColor;
+import com.example.demo.model.SupplierProductAnalysis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
@@ -28,16 +21,6 @@ import org.springframework.stereotype.Repository;
 import com.example.demo.model.Supplier;
 import com.example.demo.model.SupplierProduct;
 import com.example.demo.model.SupplierView;
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.Element;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.FontFactory;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
-import com.itextpdf.text.pdf.PdfPCell;
-import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 
 @Repository
 public class SupplierRepositoryImpl extends JdbcDaoSupport implements SupplierRepository {
@@ -54,25 +37,61 @@ public class SupplierRepositoryImpl extends JdbcDaoSupport implements SupplierRe
 	@Override
 	public void insertIntoSupplier(Supplier supplier) {
 		// TODO Auto-generated method stub
-		String sql="INSERT INTO supplier "+" (supplier_id, supplier_name, supplier_type, permanent_address, temporary_address, image) SELECT ?,?,?,?,?,?";
-        getJdbcTemplate().update(sql, new Object[] {supplier.getSupplierId(), supplier.getSupplierName(), supplier.getSupplierType(), supplier.getPermanentAddress(), supplier.getTemporaryAddress(), supplier.getImage()});
+		String sql="INSERT INTO supplier "+" (supplier_id, supplier_name, supplier_type, permanent_address, temporary_address, email ,image) SELECT ?,?,?,?,?,?";
+        getJdbcTemplate().update(sql, new Object[] {supplier.getSupplierId(), supplier.getSupplierName(), supplier.getSupplierType(), supplier.getPermanentAddress(), supplier.getTemporaryAddress(),supplier.getEmail() ,supplier.getImage()});
 	}
-	
+
+
+	@Override
+	public Supplier getPersonalSupplierByName(String supplierName) {
+    	String sql="SELECT * FROM supplier where supplier_name=?";
+		return getJdbcTemplate().queryForObject(sql, new Object[]{supplierName}, new RowMapper<Supplier>() {
+			@Override
+			public Supplier mapRow(ResultSet rs, int rowNum) throws SQLException {
+				Supplier supplier=new Supplier();
+				supplier.setSupplierId(rs.getLong("supplier_id"));
+				supplier.setSupplierName(rs.getString("supplier_name"));
+				supplier.setSupplierType(rs.getString("supplier_type"));
+				supplier.setPermanentAddress(rs.getString("permanent_address"));
+				supplier.setTemporaryAddress(rs.getString("temporary_address"));
+				supplier.setImage(rs.getString("image"));
+				return supplier;
+			}
+		});
+	}
+
 	@Override
 	public void insertIntoSupplierProduct(SupplierProduct supplierproduct) {
 		// TODO Auto-generated method stub
-	    String sql="INSERT INTO supplier_product "+" (supplier_supplier_id, product_product_id, quantity, cost, buy_date, username) SELECT ?,?,?,?,?,?";
-        getJdbcTemplate().update(sql, new Object[] {supplierproduct.getSupplierId(), supplierproduct.getProductId(), supplierproduct.getQuantity(), supplierproduct.getCost(), supplierproduct.getBuyDate(), supplierproduct.getUsername()});
+	    String sql="INSERT INTO supplier_product "+" (supplier_supplier_id, product_product_id, quantity, cost, buy_date,supplier_unique_id ,username) SELECT ?,?,?,?,?,?,?";
+        getJdbcTemplate().update(sql, new Object[] {supplierproduct.getSupplierId(), supplierproduct.getProductId(), supplierproduct.getQuantity(), supplierproduct.getCost(), supplierproduct.getBuyDate(), supplierproduct.getSupplierUniqueId(),supplierproduct.getUsername()});
 	}
-	
+
+	@Override
+	public void insertIntoSupplierProductAnalysis(Map map) {
+		String sql="INSERT INTO supplier_product_analysis "+"(supplier_id, product_id, product_name, product_type, past_cost, present_cost, cost_increament, cost_decreament, reference_supplier_id, reference_product_id) SELECT ?,?,?,?,?,?,?,?,?,?";
+		getJdbcTemplate().update(sql, new Object[]{map.get("supplierId"), map.get("productId"), map.get("productName"), map.get("productType"), map.get("pastCost"), map.get("presentCost"), map.get("costIncreament"), map.get("costDecreament"), map.get("referenceSupplierId"), map.get("referenceProductId")});
+	}
+
+	@Override
+	public List<SupplierProductAnalysis> getAllSupplierProductAnalysis() {
+		String sql="SELECT * FROM supplier_product_analysis";
+		RowMapper<SupplierProductAnalysis> rowMapper=new BeanPropertyRowMapper<>(SupplierProductAnalysis.class);
+    	return this.getJdbcTemplate().query(sql, rowMapper);
+	}
+
+
+
 
 	@Override
 	public List<SupplierView> getAllSupplierInfo() {
 		// TODO Auto-generated method stub
-		String sql="SELECT s.supplier_id, s.supplier_name, s.supplier_type, s.permanent_address, s.temporary_address,h.quantity, h.cost,h.buy_date,h.username,i.product_id, i.product_name FROM supplier s INNER JOIN supplier_product h on s.supplier_id=h.supplier_supplier_id INNER JOIN product i on h.product_product_id=i.product_id";
+		String sql="SELECT s.supplier_id, s.supplier_name, s.supplier_type, s.permanent_address, s.temporary_address,h.quantity,h.supplier_unique_id ,h.cost,h.buy_date,h.username,i.product_id, i.product_name FROM supplier s INNER JOIN supplier_product h on s.supplier_id=h.supplier_supplier_id INNER JOIN product i on h.product_product_id=i.product_id";
 		RowMapper<SupplierView> rowmapper=new BeanPropertyRowMapper<SupplierView> (SupplierView.class);
 		return this.getJdbcTemplate().query(sql,rowmapper);
 	}
+
+
 
 	@Override
 	public SupplierView getSupplierBySupplierIdAndProductId(long supplierId, long productId) {
@@ -83,17 +102,24 @@ public class SupplierRepositoryImpl extends JdbcDaoSupport implements SupplierRe
 	}
 
 	@Override
+	public SupplierView getSupplierBySupplierIdAndUniqueId(long supplierId, long uniqueId) {
+		String sql="SELECT s.supplier_id, s.supplier_name, s.supplier_type,s.image,s.permanent_address, s.temporary_address,s.email,h.quantity,h.cost,h.buy_date,h.supplier_unique_id,i.product_id, i.product_name  FROM supplier s INNER JOIN supplier_product h on s.supplier_id=h.supplier_supplier_id INNER JOIN product i on h.product_product_id=i.product_id WHERE supplier_id=? and supplier_unique_id=?";
+		RowMapper<SupplierView> rowmapper=new BeanPropertyRowMapper<SupplierView> (SupplierView.class);
+		return this.getJdbcTemplate().queryForObject(sql, rowmapper, supplierId, uniqueId);
+	}
+
+	@Override
 	public void updateIntoSupplier(Supplier supplier) {
 		// TODO Auto-generated method stub
-		String sql="UPDATE supplier SET supplier_name=?,supplier_type=?,permanent_address=?, temporary_address=?,image=? WHERE supplier_id=?";
-	    getJdbcTemplate().update(sql, new Object[] {supplier.getSupplierName(), supplier.getSupplierType(),supplier.getPermanentAddress(), supplier.getTemporaryAddress(),supplier.getImage(),supplier.getSupplierId()});
+		String sql="UPDATE supplier SET supplier_name=?,supplier_type=?,permanent_address=?, temporary_address=?,email=?,image=? WHERE supplier_id=?";
+	    getJdbcTemplate().update(sql, new Object[] {supplier.getSupplierName(), supplier.getSupplierType(),supplier.getPermanentAddress(), supplier.getTemporaryAddress(),supplier.getEmail(),supplier.getImage(),supplier.getSupplierId()});
 	}
 
 	@Override
 	public void updateIntoSupplierView(SupplierProduct supplierview) {
 		// TODO Auto-generated method stub
-	   String sql="UPDATE supplier_product SET product_product_id=?, quantity=?, cost=? WHERE supplier_supplier_id=?";
-	   getJdbcTemplate().update(sql, new Object[] {supplierview.getProductId(),supplierview.getQuantity(),supplierview.getCost(),supplierview.getSupplierId()});
+	   String sql="UPDATE supplier_product SET product_product_id=?, quantity=?, cost=?, buy_date=? WHERE supplier_supplier_id=?";
+	   getJdbcTemplate().update(sql, new Object[] {supplierview.getProductId(),supplierview.getQuantity(),supplierview.getCost(),supplierview.getBuyDate(),supplierview.getSupplierId()});
 	}
 	
 
@@ -120,10 +146,10 @@ public class SupplierRepositoryImpl extends JdbcDaoSupport implements SupplierRe
 	}
 
 	@Override
-	public List<SupplierView> getSupplierByBuyDate(String[] buyDate) {
+	public List<SupplierView> getSupplierByBuyDate(String supplyStartDate, String supplyLastDate) {
 		// TODO Auto-generated method stub
-		String sql="SELECT s.supplier_id, s.supplier_name, s.supplier_type, s.image, s.permanent_address, s.temporary_address, h.quantity,h.cost,h.buy_date,h.username,i.product_id, i.product_name FROM supplier s INNER JOIN supplier_product h on s.supplier_id=h.supplier_supplier_id INNER JOIN product i on h.product_product_id=i.product_id WHERE buy_date>=?::DATE and buy_date<=?::DATE ";
-	    List<Map<String, Object>> row=getJdbcTemplate().queryForList(sql, buyDate);
+		String sql="SELECT s.supplier_id, s.supplier_name, s.supplier_type, s.image, s.permanent_address, s.temporary_address, h.quantity,h.cost,h.supplier_unique_id,h.buy_date,h.username,i.product_id, i.product_name FROM supplier s INNER JOIN supplier_product h on s.supplier_id=h.supplier_supplier_id INNER JOIN product i on h.product_product_id=i.product_id WHERE buy_date>=?::DATE and buy_date<=?::DATE ";
+	    List<Map<String, Object>> row=getJdbcTemplate().queryForList(sql, supplyStartDate, supplyLastDate);
 	    List<SupplierView> supplier_view=new ArrayList<SupplierView>();
 	    for(Map<String, Object> rows:row)
 	    {
@@ -139,6 +165,7 @@ public class SupplierRepositoryImpl extends JdbcDaoSupport implements SupplierRe
 	        obj.setQuantity((int)rows.get("quantity"));
 	        obj.setCost((double)rows.get("cost"));
 	        obj.setBuyDate((Date)rows.get("buy_date"));
+	        obj.setSupplierUniqueId((Integer) rows.get("supplier_unique_id"));
 	       obj.setProductId((long)rows.get("product_id"));
 	       obj.setProductName((String)rows.get("product_name"));
 	       obj.setUsername((String) rows.get("username"));
@@ -146,6 +173,46 @@ public class SupplierRepositoryImpl extends JdbcDaoSupport implements SupplierRe
 	    }
 	    return supplier_view;
 	}
+
+	@Override
+	public List<SupplierView> getAllSupplierByProductNameAndType(String productName, String productType) {
+		String sql="SELECT s.supplier_id, h.cost, i.product_id, i.product_name, i.product_type FROM supplier s INNER JOIN supplier_product h on s.supplier_id=h.supplier_supplier_id INNER JOIN product i on h.product_product_id=i.product_id WHERE product_name=? and product_type=? and is_expired='false'";
+		List<Map<String, Object>> rows=getJdbcTemplate().queryForList(sql, productName, productType);
+		List<SupplierView> supplierViews=new ArrayList<>();
+		for(Map<String, Object> row: rows)
+		{
+			SupplierView supplierView=new SupplierView();
+			supplierView.setSupplierId((int)row.get("supplier_id"));
+			supplierView.setCost((double)row.get("cost"));
+			supplierView.setProductId((long)row.get("product_id"));
+			supplierView.setProductName((String) row.get("product_name"));
+			supplierView.setProductType((String) row.get("product_type"));
+			supplierViews.add(supplierView);
+		}
+    	return supplierViews;
+	}
+	@Override
+	public List<SupplierProductAnalysis> getSupplierProductAnalysisBySupplierId(Integer supplierId) {
+	   String sql="SELECT * FROM supplier_product_analysis WHERE supplier_id=?";
+	   List<Map<String, Object>> rows=getJdbcTemplate().queryForList(sql, supplierId);
+	   List<SupplierProductAnalysis> supplierProductAnalyses=new ArrayList<>();
+	   for(Map<String, Object> row: rows)
+	   {
+	   	SupplierProductAnalysis supplierProductAnalysis=new SupplierProductAnalysis();
+	   	supplierProductAnalysis.setSupplierId((Integer) row.get("supplier_id"));
+	   	supplierProductAnalysis.setProductId((Integer) row.get("product_id"));
+	   	supplierProductAnalysis.setProductName((String) row.get("product_name"));
+	   	supplierProductAnalysis.setPastCost((Double) row.get("past_cost"));
+	   	supplierProductAnalysis.setPresentCost((Double) row.get("present_cost"));
+	   	supplierProductAnalysis.setCostIncreament((Double)row.get("cost_increament"));
+	   	supplierProductAnalysis.setCostDecreament((Double) row.get("cost_decreament"));
+	   	supplierProductAnalysis.setReferenceSupplierId((Integer) row.get("reference_supplier_id"));
+	   	supplierProductAnalysis.setReferenceProductId((Integer) row.get("reference_product_id"));
+	   	supplierProductAnalyses.add(supplierProductAnalysis);
+	   }
+		return supplierProductAnalyses;
+	}
+
 
 	@Override
 	public List<Supplier> getAllSupplier() {
@@ -158,7 +225,7 @@ public class SupplierRepositoryImpl extends JdbcDaoSupport implements SupplierRe
 	@Override
 	public List<SupplierView> getSupplierByName(String supplierName) {
 		// TODO Auto-generated method stub
-		String sql="SELECT s.supplier_id, s.supplier_name, s.supplier_type,s.image,s.permanent_address, s.temporary_address,h.quantity,h.cost,h.buy_date,h.username,i.product_id, i.product_name  FROM supplier s INNER JOIN supplier_product h on s.supplier_id=h.supplier_supplier_id INNER JOIN product i on h.product_product_id=i.product_id WHERE supplier_name=?";
+		String sql="SELECT s.supplier_id, s.supplier_name, s.supplier_type,s.image,s.permanent_address, s.temporary_address,h.quantity,h.cost,h.buy_date,h.supplier_unique_id,h.username,i.product_id, i.product_name  FROM supplier s INNER JOIN supplier_product h on s.supplier_id=h.supplier_supplier_id INNER JOIN product i on h.product_product_id=i.product_id WHERE supplier_name=?";
 		List<Map<String, Object>> row=getJdbcTemplate().queryForList(sql, supplierName);
 		List<SupplierView> supplier_view=new ArrayList<SupplierView>();
 		for(Map<String, Object> rows:row)
@@ -172,7 +239,8 @@ public class SupplierRepositoryImpl extends JdbcDaoSupport implements SupplierRe
 			obj.setTemporaryAddress((String)rows.get("temporary_address"));
 			obj.setQuantity((int)rows.get("quantity"));
             obj.setCost((double)rows.get("cost"));
-            obj.setBuyDate((Date)rows.get("buyDate"));
+            obj.setSupplierUniqueId((int)rows.get("supplier_unique_id"));
+            obj.setBuyDate((Date)rows.get("buy_date"));
             obj.setProductId((long)rows.get("product_id"));
             obj.setProductName((String)rows.get("product_name"));
             obj.setUsername((String) rows.get("username"));
@@ -182,7 +250,7 @@ public class SupplierRepositoryImpl extends JdbcDaoSupport implements SupplierRe
 	}
 
 	@Override
-	public List<SupplierView> getSupplierInformaton() {
+	public List<SupplierView> getSupplierDistinctName() {
 		// TODO Auto-generated method stub
 		String sql="SELECT DISTINCT(s.supplier_name) FROM supplier s INNER JOIN supplier_product h on s.supplier_id=h.supplier_supplier_id INNER JOIN product i on h.product_product_id=i.product_id";
 		RowMapper<SupplierView> rowmapper=new BeanPropertyRowMapper<SupplierView> (SupplierView.class);
@@ -256,25 +324,25 @@ public class SupplierRepositoryImpl extends JdbcDaoSupport implements SupplierRe
 	}
 
 	@Override
-	public Double getCostFromExpiredProduct(String[] buyDate) {
+	public Double getCostFromExpiredProduct(String supplyStartDate, String supplyLastDate) {
 		String sql="SELECT SUM(cost) FROM supplier_product s INNER JOIN product p on s.product_product_id=p.product_id WHERE buy_date>=?::Date and buy_date<=?::Date and p.is_expired='true'";
-        Double total=this.getJdbcTemplate().queryForObject(sql, Double.class, buyDate);
+        Double total=this.getJdbcTemplate().queryForObject(sql, Double.class, supplyStartDate, supplyLastDate);
     	return total;
 	}
 
 	@Override
-	public Double getSumofCost(String[] buyDate) {
+	public Double getSumofCost(String supplyStartDate, String supplyLastDate) {
 		// TODO Auto-generated method stub
 		String sql="SELECT SUM(h.cost) FROM supplier s INNER JOIN supplier_product h on s.supplier_id=h.supplier_supplier_id WHERE buy_date>=?::Date and buy_date<=?::Date";
-		Double total=this.getJdbcTemplate().queryForObject(sql, Double.class, buyDate);
+		Double total=this.getJdbcTemplate().queryForObject(sql, Double.class, supplyStartDate, supplyLastDate);
 		return total;
 	}
 
 	@Override
-	public int getNoofSupplier(String[] buyDate) {
+	public int getNoofSupplier(String supplyStartDate, String supplyLastDate) {
 		// TODO Auto-generated method stub
 		String sql="SELECT COUNT(h.supplier_supplier_id) FROM supplier s INNER JOIN supplier_product h on s.supplier_id=h.supplier_supplier_id WHERE buy_date>=?::Date and buy_date<=?::Date";
-		int total=this.getJdbcTemplate().queryForObject(sql, Integer.class, buyDate);
+		int total=this.getJdbcTemplate().queryForObject(sql, Integer.class, supplyStartDate, supplyLastDate);
 		return total;
 	}
 
@@ -289,18 +357,18 @@ public class SupplierRepositoryImpl extends JdbcDaoSupport implements SupplierRe
 	
 	
 	@Override
-	public Integer getNoofQuantity(String[] buyDate) {
+	public Integer getNoofQuantity(String supplyStartDate, String supplyLastDate) {
 		// TODO Auto-generated method stub
 		String sql="SELECT SUM(h.quantity) FROM supplier s INNER JOIN supplier_product h on s.supplier_id=h.supplier_supplier_id WHERE buy_date>=?::Date and buy_date<=?::Date";
-		Integer total=this.getJdbcTemplate().queryForObject(sql, Integer.class, buyDate);
+		Integer total=this.getJdbcTemplate().queryForObject(sql, Integer.class, supplyStartDate, supplyLastDate);
 		return total;
 	}
 
 	@Override
-	public int getNoofProduct(String[] buyDate) {
+	public int getNoofProduct(String supplyStartDate, String supplyLastDate) {
 		// TODO Auto-generated method stub
 		String sql="SELECT COUNT(h.product_product_id) FROM supplier s INNER JOIN supplier_product h on s.supplier_id=h.supplier_supplier_id WHERE buy_date>=?::Date and buy_date<=?::Date";
-		int total=this.getJdbcTemplate().queryForObject(sql, Integer.class, buyDate);
+		int total=this.getJdbcTemplate().queryForObject(sql, Integer.class, supplyStartDate,supplyLastDate);
 		return total;
 	}
 	
