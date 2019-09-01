@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 
 import com.example.demo.model.Projectuser;
 import com.example.demo.repository.UserRepository;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ImageDisplayController {
@@ -27,10 +28,11 @@ public class ImageDisplayController {
 	private int DEFAULT_BUFFER_SIZE=1024;
 	
 	@GetMapping(value="/imagedisplay")
-	public void showImage(HttpServletRequest request, HttpServletResponse response) throws IOException
+	public void showImage(@RequestParam long userId, HttpServletRequest request, HttpServletResponse response) throws IOException
 	{
-		int id=Integer.parseInt(request.getParameter("userId"));
-		Projectuser projectuser=userRepository.getUserById(id);
+//		int id=Integer.parseInt(request.getParameter("userId"));
+		Projectuser projectuser=userRepository.getUserById(userId);
+		System.out.println(projectuser);
 		File file=new File(projectuser.getImage());
 		BufferedInputStream input=null;
 		BufferedOutputStream output=null;
