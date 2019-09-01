@@ -22,4 +22,7 @@ public class TrashDetailServiceImpl {
 	public List<Trash> getAllTrashInfo() {
 		return trashRepository.getAllTrashInfo();
 	}
+	public List<Trash> getTrashByProductName(String productName){
+		return trashRepository.getTrashByProductName(productName);
+	}
 }
