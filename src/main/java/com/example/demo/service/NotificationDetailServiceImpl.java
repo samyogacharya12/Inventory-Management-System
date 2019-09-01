@@ -1,8 +1,6 @@
 package com.example.demo.service;
 
-import com.example.demo.model.CustomerProduct;
-import com.example.demo.model.CustomerView;
-import com.example.demo.model.Product;
+import com.example.demo.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -22,6 +20,9 @@ public class NotificationDetailServiceImpl {
 
     @Autowired
     private ProductDetailServiceImpl productDetailService;
+
+    @Autowired
+    private SupplierDetailService supplierDetailService;
 
     public  void sendProductNotification(CustomerProduct customerProduct) throws MailException
     {
@@ -46,4 +47,20 @@ public class NotificationDetailServiceImpl {
           simpleMailMessage.setText("Dear Customer you have updated your"+ "\t"+map.get("productName")+ "\t"+"quantity from"+map.get("currentQuantity") +"to" +map.get("quantity") + "\t" +"from" +map.get("currentAmount") +"to" + map.get("newAmount") );
           javaMailSender.send(simpleMailMessage);
       }
+
+     public void sendNotificationToSupplier(SupplierProduct supplierProduct) throws MailException
+     {
+         Supplier supplier=supplierDetailService.getSupplierId(supplierProduct.getSupplierId());
+         System.out.println(supplier.getEmail());
+         Product product=productDetailService.getProductById(supplierProduct.getProductId());
+         System.out.println(product);
+         SimpleMailMessage simpleMailMessage=new SimpleMailMessage();
+         simpleMailMessage.setTo(supplier.getEmail());
+         simpleMailMessage.setFrom("samyog.acharya@gmail.com");
+         simpleMailMessage.setSubject("Succesfully Received Product");
+         simpleMailMessage.setText(supplier.getSupplierName() + "We have received your product" +"\t"+product.getProductName() + "\t"+"quantity of"+ supplierProduct.getQuantity() +"at"+ "\t"+"amount of"+ supplierProduct.getCost());
+          javaMailSender.send(simpleMailMessage);
+     }
+
+
 }
