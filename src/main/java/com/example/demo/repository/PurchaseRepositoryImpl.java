@@ -26,4 +26,9 @@ public class PurchaseRepositoryImpl extends JdbcDaoSupport implements PurchaseRe
         String sql="INSERT INTO purchase "+"(product_id, purchase_date, user_id, username) SELECT ?,?,?,?";
         this.getJdbcTemplate().update(sql, new Object[] {map.get("productId"), map.get("purchaseDate"), map.get("userId"), map.get("username")});
     }
+    @Override
+    public void deletePurchase(long productId) {
+        String sql="DELETE FROM purchase WHERE product_id=?";
+        getJdbcTemplate().update(sql, productId);
+    }
 }
