@@ -5,22 +5,42 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-  <link rel="apple-touch-icon"  href="static/black-dashboard-html-v1.0.1/assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="static/black-dashboard-html-v1.0.1/assets/img/favicon.png">
-<title>Insert title here</title>
-<link rel="shortcut icon" type="image/ico" href="http://www.datatables.net/favicon.ico">
-  <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
-  <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
-  <!-- Nucleo Icons -->
-  <link href="static/black-dashboard-html-v1.0.1/assets/css/nucleo-icons.css" rel="stylesheet" />
-  <!-- CSS Files -->
-  <link href="static/black-dashboard-html-v1.0.1/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
-  <!-- CSS Just for demo purpose, don't include it in your project -->
-	<link href="static/resources/jquery.dynatable.css" rel="stylesheet"/>
+    <link rel="shortcut icon" type="image/ico" href="http://www.datatables.net/favicon.ico">
+    <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
+    <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
+    <!-- Nucleo Icons -->
+    <link href="static/black-dashboard-html-v1.0.1/assets/css/nucleo-icons.css" rel="stylesheet" />
+    <!-- CSS Files -->
+    <link href="static/black-dashboard-html-v1.0.1/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="static/resources/jquery.dynatable.css" rel="stylesheet"/>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"> </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"> </script>
+    <script src="static/RestJs/summaryReport.js"> </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link href="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.css" rel="stylesheet"/>
+    <script src="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.js"> </script>
 	<style type="text/css" class="init">
-	
+	#summaryExpenseForm
+    {
+        display: none;
+    }
 	</style>
 
+
+    <script>
+        $(document).ready(function() {
+            $("#filter").click(function() {
+                $("#summaryExpenseForm").show();
+            });
+        });
+    </script>
 </head>
 <body class="nav-md">
     <div class="wrapper">
@@ -143,26 +163,32 @@
                 <h5 class="card-category"></h5>
                 <h3 class="card-title">Calculation of a amount</h3>
                     <div class="card-body">
-                      <button class="btn btn-primary btn-sm" onclick="search(this)">Filter</button>
-                <div class="typography-line">
-                   <c:choose>
-                   <c:when test="${data=='profit'}">
-                   The profit is of ${profit}  
-                  </c:when>
-                 
-                     
-                  <c:when test="${data=='breakevenpoint'}">
-                  The break even is of ${breakevenpoint} 
-                   </c:when>
-                  
-                   
-                      
-                    <c:when test="${data=='loss'}">
-                   The loss is of ${loss}
-                   </c:when>
-                   
-                   </c:choose>
-                   </div>
+                      <button id="filter" class="btn btn-primary btn-sm">Filter</button>
+                        <form id="summaryExpenseForm" action="/calculateCash" method="GET">
+                            <span class="icon"><i class="fa fa-search"></i></span>
+                            <input type="Date" id="startDate" name="startDate" placeholder="Date..." />
+                            <input type="Date" id="endDate" name="endDate"  placeholder="Date..." />
+                            <button  type="submit" class="btn btn-fill btn-primary">Find</button>
+                        </form>
+                <div id="typography" class="typography-line">
+<%--                   <c:choose>--%>
+<%--                   <c:when test="${data=='profit'}">--%>
+<%--                   The profit is of ${profit}  --%>
+<%--                  </c:when>--%>
+<%--                 --%>
+<%--                     --%>
+<%--                  <c:when test="${data=='breakevenpoint'}">--%>
+<%--                  The break even is of ${breakevenpoint} --%>
+<%--                   </c:when>--%>
+<%--                  --%>
+<%--                   --%>
+<%--                      --%>
+<%--                    <c:when test="${data=='loss'}">--%>
+<%--                   The loss is of ${loss}--%>
+<%--                   </c:when>--%>
+<%--                   --%>
+<%--                   </c:choose>--%>
+<%--                   </div>--%>
                 
                   </div>
                   
@@ -172,6 +198,7 @@
            </div>
            </div> 
            </div>      
+    </div>
     </div>
 </body>
         <!--   Core JS Files   -->
