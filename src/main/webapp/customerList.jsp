@@ -17,9 +17,132 @@
   <link href="static/black-dashboard-html-v1.0.1/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
 	<link href="static/resources/jquery.dynatable.css" rel="stylesheet"/>
-	<style type="text/css" class="init">
-	
-	</style>
+    <link href="static/resources/jquery.dynatable.css" rel="stylesheet"/>
+    <style type="text/css" class="init">
+    </style>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script
+            src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+    <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.js"> </script>
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"> </script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="static/RestJs/customerList.js"> </script>
+    <script src="static/RestJs/saveCurrentCustomerProduct.js"> </script>
+    <script src="static/RestJs/saveNewCustomerProduct.js"> </script>
+    <script src="static/RestJs/addNewCustomerProduct.js"> </script>
+    <script src="static/RestJs/addCurrentCustomerProduct.js"> </script>
+    <script src="static/RestJs/listCustomerByName.js"> </script>
+    <script src="static/RestJs/customerEdit.js"> </script>
+    <script src="static/RestJs/updateCustomerPersonal.js"> </script>
+    <script src="static/RestJs/updateCustomerProduct.js"> </script>
+    <script src="static/RestJs/listCustomerDatabyDate.js"> </script>
+    <link href="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.css" rel="stylesheet"/>
+    <script src="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.js"> </script>
+    <style type="text/css" class="init">
+        #customerDateForm {
+            display: none;
+        }
+
+        #newCustomerProductCard{
+            display: none;
+        }
+
+        #currentCustomerProductCard
+        {
+            display: none;
+        }
+
+        #updateCustomerPersonalCard
+        {
+            display: none;
+        }
+
+        #updateCustomerProductForm
+        {
+            display: none;
+        }
+
+    </style>
+    <script>
+        $(document).ready(function() {
+            $("#filter").click(function() {
+                $("#customerDateForm").show();
+            });
+        });
+         $(document).ready(function () {
+             $("#customerList").on('click', 'a[id="customerEdit"]', function (e) {
+                 $("#updateCustomerPersonalCard").show();
+                 $("#updateCustomerProductForm").hide();
+                 $("#newCustomerProductCard").hide();
+                 $("#customerDateForm").hide();
+                 $("#searchCustomer").hide();
+                 $("#customerList").hide();
+                 $("#createExcelCustomer").hide();
+                 $("#createPdfCustomer").hide();
+                 $("#filter").hide();
+                 $("#newCustomerPurchaseButton").hide();
+                 $("#addNewCustomerButton").hide();
+             })
+         })
+
+
+        $(document).ready(function () {
+            $("#newCustomerPurchaseButton").click(function () {
+                $("#newCustomerProductCard").show();
+                $("#customerDateForm").hide();
+                $("#searchCustomer").hide();
+                $("#customerList").hide();
+                $("#createExcelCustomer").hide();
+                $("#createPdfCustomer").hide();
+                $("#filter").hide();
+                $("#newCustomerPurchaseButton").hide();
+                $("#addNewCustomerButton").hide();
+            })
+        })
+         $(document).ready(function () {
+             $("#customerList").on('click', 'a[id="addCurrentCustomerProduct"]', function (e) {
+                 $("#newCustomerProductCard").hide();
+                 $("#customerDateForm").hide();
+                 $("#searchCustomer").hide();
+                 $("#customerList").hide();
+                 $("#createExcelCustomer").hide();
+                 $("#createPdfCustomer").hide();
+                 $("#filter").hide();
+                 $("#newCustomerPurchaseButton").hide();
+                 $("#addNewCustomerButton").hide();
+                 $("#currentCustomerProductCard").show();
+             })
+         })
+        $(document).ready(function () {
+            $("#customerProductInfoButton").click(function () {
+                $("#updateCustomerPersonalForm").hide();
+                $("#updateCustomerProductForm").show();
+                $("#newCustomerProductForm").hide();
+                $("#customerDateForm").hide();
+                $("#searchCustomer").hide();
+                $("#customerList").hide();
+                $("#createExcelCustomer").hide();
+                $("#createPdfCustomer").hide();
+                $("#filter").hide();
+                $("#newCustomerPurchaseButton").hide();
+                $("#addNewCustomerButton").hide();
+            })
+        })
+
+        $(document).ready(function () {
+            $("#customerProductBackButton").click(function () {
+                  $("#updateCustomerPersonalForm").show();
+                  $("#updateCustomerProductForm").hide();
+            })
+        })
+
+
+
+
+    </script>
 
 </head>
 <body class="nav-md">
@@ -58,7 +181,7 @@
           </li>
           
              <li>
-            <a href="/list-expenses">
+            <a href="/list-expense">
           <i class="tim-icons icon-notes"></i>
               Expenses
             </a>
@@ -105,8 +228,6 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="SEARCH">
-              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <i class="tim-icons icon-simple-remove"></i>
               </button>
             </div>
@@ -135,21 +256,27 @@
                 
                 <div class="col-sm-12 col-md-6">
                 <div id="datatable_filter" class="dataTables_filter">
-                <form action="/getCustomerByName" method="get">
-                <label><input type="search" name="customerName" class="form-control form-control-sm" placeholder="Search records" aria-controls="datatable"></label>
+                <form id="searchCustomer" action="/getCustomerByName" method="get">
+                <label><input type="search" id="customerName" name="customerName" class="form-control form-control-sm" placeholder="Search records" aria-controls="datatable"></label>
                 <button class="btn btn-primary btn-sm">Search</button>
                 </form>
                 </div></div></div>
          
                 <div class="row"><div class="col-sm-12">
-                    <a href="/getCustomerForm" class="btn btn-primary btn-sm"> Add new </a>
-                      <button class="btn btn-primary btn-sm" onclick="search(this)">Filter</button>
-                <table id="" class="table">
-                    <a href="/getNewCustomerProductForm" class="btn btn-primary btn-sm"> New Customer Product </a>
-                <a href="/createExcel" style="float:right;">
+                    <a id="addNewCustomerButton" href="/getCustomerForm" class="btn btn-primary btn-sm"> Add new </a>
+                      <button id="filter" class="btn btn-primary btn-sm">Filter</button>
+                    <form id="customerDateForm" action="/getCustomerDataByDate" method="GET">
+                        <span class="icon"><i class="fa fa-search"></i></span>
+                        <input type="Date" id="sellStartDate" name="sellStartDate" placeholder="Date..." />
+                        <input type="Date" id="sellLastDate" name="sellLastDate"  placeholder="Date..." />
+                        <button  type="submit" class="btn btn-fill btn-primary">Find</button>
+                    </form>
+                <table id="customerList" class="table">
+                    <a id="newCustomerPurchaseButton" class="btn btn-primary btn-sm"> New Customer Product </a>
+                <a id="createExcelCustomer" href="/createExcel" style="float:right;">
                 <img src="images/excelimg.png" style="width:70px;">
                 </a>
-                <a href="/createPdf" style="float:right;"><img src="images/Pdf_by_mimooh.svg.png" style="width:40px;" margin-left:10px;> </a>
+                <a id="createPdfCustomer" href="/createPdf" style="float:right;"><img src="images/Pdf_by_mimooh.svg.png" style="width:40px;" margin-left:10px;> </a>
 
                   <thead class=" text-primary">
                    <tr>
@@ -201,105 +328,251 @@
 
                    </tr>
                   </thead>
-               
-                     <c:forEach var="customer" items="${customers}">
-                  <tr>
-                      <td tabindex="0" class="sorting_1" class="odd">${customer.customerId}</td>
-                      <td>${customer.customerName}</td>
-                      <td>${customer.quantity}</td>
-                      <td>${customer.amount} </td>
-                      <td>  ${customer.buyDate} </td>
-                      <td>${customer.permanentAddress}</td>
-                      <td> ${customer.temporaryAddress}</td>
-                      <td>  ${customer.phoneNumber} </td>
-                      <td> ${customer.productId} </td>
-                      <td> ${customer.productName} </td>
-                      <td>  ${customer.username}</td>
-                      <td><a href="/getCustomerProductForm?customerId=${customer.customerId}&productId=${customer.productId}" class=""> <i class="tim-icons icon-upload"></i></a> </td>
-                       <td> <a href="getCustomerEditForm?customerId=${customer.customerId}&productId=${customer.productId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-                       <td> <a href="deleteCustomer?customerId=${customer.customerId}&productId=${customer.productId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
-                      </tr>
-                      </c:forEach>
-                      
-                      
-                      <td> ${customerId} </td>
-                      <td>  </td>
-                      <td> ${quantity} </td>
-                      <td> ${amount} </td>
-                      <td>  </td>
-                      <td>  </td>
-                      <td>  </td>
-                      <td>  </td>
-                      <td> ${productId}</td>
-                      <td>  </td>
-                      
-                      
-                    
-                     <c:forEach var="customer" items="${customerview}">
-                  <tr>
-                      <td tabindex="0" class="sorting_1" class="odd">${customer.customerId}</td>
-                      <td>${customer.customerName}</td>
-                      <td>${customer.quantity}</td>
-                      <td>${customer.amount} </td>
-                       <td>  ${customer.buyDate} </td>
-                      <td>${customer.permanentAddress}</td>
-                      <td> ${customer.temporaryAddress}</td>
-                      <td>  ${customer.phoneNumber} </td>
-                      <td> ${customer.productId} </td>
-                      <td> ${customer.productName} </td>
-                      <td>  ${customer.username}</td>
-                      <td><a href="/getCustomerProductForm?customerId=${customer.customerId}&productId=${customer.productId}" class=""> <i class="tim-icons icon-upload"></i></a> </td>
-                       <td> <a href="getCustomerEditForm?customerId=${customer.customerId}&productId=${customer.productId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-                       <td> <a href="deleteCustomer?customerId=${customer.customerId}&productId=${customer.productId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
-                      </tr>
-                      </c:forEach>
-                      
-                         <td> ${totalcustomer} </td>
-                      <td>  </td>
-                      <td> ${totalquantity} </td>
-                      <td> ${totalamount} </td>
-                      <td>  </td>
-                      <td>  </td>
-                      <td>  </td>
-                      <td>  </td>
-                      <td> ${totalproduct}</td>
-                      <td>  </td>
-                      
-                       
-                     <c:forEach var="customer" items="${buyDate}">
-                  <tr>
-                      <td tabindex="0" class="sorting_1" class="odd">${customer.customerId}</td>
-                      <td>${customer.customerName}</td>
-                      <td>${customer.quantity}</td>
-                      <td>${customer.amount} </td>
-                       <td>${customer.buyDate} </td>
-                      <td>${customer.permanentAddress}</td>
-                      <td> ${customer.temporaryAddress}</td>
-                      <td>  ${customer.phoneNumber} </td>
-                      <td> ${customer.productId} </td>
-                      <td> ${customer.productName} </td>
-                      <td>  ${customer.username}</td>
-                      <td><a href="/getCustomerProductForm?customerId=${customer.customerId}&productId=${customer.productId}" class=""> <i class="tim-icons icon-upload"></i></a> </td>
-                       <td> <a href="getCustomerEditForm?customerId=${customer.customerId}&productId=${customer.productId}" class="btn btn-link btn-warning btn-icon btn-sm edit"><i class="tim-icons icon-pencil"></i></a> </td>
-                       <td> <a href="deleteCustomer?customerId=${customer.customerId}&productId=${customer.productId}" class="btn btn-link btn-danger btn-icon btn-sm remove"><i class="tim-icons icon-simple-remove"></i></a> </td>
-                      </tr>
-                      </c:forEach>
-                      
-                      <td> ${totalcustomer1} </td>
-                      <td>  </td>
-                      <td> ${totalquantity1} </td>
-                      <td> ${totalamount1} </td>
-                      <td>  </td>
-                      <td>  </td>
-                      <td>  </td>
-                      <td>  </td>
-                      <td> ${totalproduct1}</td>
-                      <td>  </td>
-                      </tbody>
+
+                    <tbody id="customerData">
+                    </tbody>
+
+                    <tbody id="getCustomerByName">
+
+                    </tbody>
+
+                    <tbody id="getCustomerDataByDate">
+
+                    </tbody>
+
+                    <tr id="aggregateTables">
+
+                    </tr>
                       </table>
                 </div>
-              </div>
-           </div>
+                    <div id="newCustomerProductCard" class="card-body">
+                        <div class="col-sm-12 col-md-6">
+                            <a href="/list-Customer" class="btn btn-primary btn-sm"> Back</a>
+                        </div>
+                        <form id="newCustomerProductForm" action="/saveNewCustomerProduct" method="post">
+                            <div class="col-md-3 px-md-1">
+                                <div class="form-group">
+                                    <label> Customer Id </label>
+                                    <input type="text" id="customerIdAdd"  name="customerId"  class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 pl-md-1">
+                                <div class="form-group has-label">
+                                    <label> Product Id</label>
+                                    <select id="productIdAdd" name="productIdAdd">
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 pl-md-1">
+                                <div class="form-group">
+                                    <label> Quantity</label>
+                                    <input type="number" id="quantity" name="quantity"  placeholder="" class="form-control"/>
+                                </div>
+                            </div>
+
+
+
+                            <div class="col-md-4 px-md-1">
+                                <div class="form-group has-label">
+                                    <label>Buy Date </label>
+                                    <input type="date" id="buyDate" name="buyDate" placeholder="" class="form-control" required="true"/>
+                                </div>
+                            </div>
+
+
+                            <div class="card-footer">
+                                <div class="col-md-4">
+                                    <button id="newCustomerProduct" type="submit" class="btn btn-fill btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div id="currentCustomerProductCard" class="card-body">
+                        <form id="currentCustomerProductForm" action="/saveCustomerProduct" method="post">
+                            <div class="col-sm-12 col-md-6">
+                                <a href="/list-Customer" class="btn btn-primary btn-sm"> Back</a>
+                            </div>
+                            <div class="col-md-3 px-md-1">
+                                <div class="form-group">
+                                    <label> Customer Id </label>
+                                    <input type="text" id="currentCustomerId"  name="customerId" value="${customer.customerId}"  readonly class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-5 pr-md-1">
+                                <div class="form-group">
+                                    <div>
+                                        <label> product id </label>
+                                        <select id="currentProductId" name="productId">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 pl-md-1">
+                                <div class="form-group">
+                                    <label> Quantity</label>
+                                    <input type="number" id="currentQuantity" name="quantity"  placeholder="" class="form-control"/>
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4 px-md-1">
+                                <div class="form-group has-label">
+                                    <label>Buy Date </label>
+                                    <input type="date" id="currentBuyDate" name="buyDate" placeholder="" class="form-control" required="true"/>
+                                </div>
+                            </div>
+
+
+                            <div class="card-footer">
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-fill btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div id="updateCustomerPersonalCard" align="left" class="card-body">
+                        <div class="col-sm-12 col-md-6">
+                        <form id="updateCustomerPersonalForm" action="/updateCustomerPersonalData" method="post"  enctype="multipart/form-data">
+                            <div class="col-sm-12 col-md-6">
+                                <a href="/list-Customer" class="btn btn-primary btn-sm"> Back</a>
+                            </div>
+                            <div  class="dataTables_filter">
+                                <a id="customerProductInfoButton" class="btn btn-primary btn-sm">ProductInfo</a>
+                            </div>
+
+                                <input type="hidden" id="customerIdPersonal" name="customerId" value="${customerView.customerId}" class="form-control" />
+                            <input type="hidden" id="productIdPersonal" name="productId" value="${customerView.customerId}" class="form-control" />
+                            <div class="row">
+                                <div class="col-md-6 pr-md-1">
+                                    <div class="form-group">
+                                        <label>customer name</label>
+                                        <input type="text"  id="customerNamePersonal"  name="customerName" value="${customerView.customerName}" placeholder="productname" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-md-6 pr-md-1">
+                                    <div class="form-group">
+                                        <label>permanent address </label>
+                                        <input type="text" id="permanentAddressPersonal" id="permanentAddress" name="permanentAddress" value="${customerView.permanentAddress}" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                            <div class="col-md-6 pr-md-1">
+                                    <div class="form-group">
+                                        <label> temporary address  </label>
+                                        <input type="text" id="temporaryAddressPersonal" id="temporaryAddress"  name="temporaryAddress" value="${customerView.temporaryAddress}" placeholder="" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-6 pr-md-1">
+                                    <div class="form-group">
+                                        <label> phone number  </label>
+                                        <input type="text" id="phoneNumber"  name="phoneNumber" value="${customerView.phoneNumber}" placeholder="" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+<%--                            <div class="row">--%>
+<%--                                <div class="col-md-6 pr-md-1">--%>
+<%--                                    <div class="form-group">--%>
+<%--                                        <label> email  </label>--%>
+<%--                                        <input type="email" id="email"  name="email" value="${customerView.phoneNumber}" placeholder="" class="form-control" />--%>
+<%--                                    </div>--%>
+<%--                                </div>--%>
+<%--                            </div>--%>
+
+
+
+
+
+                            <div class="card-footer">
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-fill btn-primary">Save</button>
+                                </div>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+                    <div class="card">
+                    <div  align="left" class="card-body">
+                        <div class="left-auto">
+                        <form id="updateCustomerProductForm" action="/updateCustomerProduct" method="post"  enctype="multipart/form-data">
+                            <div  class="dataTables_filter">
+                            <a id="customerProductBackButton" class="btn btn-primary btn-sm">Back</a>
+                            </div>
+                            <div class="col-md-4 px-md-1">
+                                <div class="form-group">
+                                    <label>Customer Id </label>
+                                    <input type="text" id="customerIdProduct" name="customerId" value="${customerProduct.customerId}" readonly class="form-control" />
+                                </div>
+                            </div>
+
+
+                            <div class="col-md-4 px-md-1">
+                                <div class="form-group">
+                                    <label>Product Id </label>
+                                    <input type="text" id="productId" name="productId" value="${customerProduct.productId}"  readonly placeholder="" class="form-control" />
+                                </div>
+                            </div>
+
+
+
+
+                            <div class="col-md-4 px-md-1">
+                                <div class="form-group">
+                                    <input type="hidden" id="customerPurchaseId" name="customerPurchaseId" value="${customerProduct.customerPurchaseId}" placeholder="" class="form-control" />
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 pl-md-1">
+                                <div class="form-group">
+                                    <label> Quantity</label>
+                                    <input type="number" id="quantityCustomerProduct" name="quantity" value="${customerProduct.quantity}" placeholder="" class="form-control"/>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4 pl-md-1">
+                                <div class="form-group">
+                                    <label> Buy Date</label>
+                                    <input type="text" id="buyDateCustomerProduct" name="buyDate" value="${customerProduct.buyDate}" placeholder="" class="form-control"/>
+                                </div>
+                            </div>
+
+
+
+                            <div class="row">
+                                <div class="col-md-6 pr-md-1">
+                                    <div class="form-group">
+                                        <input type="hidden" id="amount"  name="amount" value="${customerproduct.amount}" placeholder="" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="card-footer">
+                                <div class="col-md-4">
+                                    <button type="submit" class="btn btn-fill btn-primary">Save</button>
+                                </div>
+                            </div>
+                        </form>
+                        </div>
+                    </div>
+                    </div>
+
+                </div>
            </div>   
            </div>
            </div>
@@ -498,6 +771,6 @@ function search(elem) {
   elem.outerHTML = html;
 }
   </script>
-  
+    </div>
 </body>
 </html>
