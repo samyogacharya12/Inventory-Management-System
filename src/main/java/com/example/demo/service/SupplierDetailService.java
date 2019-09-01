@@ -1,11 +1,14 @@
 package com.example.demo.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.demo.model.SupplierProductAnalysis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,6 +28,81 @@ public class SupplierDetailService {
 
 	@Autowired
 	private PdfService pdfService;
+
+	public void insertIntoSupplierProductAnalysis(Map map)
+	{
+		supplierRepository.insertIntoSupplierProductAnalysis(map);
+	}
+
+	public List<SupplierProductAnalysis> getAllSupplierProductAnalysis() {
+		return supplierRepository.getAllSupplierProductAnalysis();
+	}
+
+	 public  void calculateDifferenceInSupplierProductCost(long supplierId, long productId, String productName, String productType, double cost)
+	 {
+      List<SupplierView> supplierViews=getAllSupplierByProductNameAndType(productName, productType);
+       for(SupplierView supplierView: supplierViews)
+	   {
+	   	if(supplierView.getProductId()!=productId) {
+			if (cost >= supplierView.getCost()) {
+				System.out.println(cost);
+				System.out.println(supplierView.getCost());
+				double costIncreament = cost - supplierView.getCost();
+				Map<String, Object> map = new HashMap<>();
+				map.put("supplierId", supplierId);
+				map.put("productId", productId);
+				map.put("productName", supplierView.getProductName());
+				map.put("productType", supplierView.getProductType());
+				map.put("pastCost", supplierView.getCost());
+				map.put("presentCost", cost);
+				map.put("costIncreament", costIncreament);
+				map.put("costDecreament", 0);
+				map.put("referenceSupplierId", supplierView.getSupplierId());
+				map.put("referenceProductId", supplierView.getProductId());
+				insertIntoSupplierProductAnalysis(map);
+			} else if (cost == supplierView.getCost()) {
+				System.out.println("The given data are equal");
+			} else if (cost <= supplierView.getCost()) {
+				System.out.println(cost);
+				System.out.println(supplierView.getCost());
+				double costDecreament = supplierView.getCost() - cost;
+				Map<String, Object> map = new HashMap<>();
+				map.put("supplierId", supplierId);
+				map.put("productId", productId);
+				map.put("productName", supplierView.getProductName());
+				map.put("productType", supplierView.getProductType());
+				map.put("pastCost", supplierView.getCost());
+				map.put("presentCost", cost);
+				map.put("costIncreament", 0);
+				map.put("costDecreament", costDecreament);
+				map.put("referenceSupplierId", supplierView.getSupplierId());
+				map.put("referenceProductId", supplierView.getProductId());
+				insertIntoSupplierProductAnalysis(map);
+			} else {
+				System.out.println("The Given Data is Empty");
+			}
+		}
+	   }
+	 }
+
+	public List<SupplierProductAnalysis> getSupplierProductAnalysisBySupplierId(Integer supplierId) {
+		return supplierRepository.getSupplierProductAnalysisBySupplierId(supplierId);
+	}
+
+	public List<SupplierView> getAllSupplierByProductNameAndType(String productName, String productType)
+	{
+		return supplierRepository.getAllSupplierByProductNameAndType(productName, productType);
+	}
+
+
+	public SupplierView getSupplierBySupplierIdAndUniqueId(long supplierId, long uniqueId) {
+		return supplierRepository.getSupplierBySupplierIdAndUniqueId(supplierId, uniqueId);
+	}
+
+
+	public Supplier getPersonalSupplierByName(String supplierName) {
+		return supplierRepository.getPersonalSupplierByName(supplierName);
+	}
 
     public void insertIntoSupplier(Supplier supplier)
     {
@@ -73,9 +151,9 @@ public class SupplierDetailService {
     	supplierRepository.deleteIntoSupplier(supplierId, productId);
     }
     
-    public List<SupplierView> getSupplierByBuyDate(String[] buyDate)
+    public List<SupplierView> getSupplierByBuyDate(String supplyStartDate, String supplyLastDate)
     {
-        return supplierRepository.getSupplierByBuyDate(buyDate);
+        return supplierRepository.getSupplierByBuyDate(supplyStartDate, supplyLastDate);
     }
     
     public List<Supplier> getAllSupplier()
@@ -88,9 +166,9 @@ public class SupplierDetailService {
     	return supplierRepository.getSupplierByName(supplierName);
     }
     
-    public List<SupplierView> getSupplierInformation()
+    public List<SupplierView> getSupplierDistinctName()
     {
-    	return supplierRepository.getSupplierInformaton();
+    	return supplierRepository.getSupplierDistinctName();
     }
     
     public double getSupplierCost()
@@ -130,24 +208,24 @@ public class SupplierDetailService {
 	{
 		return supplierRepository.getNoofProduct(supplierName);
 	}
-	public Double getSumofCost(String[] buyDate) {
+	public Double getSumofCost(String supplyStartDate, String supplyLastDate) {
 		
-		return supplierRepository.getSumofCost(buyDate);
+		return supplierRepository.getSumofCost(supplyStartDate,  supplyLastDate);
 	}
 	
-	public int getNoofSupplier(String[] buyDate) {
+	public int getNoofSupplier(String supplyStartDate, String supplyLastDate) {
 		
-		return supplierRepository.getNoofSupplier(buyDate);
+		return supplierRepository.getNoofSupplier(supplyStartDate, supplyLastDate);
 	}
 	
-	public Integer getNoofQuantity(String[] buyDate) {
+	public Integer getNoofQuantity(String supplyStartDate, String supplyLastDate) {
 		
-		return supplierRepository.getNoofQuantity(buyDate);
+		return supplierRepository.getNoofQuantity(supplyStartDate, supplyLastDate);
 	}
 	
-	public int getNoofProduct(String[] buyDate) {
+	public int getNoofProduct(String supplyStartDate, String supplyLastDate) {
 		
-		return supplierRepository.getNoofProduct(buyDate);
+		return supplierRepository.getNoofProduct(supplyStartDate, supplyLastDate);
 	}
 	
 	
@@ -166,8 +244,8 @@ public class SupplierDetailService {
     	return pdfService.createPdfForSuppliers(supplierproducts, context, response, request);
     }
 
-	public Double getCostFromExpiredProduct(String[] buy_date)
+	public Double getCostFromExpiredProduct(String supplyStartDate, String supplyLastDate)
 	{
-		return supplierRepository.getCostFromExpiredProduct(buy_date);
+		return supplierRepository.getCostFromExpiredProduct(supplyStartDate, supplyLastDate);
 	}
 }
