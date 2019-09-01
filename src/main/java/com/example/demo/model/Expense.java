@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class Expense {
@@ -9,7 +10,7 @@ public class Expense {
 	private long expenseId;
 	private String expenseName;
 	private double cost;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date expenseDate;
 	private String username;
 	public String getUsername() {
