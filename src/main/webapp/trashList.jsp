@@ -49,6 +49,25 @@ body {
   <link href="static/black-dashboard-html-v1.0.1/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="static/black-dashboard-html-v1.0.1/assets/demo/demo.css" rel="stylesheet" /></head>
+
+<link href="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.css" rel="stylesheet"/>
+<script src="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.js"> </script>
+<script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript"  src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script type="text/javascript"  src="static/media/js/jquery.dataTables.js"></script>
+<script type="text/javascript"  src="static/resources/syntax/shCore.js"></script>
+<script type="text/javascript"  src="static/resources/demo.js"></script>
+<script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script
+        src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js"></script>
+<script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.js"> </script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"> </script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="static/RestJs/trashList.js"> </script>
+<script type="text/javascript" src="static/RestJs/listTrashByProductName.js"> </script>
 <body>
   <div class="wrapper">
     <div class="sidebar">
@@ -148,10 +167,17 @@ body {
                 <div class="col-sm-12 col-md-6">
                 <div class="dataTables_length" id="datatable_length">
                 </div></div>
+
+                    <div class="col-sm-12 col-md-6">
+                        <div id="datatable_filter" class="dataTables_filter">
+                            <form id="searchTrashForm" action="/getTrashByProductName" method="get">
+                                <label><input type="search" id="productName" name="productName" class="form-control form-control-sm" placeholder="Search records" aria-controls="datatable"></label>
+                                <button class="btn btn-primary btn-sm">Search</button>
+                            </form>
+                        </div></div></div>
+
      <div class="row"><div class="col-sm-12">
-                    <a href="/addproduct" class="btn btn-primary btn-sm"> Add new </a>
-                 
-                  <table class="table" id="">
+                  <table id="trashList" class="table">
                   <thead class=" text-primary">
                    <tr>
                    
@@ -188,20 +214,25 @@ body {
                    </th>
                    </tr>
                   </thead>
-                        <tbody>
-                 <c:forEach var="trashes" items="${trash}">
-<tr>   
-    <td> ${trashes.trashId} </td>
-    <td>${trashes.productId } </td>
-    <td> ${trashes.productName} </td>
-    <td> ${trashes.productType} </td>
-    <td> ${trashes.price} </td>
-    <td> ${trashes.quantity} </td>
-    <td> ${trashes.magnifactureDate}</td>
-    <td> ${trashes.expiryDate}</td>
-    </tr>
-</c:forEach>                         
-</tbody>
+                        <tbody id="trashData">
+                        </tbody>
+
+                      <tbody id="trashDataByProductName">
+
+                      </tbody>
+
+<%--                 <c:forEach var="trashes" items="${trash}">--%>
+<%--<tr>   --%>
+<%--    <td> ${trashes.trashId} </td>--%>
+<%--    <td>${trashes.productId } </td>--%>
+<%--    <td> ${trashes.productName} </td>--%>
+<%--    <td> ${trashes.productType} </td>--%>
+<%--    <td> ${trashes.price} </td>--%>
+<%--    <td> ${trashes.quantity} </td>--%>
+<%--    <td> ${trashes.magnifactureDate}</td>--%>
+<%--    <td> ${trashes.expiryDate}</td>--%>
+<%--    </tr>--%>
+<%--</c:forEach>                         --%>
                       </table>
                 </div>
               </div>
