@@ -12,7 +12,17 @@ public class SupplierProduct {
 	private int quantity;
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date buyDate;
+	private long supplierUniqueId;
 	private String username;
+
+	public long getSupplierUniqueId() {
+		return supplierUniqueId;
+	}
+
+	public void setSupplierUniqueId(long supplierUniqueId) {
+		this.supplierUniqueId = supplierUniqueId;
+	}
+
 	public String getUsername() {
 		return username;
 	}
