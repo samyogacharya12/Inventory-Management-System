@@ -107,10 +107,10 @@ public class CustomerRepositoryImpl extends JdbcDaoSupport implements CustomerRe
 	}
 
 	@Override
-	public List<CustomerView> getCustomerByBuyDate(String[] buyDate) {
+	public List<CustomerView> getCustomerByBuyDate(String buyDateStart, String buyDateEnd) {
 		// TODO Auto-generated method stub
 		String sql="SELECT c.customer_id, c.customer_name, c.permanent_address, c.temporary_address, c.phone_number,c.country, h.customer_customer_id, h.product_product_id, h.quantity, h.amount,h.buy_date, h.username ,i.product_id, i.product_name FROM Customer c INNER JOIN customer_product h on c.customer_id=h.customer_customer_id INNER JOIN product i on h.product_product_id=i.product_id WHERE buy_date>=?::Date and buy_date<=?::Date";
-        List<Map<String, Object>> row=getJdbcTemplate().queryForList(sql, buyDate);
+        List<Map<String, Object>> row=getJdbcTemplate().queryForList(sql, buyDateStart, buyDateEnd);
         List<CustomerView> customerViews=new ArrayList<CustomerView>();
         for(Map<String, Object> rows:row)
         {
@@ -121,7 +121,7 @@ public class CustomerRepositoryImpl extends JdbcDaoSupport implements CustomerRe
         	obj.setTemporaryAddress((String)rows.get("temporary_address"));
         	obj.setPhoneNumber((int)rows.get("phone_number"));
         	obj.setCountry((String)rows.get("country"));
-        	obj.setBuyDate((Date)rows.get("buyDate"));
+        	obj.setBuyDate((Date)rows.get("buy_date"));
         	obj.setCustomerId((long)rows.get("customer_customer_id"));
         	obj.setProductId((long)rows.get("product_product_id"));
         	obj.setQuantity((int)rows.get("quantity"));
@@ -139,30 +139,30 @@ public class CustomerRepositoryImpl extends JdbcDaoSupport implements CustomerRe
 	@Override
 	public List<CustomerView> getCustomerByName(String customerName) {
 		// TODO Auto-generated method stub
-	  String sql="SELECT c.customer_id, c.customer_name, c.permanent_address, c.temporary_address, c.phone_number, h.customer_customer_id, h.product_product_id, h.quantity, h.amount,  h.username  ,i.product_id, i.product_name FROM Customer c INNER JOIN customer_product h on c.customer_id=h.customer_customer_id INNER JOIN product i on h.product_product_id =i.product_id WHERE customer_name=?";
+	  String sql="SELECT c.customer_id, c.customer_name, c.permanent_address, c.temporary_address, c.phone_number, h.customer_customer_id, h.product_product_id ,h.quantity, h.amount, h.buy_date  ,h.username  ,i.product_id, i.product_name FROM Customer c INNER JOIN customer_product h on c.customer_id=h.customer_customer_id INNER JOIN product i on h.product_product_id =i.product_id WHERE customer_name=?";
 	  List<Map<String, Object>> row=getJdbcTemplate().queryForList(sql, customerName);
-	  List<CustomerView> customer_view=new ArrayList<CustomerView>();
+	  List<CustomerView> customerViews=new ArrayList<CustomerView>();
 	  for(Map<String, Object> rows:row)
 	  {
 		  CustomerView obj=new CustomerView();
       	obj.setCustomerId((long)rows.get("customer_id"));
-      	obj.setCustomerName((String)rows.get("customerName"));
+      	obj.setCustomerName((String)rows.get("customer_name"));
       	obj.setPermanentAddress((String)rows.get("permanent_address"));
       	obj.setTemporaryAddress((String)rows.get("temporary_address"));
       	obj.setPhoneNumber((int)rows.get("phone_number"));
       	obj.setCountry((String)rows.get("country"));
-      	obj.setBuyDate((Date)rows.get("buyDate"));
       	obj.setCustomerId((long)rows.get("customer_customer_id"));
       	obj.setProductId((long)rows.get("product_product_id"));
       	obj.setQuantity((int)rows.get("quantity"));
       	obj.setAmount((double)rows.get("amount"));
+      	obj.setBuyDate((Date)rows.get("buy_date"));
       	obj.setProductId((long)rows.get("product_id"));
       	obj.setProductName((String)rows.get("product_name"));
       	obj.setUsername((String) rows.get("username"));
-      	customer_view.add(obj);
-	  }
-		return customer_view;
-	}
+		  customerViews.add(obj);
+}
+		return customerViews;
+	    }
 
 	@Override
 	public void updateIntoPersonalCustomer(Customer customer) {
@@ -266,34 +266,34 @@ public class CustomerRepositoryImpl extends JdbcDaoSupport implements CustomerRe
 	}
 
 	@Override
-	public int getTotalCustomer(String[] buyDate) {
+	public int getTotalCustomer(String buyDateStart, String buyDateEnd) {
 		// TODO Auto-generated method stub
 		String sql="SELECT COUNT(h.customer_customer_id) FROM Customer c INNER JOIN customer_product h on c.customer_id=h.customer_customer_id  WHERE buy_date>=?::Date and buy_date<=?::Date";
-		int total=this.getJdbcTemplate().queryForObject(sql, Integer.class, buyDate);
+		int total=this.getJdbcTemplate().queryForObject(sql, Integer.class, buyDateStart, buyDateEnd);
 		return total;
 	}
 
 	@Override
-	public Integer sumOfQuantity(String[] buyDate) {
+	public Integer sumOfQuantity(String buyDateStart, String buyDateEnd) {
 		// TODO Auto-generated method stub
 		String sql="SELECT SUM(h.quantity) FROM Customer c INNER JOIN customer_product h on c.customer_id=h.customer_customer_id  WHERE buy_date>=?::Date and buy_date<=?::Date";
-		Integer total=this.getJdbcTemplate().queryForObject(sql, Integer.class, buyDate);
+		Integer total=this.getJdbcTemplate().queryForObject(sql, Integer.class, buyDateStart, buyDateEnd);
 		return total;
 	}
 
 	@Override
-	public Double sumOfAmount(String[] buyDate) {
+	public Double sumOfAmount(String buyDateStart, String buyDateEnd) {
 		// TODO Auto-generated method stub
 		String sql="SELECT SUM(amount) FROM customer_product  WHERE buy_date>=?::Date and buy_date<=?::Date";
-        Double total=this.getJdbcTemplate().queryForObject(sql, Double.class, buyDate);
+        Double total=this.getJdbcTemplate().queryForObject(sql, Double.class, buyDateStart, buyDateEnd);
 		return total;
 	}
 
 	@Override
-	public int getTotalProduct(String[] buyDate) {
+	public int getTotalProduct(String buyDateStart, String buyDateEnd) {
 		// TODO Auto-generated method stub
 		String sql="SELECT COUNT(h.product_product_id) FROM Customer c INNER JOIN customer_product h on c.customer_id=h.customer_customer_id  WHERE buy_date>=?::Date and buy_date<=?::Date";
-		int total=this.getJdbcTemplate().queryForObject(sql, Integer.class, buyDate);
+		int total=this.getJdbcTemplate().queryForObject(sql, Integer.class, buyDateStart, buyDateEnd);
 		return total;
 	}
 
