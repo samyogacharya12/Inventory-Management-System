@@ -1,9 +1,11 @@
 package com.example.demo.service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.example.demo.model.LogRecord;
 import com.example.demo.model.Usertemp;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -28,12 +30,32 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	{
 		return userRepository.findByUsername(username);
 	}
-	
-	
-//	public void updateExpiredProduct(Product product)
-//	{
-//		userRepository.updateExpiredProduct(product);
-//	}
+
+
+	public void updateIntoUserRole(Map map) {
+		 userRolesRepository.updateIntoUserRole(map);
+	}
+
+
+	public void insertIntoUserRole(Map map) {
+		userRolesRepository.insertIntoUserRole(map);
+	}
+
+	public void deleteIntoUserRole(Map map) { userRolesRepository.deleteIntoUserRole(map);
+	}
+
+	public void insertIntoLogRecord(Map map)
+	{
+		userRepository.insertIntoLogRecord(map);
+	}
+
+	public void updateIntoLogRecord(Map map) {
+		userRepository.updateIntoLogRecord(map);
+	}
+
+	public List<LogRecord> getListLogRecord(Date logoutTime) {
+		return userRepository.getListLogRecord(logoutTime);
+	}
 
 	public void deleteIntoUserTemp(String username) {
 		userRepository.deleteIntoUserTemp(username);
@@ -47,8 +69,12 @@ public class UserDetailServiceImpl implements UserDetailsService {
 		if (user == null) {
 			throw new UsernameNotFoundException("Username not found");
 		}
+		Date loginTime = new Date(System.currentTimeMillis());
 				Map<String, Object> map = new HashMap<>();
+		            map.put("userId", user.getUserId());
 					map.put("username", user.getUsername());
+                    map.put("loginTime", loginTime);
+                    userRepository.insertIntoLogRecord(map);
 					userRepository.insetIntoUserTemp(map);
 
 			List<String> roleuser = userRolesRepository.findRoleByUsername(username);
@@ -57,21 +83,17 @@ public class UserDetailServiceImpl implements UserDetailsService {
 			return new CustomUserDetails(user, roleuser);
 	}
 
-	public  Map getUserTempData()
-	{
-		return userRepository.getUserTempData();
-	}
+//	public  Map getUserTempData()
+//	{
+//		return userRepository.getUserTempData();
+//	}
 
 
 	public Projectuser getUserIdByUsername(String username) {
 		return  userRepository.getUserIdByUsername(username);
 	}
 
-	
-//	public List<Product> findByProductName(String product_name)
-//	{
-//		return userRepository.findByProductName(product_name);
-//	}
+
 	
 	
 	public void insert(Projectuser projectuser)
@@ -88,26 +110,7 @@ public class UserDetailServiceImpl implements UserDetailsService {
 		return userRepository.getAllUserInfo();
 		
 	}
-//	public void insertintorpoduct(Product product)
-//	{
-//		userRepository.insertintoproduct(product);
-//	}
-//
-//
-//	public void updateintoproduct(Product product)
-//	{
-//		userRepository.updateintoproduct(product);
-//	}
-//
-//	public Product getquantitybyid(long id)
-//	{
-//		return userRepository.getquantitybyid(id);
-//	}
-//
-//	public List<Product> getAllProductInfo()
-//	{
-//		return userRepository.getAllProductInfo();
-//	}
+
 //
 	public void updateUser(Projectuser projectuser)
 	{
@@ -118,75 +121,17 @@ public class UserDetailServiceImpl implements UserDetailsService {
 	{
 		userRepository.deleteUserInfo(user_id);
 	}
-//
-//	public Product getproductbyId(long id)
-//	{
-//		return userRepository.getproductbyid(id);
-//	}
-//
-//	public void deleteproduct(long product_id)
-//	{
-//		userRepository.deleteproductinfo(product_id);
-//	}
-//
-//	public int getTotalNoOfProduct() {
-//
-//		return userRepository.getTotalNoOfProduct();
-//	}
-//
-//	public double getSumOfPrice() {
-//
-//		return userRepository.getSumOfPrice();
-//	}
-//
-//	public int getTotalNoOfQuantity() {
-//		return userRepository.getTotalNoOfQuantity();
-//	}
-//
-//	public int getTotalNoOfProduct(String product_name) {
-//		return userRepository.getTotalNoOfProduct(product_name);
-//	}
-//
-//	public double getSumOfPrice(String product_name) {
-//
-//		return userRepository.getSumOfPrice(product_name);
-//	}
+
 	
 
 	public int getTotalNoOfQuantity(String product_name) {
 		return userRepository.getTotalNoOfQuantity(product_name);
 	}
-	
-	
-//	public CustomerProduct getquantitybycustomerid(long customer_id, long product_id)
-//	{
-//		return userRepository.getquantitybycustomerid(customer_id, product_id);
-//	}
-//
-//	public boolean createPdf(List<Product> products, ServletContext context, HttpServletRequest request,
-//			HttpServletResponse response) {
-//		return userRepository.createPdf(products, context, request, response);
-//	}
-//
-//	public boolean createExcel(List<Product> products, ServletContext context, HttpServletRequest request,
-//			HttpServletResponse response) {
-//
-//		return userRepository.createExcel(products, context, request, response);
-//	}
-//
+
 		public int getNoofUsers()
 		{
 			return userRepository.getNoofUsers();
 		}
-//
-//		public int getNoOfExpiredProduct(String expiry_date) {
-//
-//			return userRepository.getNoOfExpiredProduct(expiry_date);
-//		}
-//
-//		  public List<String> getExpiredProduct(String expiry_date)
-//		  {
-//			  return userRepository.getExpiredProduct(expiry_date);
-//		  }
+
 		
 }
