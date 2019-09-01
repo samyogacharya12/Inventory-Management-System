@@ -1,11 +1,10 @@
 package com.example.demo.controller;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import com.example.demo.model.Login;
+import com.example.demo.model.Product;
 import com.example.demo.service.ProductDetailServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -16,9 +15,8 @@ import com.example.demo.service.CustomerDetailServiceImpl;
 import com.example.demo.service.SupplierDetailService;
 import com.example.demo.service.UserDetailServiceImpl;
 
-@Controller
-@RequestMapping("/")
-public class HomeController {
+@RestController
+public class HomeRestController {
 
 	@Autowired
 	private UserDetailServiceImpl userDetailService;
@@ -30,62 +28,54 @@ public class HomeController {
 
 	@Autowired
 	private SupplierDetailService supplierDetailService;
-	@RequestMapping(value= {"/", "/home"})
-	public String home(Model model)
+
+	@GetMapping(value = "/getFrontDatas")
+	public List<Map> home()
 	{
+     List<Map> map=new ArrayList<>();
+     Map<String, Object> map1=new HashMap<>();
 		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM-dd");
 		Date buyDate1 = new Date(System.currentTimeMillis());
 		String buyDate=formatter.format(buyDate1);
 		int user=userDetailService.getNoofUsers();
 		int numberofsales=customerDetailService.getPresentDate(buyDate);
-		model.addAttribute("numberofsales", numberofsales);
-		model.addAttribute("user", user);
 		int numberofcustomers=customerDetailService.getNumberofCustomersToday(buyDate);
-		model.addAttribute("numberofcustomers", numberofcustomers);
 		int numberofsuppliers=supplierDetailService.NoofSupplier();
-		model.addAttribute("numberofsuppliers", numberofsuppliers);
 		int expiredproduct=productDetailService.getNoOfExpiredProduct(buyDate);
-		model.addAttribute("expiredproduct", expiredproduct);
+		System.out.println(expiredproduct);
 		int totalNoOfQuantity = productDetailService.getTotalNoOfQuantity();
 		int numberofproduct= totalNoOfQuantity;
-		model.addAttribute("numberofproducts", numberofproduct);
+		Date date = new Date(System.currentTimeMillis());
+		String sellDate=formatter.format(date);
+		List<Product> product=productDetailService.getExpiredProduct(sellDate);
 		Double revenue=customerDetailService.getPresentRevenue(buyDate);
 		if(revenue==null)
 		{
 			revenue=(double) 0;
-			model.addAttribute("revenue", revenue);
+            map1.put("revenue", revenue);
 		}
 		else
 		{
-		model.addAttribute("revenue", revenue);
+			map1.put("revenue", revenue);
 		}
-		Date date = new Date(System.currentTimeMillis());
-		String sellDate=formatter.format(date);
-		List<String> productName=productDetailService.getExpiredProduct(sellDate);
-		System.out.println(productName);
-		if(productName!=null)
+		if(product!=null)
 		{
-			model.addAttribute("productName", productName);
+			map1.put("product", product);
 		}
 		else
 		{
-			productName=null;
-			model.addAttribute("productName", productName);
+			product=null;
+			map1.put("product", product);
 		}
-		return "home.jsp";
+		map1.put("user", user);
+		map1.put("numberofsales", numberofsales);
+		map1.put("numberofcustomers", numberofcustomers);
+		map1.put("numberofsuppliers", numberofsuppliers);
+		map1.put("expiredproduct",expiredproduct );
+        map1.put("numberofproduct", numberofproduct);
+        map.add(map1);
+        return map;
 	}
-	
-	 @GetMapping(value="/login")
-	public String loginpage(@ModelAttribute("login") Login login)
-	{
-		return "login.jsp";
-	}
-	
-	@GetMapping("/logout-sucess")
-	public String logoutpage()
-	{
-		Map map=userDetailService.getUserTempData();
-		userDetailService.deleteIntoUserTemp((String) map.get("username"));
-		return "logout.jsp";
-	}
+
+
 }
