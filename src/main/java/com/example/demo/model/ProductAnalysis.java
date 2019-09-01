@@ -3,11 +3,21 @@ package com.example.demo.model;
 public class ProductAnalysis {
 
     private long productId;
+    private String productName;
     private double pastPrice;
     private double presentPrice;
     private double priceIncreament;
     private double priceDecreament;
     private long referenceProductId;
+
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public void setProductName(String productName) {
+        this.productName = productName;
+    }
 
     public double getPresentPrice() {
         return presentPrice;
