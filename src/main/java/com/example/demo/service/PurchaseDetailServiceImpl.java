@@ -22,4 +22,8 @@ public class PurchaseDetailServiceImpl {
         map.put("purchaseDate", currentDate1);
         purchaseRepository.insertIntoPurchase(map);
     }
+
+    public void deletePurchase(long productId) {
+        purchaseRepository.deletePurchase(productId);
+    }
 }
