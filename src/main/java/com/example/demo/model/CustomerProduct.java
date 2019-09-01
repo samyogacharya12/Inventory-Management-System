@@ -2,6 +2,7 @@ package com.example.demo.model;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class CustomerProduct {
@@ -11,7 +12,7 @@ public class CustomerProduct {
 	private long productId;
     private int quantity;
     private double amount;
-	@DateTimeFormat(pattern="yyyy-MM-dd")
+	@JsonFormat(pattern="yyyy-MM-dd")
     private Date buyDate;
 	private String username;
 
