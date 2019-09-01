@@ -4,12 +4,11 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <html>
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="static/black-dashboard-html-v1.0.1/assets/img/apple-icon.png">
-  <link rel="icon" type="image/png" href="static/black-dashboard-html-v1.0.1/assets/img/favicon.png">
   <title>
-  User Information
+  User Information<meta charset="utf-8" />
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <link rel="apple-touch-icon" sizes="76x76" href="static/black-dashboard-html-v1.0.1/assets/img/apple-icon.png">
+      <link rel="icon" type="image/png" href="static/black-dashboard-html-v1.0.1/assets/img/favicon.png">
   </title>
   <!--     Fonts and icons     -->
   <link href="https://fonts.googleapis.com/css?family=Poppins:200,300,400,600,700,800" rel="stylesheet" />
@@ -20,6 +19,10 @@
   <link href="static/black-dashboard-html-v1.0.1/assets/css/black-dashboard.css?v=1.0.0" rel="stylesheet" />
   <!-- CSS Just for demo purpose, don't include it in your project -->
   <link href="static/black-dashboard-html-v1.0.1/assets/demo/demo.css" rel="stylesheet" />
+  <link href="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.css" rel="stylesheet"/>
+    <script src="static/black-dashboard-html-v1.0.1/assets/demo/sweetalert.js"> </script>
+    <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript"  src="https://code.jquery.com/jquery-3.3.1.js"></script>
 </head>
 
 <body class="">
@@ -134,25 +137,25 @@
                 <h5 class="title">Add Profile</h5>
               </div>
               <div class="card-body">
-                <form action="save_form" method="post" enctype="multipart/form-data">
+                <form id="userForm" action="save-user" method="post" enctype="multipart/form-data">
                   <div class="row">
                     <div class="col-md-5 pr-md-1">
                       <div class="form-group">
                         <label >User Id </label>
-                        <input type="text" name="userId" class="form-control" />
+                        <input type="text" id="userId" name="userId" class="form-control" />
                       </div>
                     </div>
                     <div class="col-md-3 px-md-1">
                       <div class="form-group has-label">
                         <label> Username</label>
-                        <input type="text"  name="username" placeholder="username" class="form-control" required="true" />
+                        <input type="text" id="username"  name="username" placeholder="username" class="form-control" required="true" />
                       </div>
                     </div>
                     
                     <div class="col-md-3 px-md-1">
                        <div class="form-group has-label">
                         <label>Password</label>
-                        <input type="password" name="password" placeholder="password" class="form-control" required="true" />
+                        <input type="password" id="password" name="password" placeholder="password" class="form-control" required="true" />
                       </div>
                     </div>
                     </div>
@@ -160,7 +163,7 @@
                     <div class="col-md-4 pl-md-1">
                      <div class="form-group has-label">
                         <label> Email address</label>
-                        <input type="email" name="email" placeholder="mike@email.com" class="form-control" required="true" />
+                        <input type="email" id="email" name="email" placeholder="mike@email.com" class="form-control" required="true" />
                       </div>
                     </div>
              
@@ -168,21 +171,21 @@
                     <div class="col-md-6 pr-md-1">
                        <div class="form-group has-label">
                         <label> First Name </label>
-                        <input type="text"  name="firstName" placeholder="firstName" class="form-control" required="true">
+                        <input type="text" id="firstName"  name="firstName" placeholder="firstName" class="form-control" required="true">
                       </div>
                     </div>
                     
                     <div class="col-md-6 pl-md-1">
                       <div class="form-group">
                         <label>Middle Name </label>
-                        <input type="text" name="middleName" placeholder="Middle Name" class="form-control" />
+                        <input type="text" id="middleName"  name="middleName" placeholder="Middle Name" class="form-control" />
                       </div>
                     </div>
                     
                     <div class="col-md-6 pl-md-1">
                          <div class="form-group has-label">
                         <label> Last Name </label>
-                        <input type="text"  name="lastName" placeholder="Last Name" class="form-control" required="true"/>
+                        <input type="text" id="lastName"  name="lastName" placeholder="Last Name" class="form-control" required="true"/>
                       </div>
                     </div>
                   </div>
@@ -190,7 +193,7 @@
                     <div class="col-md-12">
                    <div class="form-group has-label">
                         <label >Temporary Address </label>
-                        <input type="text" name="temporaryAdddress" placeholder="Home Address" class="form-control" required="true"/>
+                        <input type="text" id="temporaryAddress" name="temporaryAdddress" placeholder="Home Address" class="form-control" required="true"/>
                       </div>
                     </div>
                   </div>
@@ -198,26 +201,26 @@
                     <div class="col-md-4 pr-md-1">
                         <div class="form-group has-label">
                         <label> Permanent Address </label>
-                        <input type="text" name="permanentAddress" placeholder="City" class="form-control" required="true"/>
+                        <input type="text" id="permanentAddress" name="permanentAddress" placeholder="City" class="form-control" required="true"/>
                       </div>
                     </div>
                     <div class="col-md-4 px-md-1">
                       <div class="form-group has-label">
                          <label>Country </label>
-                        <input type="text" name="country" placeholder="Country" class="form-control" required="true"/>
+                        <input type="text" id="country" name="country" placeholder="Country" class="form-control" required="true"/>
                       </div>
                     </div>
                     <div class="col-md-4 pl-md-1">
                      <div class="form-group has-label">
                         <label> Phone number </label>
-                        <input type="number" name="phoneNumber" class="form-control"/>
+                        <input type="number" id="phoneNumber" name="phoneNumber" class="form-control"/>
                       </div>
                     </div>
                     
                       <div class="col-md-4 pl-md-1">
                      <div class="form-group has-label">
                         <label> LandLine number </label>
-                        <input type="number" name="landlineNumber"  class="form-control"/>
+                        <input type="number" id="landlineNumber" name="landlineNumber"  class="form-control"/>
                       </div>
                     </div>
                     
@@ -226,8 +229,8 @@
                   <div class="col-md-4 pl-md-1">
                     <div class="form-group has-label">
                    <label> User Role </label>   
-                  <select name="userRoleId">
-  <option value="1">1</option>
+                  <select id="userRoleId" name="userRoleId">
+  <option  value="1">1</option>
   <option value="2">2</option>
 </select>
 </div>
@@ -236,23 +239,26 @@
                   <div class="row">
                     <div class="col-md-8">
                      <div class="form-group has-label">
-<input type="radio" name="gender" value="male"/> Male
-<input type="radio" name="gender" value="female"/> Female
+<input type="radio"   name="gender" value="male"/> Male
+<input type="radio"  name="gender" value="female"/> Female
   </div>
                       </div>
                     </div>
-                    
-                     <div class="row">
-                    <div class="col-md-8">
-                      <div class="form-group">
-                    <label> Upload Image </label> <input type="file" name="file">
+
+
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group">
+                                <label> Upload Image </label> <input type="file" id="image" name="file">
+                            </div>
+                        </div>
                     </div>
-                    </div>
-                    </div>
+
+
 
               <div class="card-footer">
                <div class="col-md-4">
-               <button class="btn btn-primary btn-fill" onclick='swal({ title:"Good job!", text: "You clicked the button!", type: "success", buttonsStyling: false, confirmButtonClass: "btn btn-success"})'>Save</button>
+               <button id="btnsubmit" class="btn btn-primary btn-fill">Save</button>
               </div>
               </div>
 
@@ -266,6 +272,7 @@
         </div>
        
   <!--   Core JS Files   -->
+  <script src="static/RestJs/saveUser.js"></script>
   <script src="static/black-dashboard-html-v1.0.1/assets/js/core/jquery.min.js"></script>
   <script src="static/black-dashboard-html-v1.0.1/assets/js/core/popper.min.js"></script>
   <script src="static/black-dashboard-html-v1.0.1/assets/js/core/bootstrap.min.js"></script>
