@@ -26,7 +26,7 @@ public interface CustomerRepository {
 	   void updateIntoCustomerProduct(CustomerView customerproduct);
 	   void deleteIntoCustomerView(long customerId, long productId);
 	   void deleteIntoCustomer(long customerId, long productId);
-	   List<CustomerView> getCustomerByBuyDate(String[] buyDate);
+	   List<CustomerView> getCustomerByBuyDate(String buyDateStart, String buyDateEnd);
 	   List<CustomerView> getCustomerByName(String customerName);
 	   int getTotalCustomer();
 	   int sumOfQuantity();
@@ -35,11 +35,11 @@ public interface CustomerRepository {
 	   int getTotalCustomer(String customerName);
 	   int sumOfQuantity(String customerName);
 	   double sumOfAmount(String customerName);
-	   int getTotalProduct(String customerName);
-	   int getTotalCustomer(String[] buyDate);
-	   Integer sumOfQuantity(String[] buyDate);
-	   Double sumOfAmount(String[] buyDate);
-	   int getTotalProduct(String[] buyDate);
+	int getTotalProduct(String customerName);
+	   int getTotalProduct(String buyDateStart, String buyDateEnd);
+	   int getTotalCustomer(String buyDateStart, String buyDateEnd);
+	   Integer sumOfQuantity(String buyDateStart, String buyDateEnd);
+	   Double sumOfAmount(String buyDateStart, String buyDateEnd);
 	   int getPresentDate(String buyDate);
 	   int getNumberofCustomersToday(String buyDate);
 	   Double getPresentRevenue(String buyDate);
