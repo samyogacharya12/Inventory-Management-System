@@ -43,10 +43,10 @@ public class ProductDetailServiceImpl {
     {
         return  productRepository.getProductByNameTypeLessThanPurchaseDate(productName, productType, purchaseDate);
     }
-
-//    public List<Product> getProductByNameTypeAndDate(String productName, String productType, Date purchaseDate) {
 //
-//        return productRepository.getProductByNameTypeAndPurchaseDate(productName, productType, purchaseDate);
+//    public List<Product> getProductByNameTypeAndPurchaseDate(String productName, String productType, Date purchaseDate) {
+//
+//        return productRepository.getProductByNameTypeAndPurchaseDate(productName, productType, purchaseDate)
 //    }
 
     public List<ProductAnalysis> getAllProductAnalysis() {
@@ -62,54 +62,55 @@ public class ProductDetailServiceImpl {
         return  productRepository.countProductByNameAndType(productName, productType);
     }
 
-//    public void calculateDifferenceInProductPrice(String productName, String productType)
-//    {
-//        Date purchaseDate=new Date((System.currentTimeMillis()));
-////        Integer count=countProductByNameAndType(productName, productType);
-////        System.out.println(count);
-////        System.out.println(productName);
-////        System.out.println(productType);
-////        for(int i=0;i<=count;i++)
-////        {
-//            PurchaseProduct purchaseProduct=getProductByNameTypeAndPurchaseDate(productName, productType, purchaseDate);
-//            System.out.println(purchaseProduct);
-////               List<PurchaseProduct> productList=getProductByNameTypeLessThanPurchaseDate(productName, productType, purchaseDate);
-////               System.out.println(productList);
-////
-////                   for(PurchaseProduct productList1:productList)
-////                   {
-////                       if (purchaseProduct.getPrice()>= productList1.getPrice()) {
-////                           Double currentPrice = purchaseProduct.getPrice()-productList1.getPrice();
-////                           Map<String, Object> map = new HashMap<>();
-////                           map.put("productId", purchaseProduct.getProductId());
-////                           map.put("pastPrice", productList1.getPrice());
-////                           map.put("presentPrice", purchaseProduct.getPrice());
-////                           map.put("priceIncreament", currentPrice);
-////                           map.put("priceDecreament", 0);
-////                           map.put("referenceProductId", productList1.getProductId());
-////                           System.out.println(currentPrice);
-////                           insertIntoProductAnalysis(map);
-////                       } else if (productList1.getPrice() == purchaseProduct.getPrice()) {
-////                           System.out.println("The prices of a given product are equal");
-////                       } else if (purchaseProduct.getPrice() <= productList1.getPrice()) {
-////                           Double currentPrice = productList1.getPrice()-purchaseProduct.getPrice();
-////                           Map<String, Object> map = new HashMap<>();
-////                           map.put("productId", purchaseProduct.getProductId());
-////                           map.put("pastPrice", productList1.getPrice());
-////                           map.put("presentPrice", purchaseProduct.getPrice());
-////                           map.put("priceIncreament", 0);
-////                           map.put("priceDecreament", currentPrice);
-////                           map.put("referenceProductId", productList1.getProductId());
-////                           insertIntoProductAnalysis(map);
-////                       } else {
-////                           System.out.println("The given data is empty");
-////                       }
-////                       purchaseDate=productList1.getPurchase_date();
-////
-////                   }
-////               }
 
-        //}
+    public List<ProductAnalysis> getDataByName(String productName) {
+        return productRepository.getDataByName(productName);
+    }
+
+
+
+//    public void calculateDifferenceInProductPrice(String productName, String productType) {
+//        Date purchaseDate = new Date((System.currentTimeMillis()));
+//        Integer count = countProductByNameAndType(productName, productType);
+//        for (int i = 0; i <= count; i++) {
+//            List<PurchaseProduct> purchaseProducts = getProductByNameTypeAndPurchaseDate(purchaseDate);
+//            System.out.println(purchaseProducts);
+//            List<PurchaseProduct> productList = getProductByNameTypeLessThanPurchaseDate(productName, productType, purchaseDate);
+//            for (PurchaseProduct purchaseProduct : purchaseProducts) {
+//                for (PurchaseProduct productList1 : productList) {
+//                    if (purchaseProduct.getProductId() != productList1.getProductId()) {
+//                        if (purchaseProduct.getPrice() >= productList1.getPrice()) {
+//                            Double currentPrice = purchaseProduct.getPrice() - productList1.getPrice();
+//                            Map<String, Object> map1 = new HashMap<>();
+//                            map1.put("productId", purchaseProduct.getProductId());
+//                            map1.put("pastPrice", productList1.getPrice());
+//                            map1.put("presentPrice", purchaseProduct.getPrice());
+//                            map1.put("priceIncreament", currentPrice);
+//                            map1.put("priceDecreament", 0);
+//                            map1.put("referenceProductId", productList1.getProductId());
+//                            insertIntoProductAnalysis(map1);
+//                        } else if (productList1.getPrice() == purchaseProduct.getPrice()) {
+//                            System.out.println("The prices of a given product are equal");
+//                        } else if (purchaseProduct.getPrice() <= productList1.getPrice()) {
+//                            Double currentPrice = productList1.getPrice() - purchaseProduct.getPrice();
+//                            Map<String, Object> map1 = new HashMap<>();
+//                            map1.put("productId", purchaseProduct.getProductId());
+//                            map1.put("pastPrice", productList1.getPrice());
+//                            map1.put("presentPrice", purchaseProduct.getPrice());
+//                            map1.put("priceIncreament", 0);
+//                            map1.put("priceDecreament", currentPrice);
+//                            map1.put("referenceProductId", productList1.getProductId());
+//                            insertIntoProductAnalysis(map1);
+//                        } else {
+//                            System.out.println("The given data is empty");
+//                        }
+//                        purchaseDate = productList1.getPurchaseDate();
+//                        System.out.println(purchaseDate);
+//                    }
+//                }
+//            }
+//        }
+//    }
 
 
 
@@ -175,10 +176,9 @@ public class ProductDetailServiceImpl {
         productRepository.deleteProductInfo(productId);
     }
 
-//    public Product getQuantityById(long id) {
-//
-//      return productRepository.getQuantityById(id);
-//    }
+
+
+
 
     public CustomerProduct getQuantityByCustomerid(long customerId, long productId) {
         return productRepository.getQuantityByCustomerId(customerId, productId);
@@ -207,11 +207,11 @@ public class ProductDetailServiceImpl {
         return productRepository.getSumOfPrice(productName);
     }
 
-    public int getTotalNoOfQuantity(String productName) {
+    public Integer getTotalNoOfQuantity(String productName) {
         return productRepository.getTotalNoOfQuantity(productName);
     }
 
-    public List<String> getExpiredProduct(String expiryDate) {
+    public List<Product> getExpiredProduct(String expiryDate) {
         return productRepository.getExpiredProduct(expiryDate);
     }
 
